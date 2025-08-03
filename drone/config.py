@@ -118,6 +118,27 @@ class ConfigManager:
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
+            ),
+            "glm-4.5": ModelConfig(
+                name="glm-4.5",
+                provider="zhipuai",
+                model_id="glm-4.5",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "glm-4.5-air": ModelConfig(
+                name="glm-4.5-air",
+                provider="zhipuai", 
+                model_id="glm-4.5-air",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "glm-4.5-flash": ModelConfig(
+                name="glm-4.5-flash",
+                provider="zhipuai",
+                model_id="glm-4.5-flash",
+                max_tokens=2048,
+                temperature=0.7
             )
         }
         self.save_models()
@@ -175,7 +196,7 @@ class ConfigManager:
         """Get list of models that require API keys."""
         api_models = []
         for name, config in self.models.items():
-            if config.provider in ["openai", "anthropic"]:
+            if config.provider in ["openai", "anthropic", "zhipuai"]:
                 api_models.append(name)
         return api_models
 

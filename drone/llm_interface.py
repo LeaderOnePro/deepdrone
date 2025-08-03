@@ -67,6 +67,8 @@ class LLMInterface:
                     os.environ["MISTRAL_API_KEY"] = self.model_config.api_key
                 elif self.model_config.provider == "vertex_ai":
                     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.model_config.api_key
+                elif self.model_config.provider == "zhipuai":
+                    os.environ["ZHIPUAI_API_KEY"] = self.model_config.api_key
             
             # Set base URL if provided
             if self.model_config.base_url:

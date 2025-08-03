@@ -57,6 +57,12 @@ PROVIDERS = {
         "api_key_url": "https://console.mistral.ai/",
         "description": "Mistral AI models"
     },
+    "ZhipuAI": {
+        "name": "zhipuai",
+        "models": ["glm-4.5", "glm-4.5-air", "glm-4.5-flash"],
+        "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
+        "description": "GLM models from ZhipuAI"
+    },
     "Ollama": {
         "name": "ollama",
         "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest", "phi3:latest"],
