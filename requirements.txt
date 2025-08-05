@@ -16,3 +16,7 @@ typer
 prompt-toolkit
 requests
 PyJWT
+fastapi
+uvicorn[standard]
+python-multipart
+websockets
