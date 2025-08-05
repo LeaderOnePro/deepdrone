@@ -17,7 +17,7 @@ import {
   Divider,
   Link,
 } from '@mui/material';
-import { Save, TestTube, Refresh } from '@mui/icons-material';
+import { Save, Science, Refresh } from '@mui/icons-material';
 import { apiService } from '../services/apiService';
 
 const SettingsPage = ({ currentModel, onModelUpdate }) => {
@@ -335,7 +335,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
                   <Button
                     variant="outlined"
-                    startIcon={<TestTube />}
+                    startIcon={<Science />}
                     onClick={handleTestConnection}
                     disabled={loading || !modelConfig.provider || !modelConfig.model_id}
                   >

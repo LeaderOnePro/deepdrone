@@ -271,14 +271,52 @@ async def websocket_endpoint(websocket: WebSocket):
 
 # Serve static files (frontend)
 if os.path.exists("frontend/build"):
-    app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
+    # Only mount static files if the static directory exists
+    if os.path.exists("frontend/build/static"):
+        app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
     
+    # Serve index.html for frontend routes
     @app.get("/{path:path}")
     async def serve_frontend(path: str):
         """Serve React frontend"""
-        if path and not path.startswith("api"):
-            return HTMLResponse(open("frontend/build/index.html").read())
-        return HTMLResponse(open("frontend/build/index.html").read())
+        # Don't serve frontend for API routes
+        if path.startswith("api"):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        
+        # Check if index.html exists
+        index_path = "frontend/build/index.html"
+        if os.path.exists(index_path):
+            with open(index_path, 'r', encoding='utf-8') as f:
+                return HTMLResponse(f.read())
+        else:
+            return HTMLResponse("""
+            <html>
+                <head><title>DeepDrone</title></head>
+                <body>
+                    <h1>🚁 DeepDrone Web Interface</h1>
+                    <p>Frontend not built yet. Please run:</p>
+                    <pre>cd frontend && npm install && npm run build</pre>
+                    <p>Or use the API directly at <a href="/docs">/docs</a></p>
+                </body>
+            </html>
+            """)
+else:
+    # Serve a simple message if frontend build doesn't exist
+    @app.get("/")
+    async def serve_no_frontend():
+        """Serve message when no frontend build exists"""
+        return HTMLResponse("""
+        <html>
+            <head><title>DeepDrone API</title></head>
+            <body>
+                <h1>🚁 DeepDrone API Server</h1>
+                <p>Frontend not available. Build the frontend first:</p>
+                <pre>cd frontend && npm install && npm run build</pre>
+                <p>API documentation: <a href="/docs">/docs</a></p>
+                <p>API endpoints: <a href="/api/providers">/api/providers</a></p>
+            </body>
+        </html>
+        """)
 
 if __name__ == "__main__":
     import uvicorn
