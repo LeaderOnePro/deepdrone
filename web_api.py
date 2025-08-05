@@ -72,9 +72,9 @@ class DroneCommandRequest(BaseModel):
 
 # API Routes
 
-@app.get("/")
-async def root():
-    """Root endpoint"""
+@app.get("/api")
+async def api_root():
+    """API root endpoint"""
     return {"message": "DeepDrone API Server", "version": "1.0.0"}
 
 @app.get("/api/providers")
@@ -275,15 +275,10 @@ if os.path.exists("frontend/build"):
     if os.path.exists("frontend/build/static"):
         app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
     
-    # Serve index.html for frontend routes
-    @app.get("/{path:path}")
-    async def serve_frontend(path: str):
-        """Serve React frontend"""
-        # Don't serve frontend for API routes
-        if path.startswith("api"):
-            raise HTTPException(status_code=404, detail="API endpoint not found")
-        
-        # Check if index.html exists
+    # Root route - serve React frontend
+    @app.get("/")
+    async def serve_frontend_root():
+        """Serve React frontend at root"""
         index_path = "frontend/build/index.html"
         if os.path.exists(index_path):
             with open(index_path, 'r', encoding='utf-8') as f:
@@ -300,6 +295,23 @@ if os.path.exists("frontend/build"):
                 </body>
             </html>
             """)
+    
+    # Catch-all route for React Router
+    @app.get("/{path:path}")
+    async def serve_frontend_routes(path: str):
+        """Serve React frontend for all non-API routes"""
+        # Don't serve frontend for API routes
+        if path.startswith("api") or path.startswith("docs") or path.startswith("openapi.json"):
+            raise HTTPException(status_code=404, detail="Not found")
+        
+        # Serve index.html for all frontend routes
+        index_path = "frontend/build/index.html"
+        if os.path.exists(index_path):
+            with open(index_path, 'r', encoding='utf-8') as f:
+                return HTMLResponse(f.read())
+        else:
+            raise HTTPException(status_code=404, detail="Frontend not available")
+            
 else:
     # Serve a simple message if frontend build doesn't exist
     @app.get("/")
