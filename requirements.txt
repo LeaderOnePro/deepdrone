@@ -14,3 +14,5 @@ pydantic
 pydantic-settings
 typer
 prompt-toolkit
+requests
+PyJWT

@@ -24,6 +24,8 @@ class LLMInterface:
         """Set up the appropriate client based on model provider."""
         if self.model_config.provider == "ollama":
             self._setup_ollama()
+        elif self.model_config.provider == "zhipuai":
+            self._setup_zhipuai()
         else:
             self._setup_litellm()
     
@@ -51,6 +53,37 @@ class LLMInterface:
                 
         except ImportError:
             raise ImportError("Ollama package not installed. Install with: pip install ollama")
+    
+    def _setup_zhipuai(self):
+        """Set up ZhipuAI client using direct API calls."""
+        try:
+            import requests
+            import time
+            import jwt
+            
+            self.client = requests
+            self.client_type = "zhipuai"
+            
+            # Validate API key
+            if not self.model_config.api_key or self.model_config.api_key == "local":
+                raise ValueError("ZhipuAI requires a valid API key")
+            
+            # Store API key for JWT generation
+            self.zhipuai_api_key = self.model_config.api_key
+            
+            logger.info(f"Set up ZhipuAI direct client for {self.model_config.model_id}")
+            
+        except ImportError as e:
+            missing_packages = []
+            if "requests" in str(e):
+                missing_packages.append("requests")
+            if "jwt" in str(e):
+                missing_packages.append("PyJWT")
+            
+            if missing_packages:
+                raise ImportError(f"Missing packages for ZhipuAI: {', '.join(missing_packages)}. Install with: pip install {' '.join(missing_packages)}")
+            else:
+                raise e
     
     def _setup_litellm(self):
         """Set up LiteLLM client."""
@@ -87,6 +120,8 @@ class LLMInterface:
         try:
             if self.client_type == "ollama":
                 return self._chat_ollama(messages)
+            elif self.client_type == "zhipuai":
+                return self._chat_zhipuai(messages)
             else:
                 return self._chat_litellm(messages)
         except Exception as e:
@@ -144,6 +179,116 @@ class LLMInterface:
                 return "❌ Cannot connect to Ollama.\n\n💡 Make sure Ollama is running:\n   ollama serve\n\n📥 Download Ollama from: https://ollama.com/download"
             
             return f"❌ Ollama error: {str(e)}"
+    
+    def _generate_zhipuai_token(self) -> str:
+        """Generate JWT token for ZhipuAI API authentication."""
+        try:
+            import jwt
+            import time
+            
+            # Split API key (format: "id.secret")
+            api_key_parts = self.zhipuai_api_key.split(".")
+            if len(api_key_parts) != 2:
+                raise ValueError("Invalid ZhipuAI API key format. Expected format: 'id.secret'")
+            
+            api_key_id, api_key_secret = api_key_parts
+            
+            # Create JWT payload according to ZhipuAI documentation
+            # Reference: https://open.bigmodel.cn/dev/api#nosdk
+            current_time = int(time.time())
+            payload = {
+                "iss": api_key_id,
+                "exp": current_time + 3600,  # Token expires in 1 hour
+                "iat": current_time,
+                "api_key": api_key_id
+            }
+            
+            # Generate JWT token with header
+            headers = {
+                "alg": "HS256",
+                "sign_type": "SIGN"
+            }
+            
+            token = jwt.encode(payload, api_key_secret, algorithm="HS256", headers=headers)
+            
+            # Ensure token is a string (PyJWT might return bytes in some versions)
+            if isinstance(token, bytes):
+                token = token.decode('utf-8')
+            
+            logger.info(f"Generated JWT token for ZhipuAI (expires in 1 hour)")
+            return token
+            
+        except Exception as e:
+            logger.error(f"Failed to generate ZhipuAI token: {e}")
+            raise e
+    
+    def _chat_zhipuai(self, messages: List[Dict[str, str]]) -> str:
+        """Chat using ZhipuAI direct API."""
+        try:
+            # Generate authentication token
+            token = self._generate_zhipuai_token()
+            
+            # Prepare API request
+            url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            }
+            
+            # Prepare request data
+            data = {
+                "model": self.model_config.model_id,
+                "messages": messages,
+                "max_tokens": self.model_config.max_tokens,
+                "temperature": self.model_config.temperature,
+                "stream": False
+            }
+            
+            logger.info(f"Sending request to ZhipuAI API with model: {self.model_config.model_id}")
+            
+            # Make API request
+            response = self.client.post(url, headers=headers, json=data, timeout=30)
+            
+            # Check response status
+            if response.status_code != 200:
+                error_msg = f"ZhipuAI API error (status {response.status_code})"
+                try:
+                    error_data = response.json()
+                    if "error" in error_data:
+                        error_msg += f": {error_data['error'].get('message', 'Unknown error')}"
+                except:
+                    error_msg += f": {response.text}"
+                
+                logger.error(error_msg)
+                return f"❌ {error_msg}"
+            
+            # Parse response
+            response_data = response.json()
+            
+            if "choices" not in response_data or not response_data["choices"]:
+                logger.error("Invalid response format from ZhipuAI API")
+                return "❌ Invalid response format from ZhipuAI API"
+            
+            # Extract message content
+            content = response_data["choices"][0]["message"]["content"]
+            logger.info("Successfully received response from ZhipuAI")
+            
+            return content
+            
+        except Exception as e:
+            error_str = str(e).lower()
+            
+            if "invalid api key" in error_str or "authentication" in error_str:
+                return "❌ ZhipuAI API key error. Please check your API key format (should be 'id.secret')"
+            elif "quota" in error_str or "billing" in error_str:
+                return "❌ ZhipuAI quota exceeded. Please check your account balance."
+            elif "timeout" in error_str:
+                return "❌ ZhipuAI API timeout. Please try again."
+            elif "connection" in error_str:
+                return "❌ Cannot connect to ZhipuAI API. Please check your network connection."
+            
+            logger.error(f"ZhipuAI API error: {e}")
+            return f"❌ ZhipuAI error: {str(e)}"
     
     def _chat_litellm(self, messages: List[Dict[str, str]]) -> str:
         """Chat using LiteLLM."""
