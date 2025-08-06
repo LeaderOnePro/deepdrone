@@ -9,6 +9,7 @@ import {
   LinearProgress,
   Chip,
   Alert,
+  Fab,
 } from '@mui/material';
 import {
   FlightTakeoff,
@@ -17,6 +18,7 @@ import {
   Speed,
   Settings,
   Chat,
+  Add,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -264,6 +266,22 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
           </Card>
         </Grid>
       </Grid>
+
+      {/* Floating Action Button for Quick Access */}
+      {systemStatus === 'ready' && (
+        <Fab
+          color="primary"
+          aria-label="start control"
+          onClick={() => navigate('/control')}
+          sx={{
+            position: 'fixed',
+            bottom: { xs: 80, md: 16 }, // Account for mobile navigation
+            right: 16,
+          }}
+        >
+          <Chat />
+        </Fab>
+      )}
     </Box>
   );
 };

@@ -16,11 +16,14 @@ import {
   Tab,
   Divider,
   Link,
+  IconButton,
 } from '@mui/material';
-import { Save, Science, Refresh } from '@mui/icons-material';
+import { Save, Science, Refresh, ArrowBack } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import { apiService } from '../services/apiService';
 
 const SettingsPage = ({ currentModel, onModelUpdate }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [providers, setProviders] = useState({});
   const [loading, setLoading] = useState(false);
@@ -178,12 +181,23 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
     <Box>
       {/* Header */}
       <Box sx={{ mb: 3 }}>
-        <Typography variant="h4" gutterBottom sx={{ color: 'primary.main' }}>
-          ⚙️ Settings
-        </Typography>
-        <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-          Configure AI models and drone connections
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <IconButton 
+            onClick={() => navigate('/dashboard')}
+            sx={{ mr: 2, color: 'primary.main' }}
+            size="large"
+          >
+            <ArrowBack />
+          </IconButton>
+          <Box>
+            <Typography variant="h4" sx={{ color: 'primary.main', mb: 0 }}>
+              ⚙️ Settings
+            </Typography>
+            <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
+              Configure AI models and drone connections
+            </Typography>
+          </Box>
+        </Box>
       </Box>
 
       {/* Message Alert */}

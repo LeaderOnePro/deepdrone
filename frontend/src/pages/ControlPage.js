@@ -19,10 +19,13 @@ import {
   Stop,
   Refresh,
   Clear,
+  ArrowBack,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import { apiService } from '../services/apiService';
 
 const ControlPage = ({ currentModel, droneStatus }) => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -144,12 +147,23 @@ const ControlPage = ({ currentModel, droneStatus }) => {
     <Box>
       {/* Header */}
       <Box sx={{ mb: 3 }}>
-        <Typography variant="h4" gutterBottom sx={{ color: 'primary.main' }}>
-          🎮 Drone Control Center
-        </Typography>
-        <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-          Use natural language to control your drone
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <IconButton 
+            onClick={() => navigate('/dashboard')}
+            sx={{ mr: 2, color: 'primary.main' }}
+            size="large"
+          >
+            <ArrowBack />
+          </IconButton>
+          <Box>
+            <Typography variant="h4" sx={{ color: 'primary.main', mb: 0 }}>
+              🎮 Drone Control Center
+            </Typography>
+            <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
+              Use natural language to control your drone
+            </Typography>
+          </Box>
+        </Box>
       </Box>
 
       {/* System Status Alert */}
