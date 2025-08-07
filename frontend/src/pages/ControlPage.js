@@ -157,18 +157,23 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           </IconButton>
           <Box>
             <Typography variant="h4" sx={{ 
-              color: 'primary.main', 
               mb: 0,
-              fontWeight: 700,
-              background: 'linear-gradient(45deg, #1976d2, #00bcd4)',
+              fontWeight: 800,
+              fontSize: '2.5rem',
+              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
+              letterSpacing: '-0.02em',
             }}>
-              🎮 无人机控制中心
+              🎮 控制中心 2.0
             </Typography>
-            <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>
-              使用自然语言控制您的无人机
+            <Typography variant="subtitle1" sx={{ 
+              color: 'text.secondary', 
+              fontSize: '1.2rem',
+              fontWeight: 500,
+            }}>
+              用自然语言释放无人机的无限可能 ✨
             </Typography>
           </Box>
         </Box>

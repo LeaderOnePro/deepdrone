@@ -48,8 +48,14 @@ function App() {
       <AppBar position="static" elevation={0}>
         <Toolbar>
           <FlightTakeoff sx={{ mr: 2, color: 'white' }} />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', fontWeight: 600 }}>
-            DeepDrone 控制中心
+          <Typography variant="h6" component="div" sx={{ 
+            flexGrow: 1, 
+            color: 'white', 
+            fontWeight: 700,
+            fontSize: '1.3rem',
+            letterSpacing: '0.5px'
+          }}>
+            DeepDrone 2.0 ✨
           </Typography>
           
           {/* Status indicators */}

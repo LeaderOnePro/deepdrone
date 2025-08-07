@@ -60,17 +60,34 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom sx={{ 
-          color: 'primary.main', 
-          fontWeight: 700,
-          background: 'linear-gradient(45deg, #1976d2, #00bcd4)',
+          fontWeight: 800,
+          fontSize: '3rem',
+          background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)',
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
+          letterSpacing: '-0.02em',
+          textAlign: 'center',
+          mb: 1,
         }}>
-          🚁 DeepDrone 仪表盘
+          🚁 DeepDrone 2.0
         </Typography>
-        <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>
-          AI驱动的智能无人机控制系统
+        <Typography variant="subtitle1" sx={{ 
+          color: 'text.secondary', 
+          fontSize: '1.2rem',
+          textAlign: 'center',
+          fontWeight: 500,
+          mb: 2,
+        }}>
+          新一代AI驱动的智能无人机控制系统
+        </Typography>
+        <Typography variant="body2" sx={{ 
+          textAlign: 'center',
+          color: '#6366f1',
+          fontWeight: 600,
+          fontSize: '1rem',
+        }}>
+          by 臻巅科技 ⚡
         </Typography>
       </Box>
 
@@ -259,8 +276,8 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
               <Typography variant="h6" gutterBottom>
                 系统信息
               </Typography>
-              <Typography variant="body2" color="text.secondary" paragraph>
-                DeepDrone v1.0.0 - AI驱动的智能无人机控制系统
+              <Typography variant="body2" color="text.secondary" paragraph sx={{ fontWeight: 500 }}>
+                DeepDrone 2.0 - 新一代AI驱动的智能无人机控制系统 by 臻巅科技 ⚡
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 • 自然语言无人机控制

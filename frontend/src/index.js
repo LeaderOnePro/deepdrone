@@ -6,68 +6,88 @@ import CssBaseline from '@mui/material/CssBaseline';
 import './index.css';
 import App from './App';
 
-// Create Material-UI theme - 科技感亮色主题
+// Create Material-UI theme - Gen Z 风格主题
 const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2', // 科技蓝
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#6366f1', // 现代紫色
+      light: '#8b5cf6',
+      dark: '#4f46e5',
     },
     secondary: {
-      main: '#00e676', // 科技绿
-      light: '#66ffa6',
-      dark: '#00c853',
+      main: '#ec4899', // 活力粉色
+      light: '#f472b6',
+      dark: '#db2777',
     },
     background: {
-      default: '#f5f7fa', // 浅灰蓝背景
+      default: '#fafafa', // 极简白色背景
       paper: '#ffffff',
     },
     success: {
-      main: '#00e676',
-      light: '#66ffa6',
-      dark: '#00c853',
+      main: '#10b981', // 现代绿色
+      light: '#34d399',
+      dark: '#059669',
     },
     info: {
-      main: '#00bcd4',
-      light: '#4dd0e1',
-      dark: '#0097a7',
+      main: '#06b6d4', // 现代青色
+      light: '#22d3ee',
+      dark: '#0891b2',
     },
     warning: {
-      main: '#ff9800',
-      light: '#ffb74d',
-      dark: '#f57c00',
+      main: '#f59e0b', // 现代橙色
+      light: '#fbbf24',
+      dark: '#d97706',
     },
     error: {
-      main: '#f44336',
-      light: '#ef5350',
-      dark: '#d32f2f',
+      main: '#ef4444', // 现代红色
+      light: '#f87171',
+      dark: '#dc2626',
+    },
+    // Gen Z 特色颜色
+    accent: {
+      main: '#8b5cf6', // 霓虹紫
+      neon: '#00ff88', // 霓虹绿
+      cyber: '#ff006e', // 赛博粉
+      electric: '#00d4ff', // 电光蓝
     },
   },
   typography: {
-    fontFamily: '"Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif',
+    fontFamily: '"Inter", "SF Pro Display", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif',
     h4: {
-      fontWeight: 600,
-      color: '#1976d2',
+      fontWeight: 800,
+      fontSize: '2.5rem',
+      letterSpacing: '-0.02em',
     },
     h6: {
-      fontWeight: 500,
-      color: '#1976d2',
+      fontWeight: 600,
+      fontSize: '1.25rem',
+      letterSpacing: '-0.01em',
+    },
+    body1: {
+      fontSize: '1rem',
+      lineHeight: 1.6,
+    },
+    button: {
+      fontWeight: 600,
+      textTransform: 'none',
+      letterSpacing: '0.01em',
     },
   },
   components: {
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundImage: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-          border: '1px solid #e3f2fd',
-          borderRadius: 12,
-          boxShadow: '0 4px 20px rgba(25, 118, 210, 0.1)',
-          transition: 'all 0.3s ease',
+          background: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          borderRadius: 20,
+          boxShadow: '0 8px 32px rgba(99, 102, 241, 0.1)',
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           '&:hover': {
-            boxShadow: '0 8px 30px rgba(25, 118, 210, 0.15)',
-            transform: 'translateY(-2px)',
+            transform: 'translateY(-8px) scale(1.02)',
+            boxShadow: '0 20px 40px rgba(99, 102, 241, 0.2)',
+            border: '1px solid rgba(139, 92, 246, 0.3)',
           },
         },
       },
@@ -76,16 +96,30 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
-          borderRadius: 8,
-          fontWeight: 500,
-          padding: '8px 24px',
+          borderRadius: 16,
+          fontWeight: 600,
+          padding: '12px 32px',
+          fontSize: '1rem',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         },
         contained: {
-          background: 'linear-gradient(45deg, #1976d2 30%, #42a5f5 90%)',
-          boxShadow: '0 3px 15px rgba(25, 118, 210, 0.3)',
+          background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)',
+          boxShadow: '0 4px 20px rgba(99, 102, 241, 0.4)',
+          color: 'white',
           '&:hover': {
-            background: 'linear-gradient(45deg, #1565c0 30%, #1976d2 90%)',
-            boxShadow: '0 6px 20px rgba(25, 118, 210, 0.4)',
+            background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%)',
+            boxShadow: '0 8px 30px rgba(99, 102, 241, 0.6)',
+            transform: 'translateY(-2px)',
+          },
+        },
+        outlined: {
+          borderColor: '#6366f1',
+          color: '#6366f1',
+          borderWidth: 2,
+          '&:hover': {
+            background: 'rgba(99, 102, 241, 0.1)',
+            borderColor: '#8b5cf6',
+            transform: 'translateY(-1px)',
           },
         },
       },
@@ -93,20 +127,43 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(90deg, #1976d2 0%, #00bcd4 100%)',
-          boxShadow: '0 2px 20px rgba(25, 118, 210, 0.2)',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          backdropFilter: 'blur(20px)',
+          boxShadow: '0 4px 30px rgba(102, 126, 234, 0.3)',
         },
       },
     },
     MuiFab: {
       styleOverrides: {
         root: {
-          background: 'linear-gradient(45deg, #00e676 30%, #4caf50 90%)',
-          boxShadow: '0 4px 20px rgba(0, 230, 118, 0.3)',
+          background: 'linear-gradient(135deg, #ff006e 0%, #8338ec 100%)',
+          boxShadow: '0 8px 25px rgba(255, 0, 110, 0.4)',
           '&:hover': {
-            background: 'linear-gradient(45deg, #00c853 30%, #388e3c 90%)',
-            boxShadow: '0 6px 25px rgba(0, 230, 118, 0.4)',
+            background: 'linear-gradient(135deg, #d90368 0%, #7209b7 100%)',
+            boxShadow: '0 12px 35px rgba(255, 0, 110, 0.6)',
+            transform: 'scale(1.1)',
           },
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          fontWeight: 600,
+          fontSize: '0.875rem',
+        },
+        colorSuccess: {
+          background: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
+          color: 'white',
+        },
+        colorError: {
+          background: 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)',
+          color: 'white',
+        },
+        colorWarning: {
+          background: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
+          color: 'white',
         },
       },
     },
