@@ -4,7 +4,7 @@
 
 ### 1. 阿里巴巴 Qwen 模型
 - [ ] 实现 Qwen Provider 类
-- [ ] 支持 Qwen-Max、Qwen-Plus、Qwen-Turbo 等模型
+- [ ] 支持 Qwen3-235B、Qwen3-Coder 等模型
 - [ ] 配置 API Key 和端点
 - [ ] 添加模型参数配置（temperature、max_tokens 等）
 - [ ] 实现流式响应支持
@@ -13,7 +13,7 @@
 
 ### 2. 深度求索 DeepSeek 模型
 - [ ] 实现 DeepSeek Provider 类
-- [ ] 支持 DeepSeek-Chat、DeepSeek-Coder 等模型
+- [ ] 支持 DeepSeek-Reasoner、DeepSeek-Chat 等模型
 - [ ] 配置 API Key 和端点
 - [ ] 添加模型参数配置
 - [ ] 实现流式响应支持
@@ -22,12 +22,23 @@
 
 ### 3. 月之暗面 Kimi 模型
 - [ ] 实现 Kimi Provider 类
-- [ ] 支持 Moonshot-v1-8k、Moonshot-v1-32k、Moonshot-v1-128k 等模型
+- [ ] 支持 kimi-k2 等模型
 - [ ] 配置 API Key 和端点
 - [ ] 添加模型参数配置
 - [ ] 实现流式响应支持
 - [ ] 添加错误处理和重试机制
 - [ ] 编写单元测试
+
+### 4. xAI Grok 模型
+- [ ] 实现 xAI Provider 类
+- [ ] 支持 Grok-4、Grok-3 等模型
+- [ ] 配置 xAI API Key 和端点 (https://api.x.ai/v1/)
+- [ ] 添加模型参数配置（temperature、max_tokens、top_p 等）
+- [ ] 实现流式响应支持
+- [ ] 添加错误处理和重试机制
+- [ ] 支持 xAI 特有的功能（如实时信息访问）
+- [ ] 编写单元测试
+- [ ] 添加 xAI 使用文档和示例
 
 ## 通用任务
 
