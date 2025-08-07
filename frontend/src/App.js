@@ -49,7 +49,7 @@ function App() {
         <Toolbar>
           <FlightTakeoff sx={{ mr: 2, color: 'white' }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', fontWeight: 600 }}>
-            深度无人机控制中心
+            DeepDrone 控制中心
           </Typography>
           
           {/* Status indicators */}

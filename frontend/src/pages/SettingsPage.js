@@ -66,7 +66,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       setProviders(response.data);
     } catch (error) {
       console.error('Failed to load providers:', error);
-      setMessage({ type: 'error', text: 'Failed to load AI providers' });
+      setMessage({ type: 'error', text: '加载AI提供商失败' });
     }
   };
 
@@ -106,7 +106,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       const response = await apiService.configureModel(modelConfig);
       
       if (response.data.success) {
-        setMessage({ type: 'success', text: 'AI model configured successfully!' });
+        setMessage({ type: 'success', text: 'AI模型配置成功！' });
         onModelUpdate();
       } else {
         setMessage({ type: 'error', text: response.data.message });
@@ -115,7 +115,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       console.error('Model configuration error:', error);
       setMessage({ 
         type: 'error', 
-        text: error.response?.data?.detail || 'Failed to configure AI model' 
+        text: error.response?.data?.detail || '配置AI模型失败' 
       });
     } finally {
       setLoading(false);
@@ -124,7 +124,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
 
   const handleTestConnection = async () => {
     if (!modelConfig.provider || !modelConfig.model_id) {
-      setMessage({ type: 'error', text: 'Please select provider and model first' });
+      setMessage({ type: 'error', text: '请先选择提供商和模型' });
       return;
     }
 
@@ -135,7 +135,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       const response = await apiService.configureModel(modelConfig);
       
       if (response.data.success) {
-        setMessage({ type: 'success', text: 'Connection test successful!' });
+        setMessage({ type: 'success', text: '连接测试成功！' });
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
@@ -143,7 +143,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       console.error('Connection test error:', error);
       setMessage({ 
         type: 'error', 
-        text: error.response?.data?.detail || 'Connection test failed' 
+        text: error.response?.data?.detail || '连接测试失败' 
       });
     } finally {
       setLoading(false);
@@ -158,7 +158,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       const response = await apiService.connectDrone(droneConfig.connection_string);
       
       if (response.data.success) {
-        setMessage({ type: 'success', text: 'Drone connected successfully!' });
+        setMessage({ type: 'success', text: '无人机连接成功！' });
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
@@ -166,7 +166,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       console.error('Drone connection error:', error);
       setMessage({ 
         type: 'error', 
-        text: error.response?.data?.detail || 'Failed to connect to drone' 
+        text: error.response?.data?.detail || '连接无人机失败' 
       });
     } finally {
       setLoading(false);
@@ -190,11 +190,19 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
             <ArrowBack />
           </IconButton>
           <Box>
-            <Typography variant="h4" sx={{ color: 'primary.main', mb: 0 }}>
-              ⚙️ Settings
+            <Typography variant="h4" sx={{ 
+              color: 'primary.main', 
+              mb: 0,
+              fontWeight: 700,
+              background: 'linear-gradient(45deg, #1976d2, #00bcd4)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>
+              ⚙️ 系统设置
             </Typography>
-            <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-              Configure AI models and drone connections
+            <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>
+              配置AI模型和无人机连接
             </Typography>
           </Box>
         </Box>

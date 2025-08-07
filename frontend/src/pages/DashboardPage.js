@@ -67,7 +67,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}>
-          🚁 深度无人机仪表盘
+          🚁 DeepDrone 仪表盘
         </Typography>
         <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>
           AI驱动的智能无人机控制系统
@@ -260,7 +260,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
                 系统信息
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                深度无人机 v1.0.0 - AI驱动的智能无人机控制系统
+                DeepDrone v1.0.0 - AI驱动的智能无人机控制系统
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 • 自然语言无人机控制
