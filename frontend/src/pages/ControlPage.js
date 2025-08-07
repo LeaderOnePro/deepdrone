@@ -156,11 +156,19 @@ const ControlPage = ({ currentModel, droneStatus }) => {
             <ArrowBack />
           </IconButton>
           <Box>
-            <Typography variant="h4" sx={{ color: 'primary.main', mb: 0 }}>
-              🎮 Drone Control Center
+            <Typography variant="h4" sx={{ 
+              color: 'primary.main', 
+              mb: 0,
+              fontWeight: 700,
+              background: 'linear-gradient(45deg, #1976d2, #00bcd4)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>
+              🎮 无人机控制中心
             </Typography>
-            <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-              Use natural language to control your drone
+            <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>
+              使用自然语言控制您的无人机
             </Typography>
           </Box>
         </Box>
@@ -168,10 +176,14 @@ const ControlPage = ({ currentModel, droneStatus }) => {
 
       {/* System Status Alert */}
       {!isSystemReady && (
-        <Alert severity="warning" sx={{ mb: 3 }}>
-          {!currentModel?.configured && 'AI model not configured. '}
-          {!droneStatus?.connected && 'Drone not connected. '}
-          Please check your settings before controlling the drone.
+        <Alert severity="warning" sx={{ 
+          mb: 3,
+          borderRadius: 2,
+          '& .MuiAlert-message': { fontSize: '1rem' }
+        }}>
+          {!currentModel?.configured && 'AI模型未配置。'}
+          {!droneStatus?.connected && '无人机未连接。'}
+          请在控制无人机前检查您的设置。
         </Alert>
       )}
 
@@ -182,7 +194,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
             <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
               {/* Chat Header */}
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h6">AI Chat Interface</Typography>
+                <Typography variant="h6">AI聊天界面</Typography>
                 <Box>
                   <IconButton onClick={clearMessages} size="small">
                     <Clear />

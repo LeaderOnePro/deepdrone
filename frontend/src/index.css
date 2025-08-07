@@ -1,12 +1,13 @@
 body {
   margin: 0;
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+  font-family: "Microsoft YaHei", "PingFang SC", 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #333333;
+  min-height: 100vh;
 }
 
 code {
@@ -14,22 +15,25 @@ code {
     monospace;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - 科技感样式 */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #f5f7fa;
   border-radius: 4px;
 }
 
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #1976d2, #42a5f5);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: linear-gradient(45deg, #1565c0, #1976d2);
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.4);
 }
 
 /* Animation for loading states */
@@ -49,35 +53,76 @@ code {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Custom styles for chat messages */
+/* Custom styles for chat messages - 科技感样式 */
 .chat-message {
   transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 8px;
 }
 
 .chat-message:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(66, 165, 245, 0.05) 100%);
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
 }
 
-/* Drone status indicators */
+/* Drone status indicators - 科技感指示器 */
 .status-indicator {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   margin-right: 8px;
+  position: relative;
+}
+
+.status-indicator::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
 }
 
 .status-connected {
-  background-color: #4caf50;
-  box-shadow: 0 0 8px #4caf50;
+  background: linear-gradient(45deg, #00e676, #4caf50);
+  box-shadow: 0 0 12px rgba(0, 230, 118, 0.5);
+}
+
+.status-connected::after {
+  border: 2px solid rgba(0, 230, 118, 0.3);
 }
 
 .status-disconnected {
-  background-color: #f44336;
-  box-shadow: 0 0 8px #f44336;
+  background: linear-gradient(45deg, #f44336, #e57373);
+  box-shadow: 0 0 12px rgba(244, 67, 54, 0.5);
+}
+
+.status-disconnected::after {
+  border: 2px solid rgba(244, 67, 54, 0.3);
 }
 
 .status-warning {
-  background-color: #ff9800;
-  box-shadow: 0 0 8px #ff9800;
+  background: linear-gradient(45deg, #ff9800, #ffb74d);
+  box-shadow: 0 0 12px rgba(255, 152, 0, 0.5);
+}
+
+.status-warning::after {
+  border: 2px solid rgba(255, 152, 0, 0.3);
+}
+
+/* 科技感动画效果 */
+@keyframes techGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(25, 118, 210, 0.8), 0 0 30px rgba(25, 118, 210, 0.6);
+  }
+}
+
+.tech-glow {
+  animation: techGlow 2s ease-in-out infinite;
 }

@@ -45,24 +45,24 @@ function App() {
   return (
     <Box sx={{ flexGrow: 1, minHeight: '100vh', bgcolor: 'background.default' }}>
       {/* App Bar */}
-      <AppBar position="static" sx={{ bgcolor: 'background.paper', borderBottom: '1px solid #333' }}>
+      <AppBar position="static" elevation={0}>
         <Toolbar>
-          <FlightTakeoff sx={{ mr: 2, color: 'primary.main' }} />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'primary.main' }}>
-            DeepDrone Control Center
+          <FlightTakeoff sx={{ mr: 2, color: 'white' }} />
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', fontWeight: 600 }}>
+            深度无人机控制中心
           </Typography>
           
           {/* Status indicators */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {currentModel?.configured && (
-              <Typography variant="body2" sx={{ color: 'success.main' }}>
-                AI: {currentModel.model_info?.provider} ({currentModel.model_info?.model_id})
+              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)', fontWeight: 500 }}>
+                AI模型: {currentModel.model_info?.provider} ({currentModel.model_info?.model_id})
               </Typography>
             )}
             
             {droneStatus?.connected && (
-              <Typography variant="body2" sx={{ color: 'success.main' }}>
-                Drone: Connected ({droneStatus.battery}%)
+              <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)', fontWeight: 500 }}>
+                无人机: 已连接 ({droneStatus.battery}%)
               </Typography>
             )}
           </Box>

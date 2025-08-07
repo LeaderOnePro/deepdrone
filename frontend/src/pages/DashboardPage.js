@@ -48,10 +48,10 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
 
   const getStatusText = (status) => {
     switch (status) {
-      case 'ready': return 'System Ready';
-      case 'no_model': return 'AI Model Not Configured';
-      case 'no_drone': return 'Drone Not Connected';
-      default: return 'Unknown Status';
+      case 'ready': return '系统就绪';
+      case 'no_model': return 'AI模型未配置';
+      case 'no_drone': return '无人机未连接';
+      default: return '未知状态';
     }
   };
 
@@ -59,11 +59,18 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
     <Box>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom sx={{ color: 'primary.main' }}>
-          🚁 DeepDrone Dashboard
+        <Typography variant="h4" gutterBottom sx={{ 
+          color: 'primary.main', 
+          fontWeight: 700,
+          background: 'linear-gradient(45deg, #1976d2, #00bcd4)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}>
+          🚁 深度无人机仪表盘
         </Typography>
-        <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-          AI-Powered Drone Control System
+        <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>
+          AI驱动的智能无人机控制系统
         </Typography>
       </Box>
 
@@ -71,14 +78,19 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
       {systemStatus !== 'ready' && (
         <Alert 
           severity={systemStatus === 'no_model' ? 'warning' : 'error'} 
-          sx={{ mb: 3 }}
+          sx={{ 
+            mb: 3,
+            borderRadius: 2,
+            '& .MuiAlert-message': { fontSize: '1rem' }
+          }}
           action={
             <Button 
               color="inherit" 
               size="small" 
               onClick={() => navigate('/settings')}
+              sx={{ fontWeight: 500 }}
             >
-              Configure
+              立即配置
             </Button>
           }
         >
@@ -93,7 +105,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Settings sx={{ mr: 1, color: 'primary.main' }} />
-                <Typography variant="h6">System Status</Typography>
+                <Typography variant="h6">系统状态</Typography>
               </Box>
               <Chip 
                 label={getStatusText(systemStatus)}
@@ -101,7 +113,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
                 sx={{ mb: 2 }}
               />
               <Typography variant="body2" color="text.secondary">
-                Overall system health and readiness
+                系统整体健康状态和就绪情况
               </Typography>
             </CardContent>
           </Card>
@@ -113,7 +125,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Chat sx={{ mr: 1, color: 'primary.main' }} />
-                <Typography variant="h6">AI Model</Typography>
+                <Typography variant="h6">AI模型</Typography>
               </Box>
               {currentModel?.configured ? (
                 <Box>
@@ -128,14 +140,14 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
               ) : (
                 <Box>
                   <Typography variant="body2" color="text.secondary">
-                    No AI model configured
+                    未配置AI模型
                   </Typography>
                   <Button 
                     size="small" 
                     onClick={() => navigate('/settings')}
                     sx={{ mt: 1 }}
                   >
-                    Configure
+                    立即配置
                   </Button>
                 </Box>
               )}
@@ -149,14 +161,14 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <FlightTakeoff sx={{ mr: 1, color: 'primary.main' }} />
-                <Typography variant="h6">Drone Status</Typography>
+                <Typography variant="h6">无人机状态</Typography>
               </Box>
               {droneStatus?.connected ? (
                 <Box>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     <Battery90 sx={{ mr: 1, fontSize: 16 }} />
                     <Typography variant="body2">
-                      Battery: {droneStatus.battery}%
+                      电池: {droneStatus.battery}%
                     </Typography>
                   </Box>
                   <LinearProgress 
@@ -165,21 +177,21 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
                     sx={{ mb: 1 }}
                   />
                   <Typography variant="body2" color="text.secondary">
-                    Mode: {droneStatus.mode}
+                    模式: {droneStatus.mode}
                   </Typography>
                   <Chip label="Connected" color="success" size="small" sx={{ mt: 1 }} />
                 </Box>
               ) : (
                 <Box>
                   <Typography variant="body2" color="text.secondary">
-                    Drone not connected
+                    无人机未连接
                   </Typography>
                   <Button 
                     size="small" 
                     onClick={() => navigate('/settings')}
                     sx={{ mt: 1 }}
                   >
-                    Connect
+                    立即连接
                   </Button>
                 </Box>
               )}
@@ -192,7 +204,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Quick Actions
+                快速操作
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Button
@@ -202,7 +214,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
                   disabled={systemStatus !== 'ready'}
                   fullWidth
                 >
-                  Start Control
+                  开始控制
                 </Button>
                 <Button
                   variant="outlined"
@@ -210,7 +222,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
                   onClick={() => navigate('/settings')}
                   fullWidth
                 >
-                  Settings
+                  系统设置
                 </Button>
               </Box>
             </CardContent>
@@ -224,16 +236,16 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <LocationOn sx={{ mr: 1, color: 'primary.main' }} />
-                  <Typography variant="h6">Location</Typography>
+                  <Typography variant="h6">位置信息</Typography>
                 </Box>
                 <Typography variant="body1">
-                  Latitude: {droneStatus.location?.lat?.toFixed(6)}
+                  纬度: {droneStatus.location?.lat?.toFixed(6)}
                 </Typography>
                 <Typography variant="body1">
-                  Longitude: {droneStatus.location?.lon?.toFixed(6)}
+                  经度: {droneStatus.location?.lon?.toFixed(6)}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                  Altitude: {droneStatus.altitude}m
+                  海拔: {droneStatus.altitude}米
                 </Typography>
               </CardContent>
             </Card>
@@ -245,22 +257,22 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                System Information
+                系统信息
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                DeepDrone v1.0.0 - AI-Powered Drone Control System
+                深度无人机 v1.0.0 - AI驱动的智能无人机控制系统
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                • Natural language drone control
+                • 自然语言无人机控制
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                • Multiple AI provider support
+                • 多AI提供商支持
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                • Real-time telemetry monitoring
+                • 实时遥测数据监控
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                • Safe flight operations
+                • 安全飞行操作保障
               </Typography>
             </CardContent>
           </Card>
