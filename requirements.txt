@@ -4,6 +4,7 @@ matplotlib
 seaborn
 python-dotenv
 dronekit
+future
 pymavlink
 litellm
 ollama
