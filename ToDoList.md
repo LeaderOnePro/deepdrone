@@ -6,7 +6,7 @@
 - [ ] 实现 Qwen Provider 类
 - [ ] 支持 Qwen3-235B、Qwen3-Coder 等模型
 - [ ] 配置 API Key 和端点
-- [ ] 添加模型参数配置（temperature、max_tokens 等）
+- [ ] 添加模型参数配置
 - [ ] 实现流式响应支持
 - [ ] 添加错误处理和重试机制
 - [ ] 编写单元测试
@@ -33,7 +33,7 @@
 - [ ] 实现 xAI Provider 类
 - [ ] 支持 Grok-4、Grok-3 等模型
 - [ ] 配置 xAI API Key 和端点 (https://api.x.ai/v1/)
-- [ ] 添加模型参数配置（temperature、max_tokens、top_p 等）
+- [ ] 添加模型参数配置
 - [ ] 实现流式响应支持
 - [ ] 添加错误处理和重试机制
 - [ ] 支持 xAI 特有的功能（如实时信息访问）
