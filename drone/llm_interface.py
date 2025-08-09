@@ -26,6 +26,9 @@ class LLMInterface:
             self._setup_ollama()
         elif self.model_config.provider == "zhipuai":
             self._setup_zhipuai()
+        elif self.model_config.provider in ["qwen"]:
+            # Use OpenAI-compatible HTTP for providers with OpenAI-style endpoints
+            self._setup_openai_compatible()
         else:
             self._setup_litellm()
     
@@ -102,6 +105,9 @@ class LLMInterface:
                     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.model_config.api_key
                 elif self.model_config.provider == "zhipuai":
                     os.environ["ZHIPUAI_API_KEY"] = self.model_config.api_key
+                elif self.model_config.provider == "qwen":
+                    # DashScope OpenAI 兼容通道使用 OPENAI_API_KEY 头
+                    os.environ["OPENAI_API_KEY"] = self.model_config.api_key
             
             # Set base URL if provided
             if self.model_config.base_url:
@@ -114,6 +120,34 @@ class LLMInterface:
             
         except ImportError:
             raise ImportError("LiteLLM package not installed. Install with: pip install litellm")
+
+    def _setup_openai_compatible(self):
+        """Set up a direct OpenAI-compatible HTTP client (e.g., DashScope/Qwen)."""
+        try:
+            import requests
+
+            if not self.model_config.api_key or self.model_config.api_key == "local":
+                raise ValueError("OpenAI-compatible provider requires a valid API key")
+
+            self.client = requests
+            self.client_type = "openai_compatible"
+
+            # Determine base URL
+            base_url = self.model_config.base_url
+            if not base_url:
+                # Provide sensible defaults if not configured
+                if self.model_config.provider == "qwen":
+                    base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+                else:
+                    raise ValueError("Base URL required for OpenAI-compatible provider")
+
+            self.openai_base_url = base_url.rstrip("/")
+            self.openai_api_key = self.model_config.api_key
+
+            logger.info(f"Set up OpenAI-compatible client for {self.model_config.provider} at {self.openai_base_url}")
+
+        except ImportError:
+            raise ImportError("Missing 'requests' package. Install with: pip install requests")
     
     def chat(self, messages: List[Dict[str, str]]) -> str:
         """Send chat messages and get response."""
@@ -122,6 +156,8 @@ class LLMInterface:
                 return self._chat_ollama(messages)
             elif self.client_type == "zhipuai":
                 return self._chat_zhipuai(messages)
+            elif self.client_type == "openai_compatible":
+                return self._chat_openai_compatible(messages)
             else:
                 return self._chat_litellm(messages)
         except Exception as e:
@@ -179,6 +215,52 @@ class LLMInterface:
                 return "❌ Cannot connect to Ollama.\n\n💡 Make sure Ollama is running:\n   ollama serve\n\n📥 Download Ollama from: https://ollama.com/download"
             
             return f"❌ Ollama error: {str(e)}"
+
+    def _chat_openai_compatible(self, messages: List[Dict[str, str]]) -> str:
+        """Chat using OpenAI-compatible HTTP API (e.g., DashScope/Qwen)."""
+        try:
+            url = f"{self.openai_base_url}/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {self.openai_api_key}",
+                "Content-Type": "application/json",
+            }
+            data = {
+                "model": self.model_config.model_id,
+                "messages": messages,
+                "max_tokens": self.model_config.max_tokens,
+                "temperature": self.model_config.temperature,
+                "stream": False,
+            }
+
+            resp = self.client.post(url, headers=headers, json=data, timeout=30)
+
+            if resp.status_code != 200:
+                msg = f"OpenAI-compatible API error (status {resp.status_code})"
+                try:
+                    j = resp.json()
+                    if isinstance(j, dict) and "error" in j:
+                        err = j["error"]
+                        if isinstance(err, dict) and "message" in err:
+                            msg += f": {err['message']}"
+                except Exception:
+                    msg += f": {resp.text}"
+                return f"❌ {msg}"
+
+            j = resp.json()
+            if not isinstance(j, dict) or "choices" not in j or not j.get("choices"):
+                return "❌ Invalid response format from OpenAI-compatible API"
+
+            return j["choices"][0]["message"]["content"]
+
+        except Exception as e:
+            s = str(e).lower()
+            if "api key" in s or "unauthorized" in s:
+                return "❌ API key error. Please check your API key"
+            if "timeout" in s:
+                return "❌ API timeout. Please try again."
+            if "connection" in s or "failed to establish" in s:
+                return "❌ Cannot connect to API. Please check your network."
+            return f"❌ OpenAI-compatible error: {str(e)}"
     
     def _generate_zhipuai_token(self) -> str:
         """Generate JWT token for ZhipuAI API authentication."""

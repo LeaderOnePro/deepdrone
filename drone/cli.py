@@ -265,6 +265,8 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
             console.print("Get your Anthropic API key from: https://console.anthropic.com/")
         elif model_config.provider == "zhipuai":
             console.print("Get your ZhipuAI API key from: https://open.bigmodel.cn/usercenter/apikeys")
+        elif model_config.provider == "qwen":
+            console.print("Get your DashScope API key from: https://bailian.console.aliyun.com/ai/ak")
         
         api_key = getpass.getpass("Enter API key (hidden): ")
     

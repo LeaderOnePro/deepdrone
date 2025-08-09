@@ -63,6 +63,12 @@ PROVIDERS = {
         "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
         "description": "GLM models from ZhipuAI"
     },
+    "Qwen": {
+        "name": "qwen",
+        "models": ["qwen3-235b-a22b-thinking-2507", "qwen3-coder-480b-a35b-instruct"],
+        "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
+        "description": "Qwen3 models via DashScope (OpenAI-compatible)"
+    },
     "Ollama": {
         "name": "ollama",
         "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest", "phi3:latest"],
@@ -299,6 +305,8 @@ def get_api_key(provider_name: str, model_name: str) -> Optional[str]:
     if provider_name.lower() == "zhipuai":
         console.print("[yellow]格式提示：请填写以 id.secret 形式的 API Key（示例：abc123.def456）。[/yellow]")
         console.print("[dim]该 Key 将用于生成 JWT 以调用 ZhipuAI API。[/dim]\n")
+    elif provider_name.lower() == "qwen":
+        console.print("[yellow]提示：Qwen 使用 OpenAI 兼容通道，请填入 DashScope 的 API Key。[/yellow]\n")
     
     try:
         # Use getpass for secure password input (works in all environments)
@@ -385,6 +393,8 @@ def start_interactive_session():
         base_url = None
         if provider_name.lower() == "ollama":
             base_url = "http://localhost:11434"
+        elif provider_name.lower() == "qwen":
+            base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
         
         model_config = ModelConfig(
             name=f"{provider_name.lower()}-session",

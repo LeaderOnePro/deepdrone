@@ -139,6 +139,23 @@ class ConfigManager:
                 model_id="glm-4.5-flash",
                 max_tokens=2048,
                 temperature=0.7
+            ),
+            # Qwen via LiteLLM (OpenAI-compatible)
+            "qwen3-235b-a22b-thinking-2507": ModelConfig(
+                name="qwen3-235b-a22b-thinking-2507",
+                provider="qwen",
+                model_id="qwen3-235b-a22b-thinking-2507",
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "qwen3-coder-480b-a35b-instruct": ModelConfig(
+                name="qwen3-coder-480b-a35b-instruct",
+                provider="qwen",
+                model_id="qwen3-coder-480b-a35b-instruct",
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                max_tokens=2048,
+                temperature=0.7
             )
         }
         self.save_models()
@@ -196,7 +213,7 @@ class ConfigManager:
         """Get list of models that require API keys."""
         api_models = []
         for name, config in self.models.items():
-            if config.provider in ["openai", "anthropic", "zhipuai"]:
+            if config.provider in ["openai", "anthropic", "zhipuai", "qwen"]:
                 api_models.append(name)
         return api_models
 
