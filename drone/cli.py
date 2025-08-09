@@ -50,7 +50,7 @@ def chat(
         return
     
     # Check if model needs API key
-    if model_config.provider in ["openai", "anthropic"] and not model_config.api_key:
+    if model_config.provider in ["openai", "anthropic", "zhipuai"] and not model_config.api_key:
         console.print(f"[yellow]Model '{model}' requires an API key[/yellow]")
         if Confirm.ask("Would you like to set it now?"):
             set_api_key_interactive(model)
@@ -136,7 +136,7 @@ def add_model(
     console.print(f"[green]Model '{name}' added successfully[/green]")
     
     # Ask for API key if needed
-    if provider in ["openai", "anthropic"]:
+    if provider in ["openai", "anthropic", "zhipuai"]:
         if Confirm.ask(f"Would you like to set the API key for '{name}' now?"):
             set_api_key_interactive(name)
 
@@ -263,6 +263,18 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
             console.print("Get your OpenAI API key from: https://platform.openai.com/api-keys")
         elif model_config.provider == "anthropic":
             console.print("Get your Anthropic API key from: https://console.anthropic.com/")
+        elif model_config.provider == "google":
+            console.print("Get your Google AI Studio API key from: https://aistudio.google.com/app/apikey")
+        elif model_config.provider == "zhipuai":
+            console.print("Get your ZhipuAI API key from: https://open.bigmodel.cn/usercenter/apikeys")
+        elif model_config.provider == "qwen":
+            console.print("Get your DashScope API key from: https://bailian.console.aliyun.com/ai/ak")
+        elif model_config.provider == "deepseek":
+            console.print("Get your DeepSeek API key from: https://platform.deepseek.com/ ")
+        elif model_config.provider == "moonshot":
+            console.print("Get your Kimi (Moonshot) API key from: https://platform.moonshot.cn/console/api-keys")
+        elif model_config.provider == "xai":
+            console.print("Get your xAI API key from: https://console.x.ai/")
         
         api_key = getpass.getpass("Enter API key (hidden): ")
     
