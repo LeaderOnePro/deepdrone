@@ -263,6 +263,8 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
             console.print("Get your OpenAI API key from: https://platform.openai.com/api-keys")
         elif model_config.provider == "anthropic":
             console.print("Get your Anthropic API key from: https://console.anthropic.com/")
+        elif model_config.provider == "google":
+            console.print("Get your Google AI Studio API key from: https://aistudio.google.com/app/apikey")
         elif model_config.provider == "zhipuai":
             console.print("Get your ZhipuAI API key from: https://open.bigmodel.cn/usercenter/apikeys")
         elif model_config.provider == "qwen":

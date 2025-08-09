@@ -126,22 +126,22 @@ class ConfigManager:
             ),
             "gemini-2.5-pro": ModelConfig(
                 name="gemini-2.5-pro",
-                provider="vertex_ai",
-                model_id="gemini-2.5-pro",
+                provider="google",
+                model_id="gemini/gemini-2.5-pro",
                 max_tokens=2048,
                 temperature=0.7
             ),
             "gemini-2.5-flash": ModelConfig(
                 name="gemini-2.5-flash",
-                provider="vertex_ai",
-                model_id="gemini-2.5-flash",
+                provider="google",
+                model_id="gemini/gemini-2.5-flash",
                 max_tokens=2048,
                 temperature=0.7
             ),
             "gemini-2.5-flash-lite": ModelConfig(
                 name="gemini-2.5-flash-lite",
-                provider="vertex_ai",
-                model_id="gemini-2.5-flash-lite",
+                provider="google",
+                model_id="gemini/gemini-2.5-flash-lite",
                 max_tokens=2048,
                 temperature=0.7
             ),

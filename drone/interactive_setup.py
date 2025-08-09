@@ -40,10 +40,10 @@ PROVIDERS = {
         "description": "Claude models from Anthropic"
     },
     "Google": {
-        "name": "vertex_ai",
-        "models": ["gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.5-flash-lite"],
-        "api_key_url": "https://console.cloud.google.com/",
-        "description": "Gemini models from Google"
+        "name": "google",
+        "models": ["gemini/gemini-2.5-pro", "gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"],
+        "api_key_url": "https://aistudio.google.com/app/apikey",
+        "description": "Gemini models from Google AI Studio"
     },
     "Meta": {
         "name": "openai",  # Using OpenAI format for Llama models via providers

@@ -99,8 +99,8 @@ class LLMInterface:
                     os.environ["OPENAI_API_KEY"] = self.model_config.api_key
                 elif self.model_config.provider == "anthropic":
                     os.environ["ANTHROPIC_API_KEY"] = self.model_config.api_key
-                elif self.model_config.provider == "vertex_ai":
-                    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = self.model_config.api_key
+                elif self.model_config.provider == "google":
+                    os.environ["GOOGLE_API_KEY"] = self.model_config.api_key
                 elif self.model_config.provider == "zhipuai":
                     os.environ["ZHIPUAI_API_KEY"] = self.model_config.api_key
                 elif self.model_config.provider == "qwen":
