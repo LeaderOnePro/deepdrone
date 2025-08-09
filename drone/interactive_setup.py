@@ -25,6 +25,9 @@ from .drone_chat_interface import DroneChatInterface
 
 console = Console()
 
+# Global variable to store Ollama base URL
+ollama_base_url = "http://localhost:11434"
+
 # Provider configurations
 PROVIDERS = {
     "OpenAI": {
@@ -84,8 +87,8 @@ PROVIDERS = {
     "Ollama": {
         "name": "ollama",
         "models": ["qwen3:4b", "gpt-oss:latest", "qwen3:30b"],
-        "api_key_url": "https://ollama.ai/ (No API key needed - runs locally)",
-        "description": "Local models via Ollama (no API key required)"
+        "api_key_url": "https://ollama.ai/ (No API key needed - supports local/network)",
+        "description": "Local/Network models via Ollama (supports custom server URL)"
     }
 }
 
@@ -145,32 +148,36 @@ def select_provider() -> Optional[Tuple[str, Dict]]:
         console.print("\n[yellow]Selection cancelled[/yellow]")
         return None
 
-def get_available_ollama_models() -> List[str]:
-    """Get list of locally available Ollama models."""
+def get_available_ollama_models(base_url: str = "http://localhost:11434") -> List[str]:
+    """Get list of available Ollama models from specified server."""
     try:
         import ollama
-        models = ollama.list()
+        # Create client with custom base URL
+        client = ollama.Client(host=base_url)
+        models = client.list()
         # The models are returned as Model objects with a 'model' attribute
         return [model.model for model in models.models] if hasattr(models, 'models') else []
     except ImportError:
         return []
     except Exception as e:
-        # For debugging, you can uncomment the next line
-        # print(f"Error getting Ollama models: {e}")
+        # Connection failed, return empty list
         return []
 
-def install_ollama_model(model_name: str) -> bool:
-    """Install an Ollama model."""
+def install_ollama_model(model_name: str, base_url: str = "http://localhost:11434") -> bool:
+    """Install an Ollama model on specified server."""
     try:
         import ollama
-        console.print(f"[yellow]📥 Installing {model_name}... This may take a few minutes.[/yellow]")
+        console.print(f"[yellow]📥 Installing {model_name} on {base_url}... This may take a few minutes.[/yellow]")
+        
+        # Create client with custom base URL
+        client = ollama.Client(host=base_url)
         
         with Live(
             Spinner("dots", text=f"Installing {model_name}..."),
             console=console,
             transient=True
         ) as live:
-            ollama.pull(model_name)
+            client.pull(model_name)
             live.stop()
         
         console.print(f"[green]✅ Successfully installed {model_name}[/green]")
@@ -188,15 +195,59 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
     
     # Special handling for Ollama
     if provider_name.lower() == "ollama":
+        # First get the base URL
+        console.print(f"\n[bold cyan]🌐 Ollama Server Configuration[/bold cyan]\n")
+        console.print("Ollama server options:")
+        console.print("  • [green]Local[/green]: [cyan]http://localhost:11434[/cyan] (default)")
+        console.print("  • [blue]LAN[/blue]: [cyan]http://192.168.1.100:11434[/cyan] (replace with your server IP)")
+        console.print("  • [blue]Internet[/blue]: [cyan]https://your-domain.com:11434[/cyan] (if exposed to internet)")
+        console.print("\n[dim]Make sure Ollama server is running with: ollama serve[/dim]")
+        console.print("[dim]For network access, start with: OLLAMA_HOST=0.0.0.0 ollama serve[/dim]\n")
+        
+        from rich.prompt import Prompt
+        
+        # Provide numbered options for common URLs
+        console.print("Quick options:")
+        console.print("  1. Local server (default)")
+        console.print("  2. Custom URL")
+        console.print()
+        
+        choice = Prompt.ask(
+            "Select option or enter custom URL",
+            default="1"
+        )
+        
+        # Store the base_url for later use
+        global ollama_base_url
+        
+        if choice == "1" or choice.lower() == "local":
+            ollama_base_url = "http://localhost:11434"
+        elif choice == "2" or choice.lower() == "custom":
+            custom_url = Prompt.ask(
+                "Enter custom Ollama server URL",
+                default="http://localhost:11434"
+            )
+            ollama_base_url = custom_url.strip() if custom_url and custom_url.strip() else "http://localhost:11434"
+        elif choice.startswith("http://") or choice.startswith("https://"):
+            # User directly entered a URL
+            ollama_base_url = choice.strip()
+        else:
+            # Default to local if invalid input
+            ollama_base_url = "http://localhost:11434"
+            console.print(f"[yellow]Invalid input, using default: {ollama_base_url}[/yellow]")
+        
+        console.print(f"\n[dim]Using Ollama server: {ollama_base_url}[/dim]")
+        console.print(f"\n[bold cyan]🤖 Select Model for {provider_name}[/bold cyan]\n")
+        
         # Check if Ollama is running and get local models
-        local_models = get_available_ollama_models()
+        local_models = get_available_ollama_models(ollama_base_url)
         
         if local_models:
-            console.print("[bold green]✅ Local Ollama models found:[/bold green]")
+            console.print("[bold green]✅ Ollama models found:[/bold green]")
             for i, model in enumerate(local_models, 1):
                 console.print(f"  {i}. [green]{model}[/green]")
             
-            console.print("\n[bold]Popular models (if not installed locally):[/bold]")
+            console.print("\n[bold]Popular models (if not installed):[/bold]")
             start_idx = len(local_models) + 1
             for i, model in enumerate(provider_config["models"], start_idx):
                 console.print(f"  {i}. [blue]{model}[/blue] [dim](will be downloaded)[/dim]")
@@ -204,8 +255,13 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
             all_options = local_models + provider_config["models"]
             
         else:
-            console.print("[yellow]⚠️  No local Ollama models found or Ollama not running[/yellow]")
-            console.print("Make sure Ollama is running: [cyan]ollama serve[/cyan]\n")
+            console.print(f"[yellow]⚠️  No models found on {ollama_base_url}[/yellow]")
+            if ollama_base_url == "http://localhost:11434":
+                console.print("Make sure Ollama is running locally: [cyan]ollama serve[/cyan]")
+            else:
+                console.print(f"Make sure Ollama server is running on: [cyan]{ollama_base_url}[/cyan]")
+                console.print("For network access, start with: [cyan]OLLAMA_HOST=0.0.0.0 ollama serve[/cyan]")
+            console.print()
             console.print("[bold]Popular models (will be downloaded):[/bold]")
             all_options = provider_config["models"]
             for i, model in enumerate(all_options, 1):
@@ -233,7 +289,7 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
                             console.print(f"[yellow]Model '{selected_model}' not found locally.[/yellow]")
                             from rich.prompt import Confirm
                             if Confirm.ask(f"Would you like to install {selected_model}?", default=True):
-                                if install_ollama_model(selected_model):
+                                if install_ollama_model(selected_model, ollama_base_url):
                                     return selected_model
                                 else:
                                     return None
@@ -251,7 +307,7 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
                     console.print(f"[yellow]Model '{model_name}' not found locally.[/yellow]")
                     from rich.prompt import Confirm
                     if Confirm.ask(f"Would you like to install {model_name}?", default=True):
-                        if install_ollama_model(model_name):
+                        if install_ollama_model(model_name, ollama_base_url):
                             return model_name
                         else:
                             return None
@@ -300,6 +356,7 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
         except KeyboardInterrupt:
             console.print("\n[yellow]Input cancelled[/yellow]")
             return None
+
 
 def get_api_key(provider_name: str, model_name: str) -> Optional[str]:
     """Get API key from user."""
@@ -394,18 +451,23 @@ def start_interactive_session():
             console.print("[yellow]Setup cancelled. Goodbye![/yellow]")
             return
         
-        # Step 3: Get API key
-        console.print("[bold]Step 3: Enter API key[/bold]")
-        api_key = get_api_key(provider_name, model_name)
-        if not api_key:
-            console.print("[yellow]Setup cancelled. Goodbye![/yellow]")
-            return
-        
-        # Create model configuration
-        base_url = None
+        # Step 3: Get API key (Ollama base_url already configured in step 2)
         if provider_name.lower() == "ollama":
-            base_url = "http://localhost:11434"
-        elif provider_name.lower() == "qwen":
+            console.print("[bold]Step 3: API key (not needed for Ollama)[/bold]")
+            console.print("[green]✅ Ollama runs locally - no API key required![/green]")
+            console.print(f"[dim]Using server: {ollama_base_url}[/dim]\n")
+            api_key = "local"  # Ollama doesn't need API key
+            base_url = ollama_base_url
+        else:
+            console.print("[bold]Step 3: Enter API key[/bold]")
+            api_key = get_api_key(provider_name, model_name)
+            if not api_key:
+                console.print("[yellow]Setup cancelled. Goodbye![/yellow]")
+                return
+            base_url = None
+        
+        # Set base URLs for other providers
+        if provider_name.lower() == "qwen":
             base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
         
         model_config = ModelConfig(
