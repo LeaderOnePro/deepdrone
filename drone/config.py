@@ -103,10 +103,24 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "claude-3-sonnet": ModelConfig(
-                name="claude-3-sonnet",
+            "claude-opus-4-1-20250805": ModelConfig(
+                name="claude-opus-4-1-20250805",
                 provider="anthropic",
-                model_id="claude-3-sonnet-20240229",
+                model_id="claude-opus-4-1-20250805",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "claude-sonnet-4-20250514": ModelConfig(
+                name="claude-sonnet-4-20250514",
+                provider="anthropic",
+                model_id="claude-sonnet-4-20250514",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "claude-3-haiku-20240307": ModelConfig(
+                name="claude-3-haiku-20240307",
+                provider="anthropic",
+                model_id="claude-3-haiku-20240307",
                 max_tokens=2048,
                 temperature=0.7
             ),
