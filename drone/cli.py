@@ -269,6 +269,8 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
             console.print("Get your DashScope API key from: https://bailian.console.aliyun.com/ai/ak")
         elif model_config.provider == "deepseek":
             console.print("Get your DeepSeek API key from: https://platform.deepseek.com/ ")
+        elif model_config.provider == "moonshot":
+            console.print("Get your Kimi (Moonshot) API key from: https://platform.moonshot.cn/console/api-keys")
         
         api_key = getpass.getpass("Enter API key (hidden): ")
     

@@ -75,6 +75,12 @@ PROVIDERS = {
         "api_key_url": "https://platform.deepseek.com/",
         "description": "DeepSeek models (OpenAI-compatible)"
     },
+    "Kimi": {
+        "name": "moonshot",
+        "models": ["kimi-k2-turbo-preview", "kimi-k2-0711-preview"],
+        "api_key_url": "https://platform.moonshot.cn/console/api-keys",
+        "description": "Kimi models (OpenAI-compatible)"
+    },
     "Ollama": {
         "name": "ollama",
         "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest", "phi3:latest"],

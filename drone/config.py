@@ -173,6 +173,23 @@ class ConfigManager:
                 base_url="https://api.deepseek.com/v1",
                 max_tokens=2048,
                 temperature=0.7
+            ),
+            # Kimi (Moonshot) via OpenAI-compatible
+            "kimi-k2-turbo-preview": ModelConfig(
+                name="kimi-k2-turbo-preview",
+                provider="moonshot",
+                model_id="kimi-k2-turbo-preview",
+                base_url="https://api.moonshot.cn/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "kimi-k2-0711-preview": ModelConfig(
+                name="kimi-k2-0711-preview",
+                provider="moonshot",
+                model_id="kimi-k2-0711-preview",
+                base_url="https://api.moonshot.cn/v1",
+                max_tokens=2048,
+                temperature=0.7
             )
         }
         self.save_models()
@@ -230,7 +247,7 @@ class ConfigManager:
         """Get list of models that require API keys."""
         api_models = []
         for name, config in self.models.items():
-            if config.provider in ["openai", "anthropic", "zhipuai", "qwen", "deepseek"]:
+            if config.provider in ["openai", "anthropic", "zhipuai", "qwen", "deepseek", "moonshot"]:
                 api_models.append(name)
         return api_models
 
