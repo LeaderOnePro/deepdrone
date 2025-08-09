@@ -81,6 +81,12 @@ PROVIDERS = {
         "api_key_url": "https://platform.moonshot.cn/console/api-keys",
         "description": "Kimi models (OpenAI-compatible)"
     },
+    "xAI": {
+        "name": "xai",
+        "models": ["grok-4-0709", "grok-3", "grok-3-mini"],
+        "api_key_url": "https://console.x.ai/",
+        "description": "Grok models from xAI (OpenAI-compatible)"
+    },
     "Ollama": {
         "name": "ollama",
         "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest", "phi3:latest"],

@@ -190,6 +190,31 @@ class ConfigManager:
                 base_url="https://api.moonshot.cn/v1",
                 max_tokens=2048,
                 temperature=0.7
+            ),
+            # xAI Grok via OpenAI-compatible
+            "grok-4-0709": ModelConfig(
+                name="grok-4-0709",
+                provider="xai",
+                model_id="grok-4-0709",
+                base_url="https://api.x.ai/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "grok-3": ModelConfig(
+                name="grok-3",
+                provider="xai",
+                model_id="grok-3",
+                base_url="https://api.x.ai/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "grok-3-mini": ModelConfig(
+                name="grok-3-mini",
+                provider="xai",
+                model_id="grok-3-mini",
+                base_url="https://api.x.ai/v1",
+                max_tokens=2048,
+                temperature=0.7
             )
         }
         self.save_models()
