@@ -45,6 +45,10 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
     connection_string: 'udp:127.0.0.1:14550',
   });
 
+  // Ollama specific state
+  const [ollamaModels, setOllamaModels] = useState([]);
+  const [ollamaLoading, setOllamaLoading] = useState(false);
+
   useEffect(() => {
     loadProviders();
     if (currentModel?.configured) {
@@ -94,8 +98,36 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       ...prev,
       provider,
       model_id: '',
-      base_url: provider === 'ollama' ? 'http://localhost:11434' : '',
+      base_url: provider === 'ollama' ? 'http://localhost:11434' 
+               : provider === 'qwen' ? 'https://dashscope.aliyuncs.com/compatible-mode/v1'
+               : provider === 'deepseek' ? 'https://api.deepseek.com/v1'
+               : provider === 'moonshot' ? 'https://api.moonshot.cn/v1'
+               : provider === 'xai' ? 'https://api.x.ai/v1'
+               : '',
     }));
+
+    // Load Ollama models if Ollama is selected
+    if (provider === 'ollama') {
+      loadOllamaModels('http://localhost:11434');
+    }
+  };
+
+  const loadOllamaModels = async (baseUrl) => {
+    setOllamaLoading(true);
+    try {
+      const response = await apiService.getOllamaModels(baseUrl);
+      if (response.data.success) {
+        setOllamaModels(response.data.models);
+      } else {
+        setOllamaModels([]);
+        console.warn('Failed to load Ollama models:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error loading Ollama models:', error);
+      setOllamaModels([]);
+    } finally {
+      setOllamaLoading(false);
+    }
   };
 
   const handleSaveModel = async () => {
@@ -266,13 +298,35 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                     label="Model"
                     onChange={(e) => handleModelConfigChange('model_id', e.target.value)}
                   >
-                    {selectedProvider?.models.map((model) => (
-                      <MenuItem key={model} value={model}>
-                        {model}
-                      </MenuItem>
-                    ))}
+                    {/* Show detected Ollama models if available */}
+                    {modelConfig.provider === 'ollama' && ollamaModels.length > 0 ? (
+                      <>
+                        {ollamaModels.map((model) => (
+                          <MenuItem key={model} value={model}>
+                            {model} ✅
+                          </MenuItem>
+                        ))}
+                        <Divider />
+                        {selectedProvider?.models.map((model) => (
+                          <MenuItem key={model} value={model}>
+                            {model} (will download)
+                          </MenuItem>
+                        ))}
+                      </>
+                    ) : (
+                      selectedProvider?.models.map((model) => (
+                        <MenuItem key={model} value={model}>
+                          {model}
+                        </MenuItem>
+                      ))
+                    )}
                   </Select>
                 </FormControl>
+                {modelConfig.provider === 'ollama' && ollamaLoading && (
+                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
+                    Detecting models...
+                  </Typography>
+                )}
               </Grid>
 
               {/* Configuration Name */}
@@ -309,15 +363,43 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 </Grid>
               )}
 
-              {/* Base URL (for Ollama) */}
-              {modelConfig.provider === 'ollama' && (
+              {/* Base URL (for Ollama and other providers) */}
+              {(modelConfig.provider === 'ollama' || modelConfig.provider === 'qwen' || modelConfig.provider === 'deepseek' || modelConfig.provider === 'moonshot' || modelConfig.provider === 'xai') && (
                 <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
-                    label="Base URL"
+                    label={modelConfig.provider === 'ollama' ? 'Ollama Server URL' : 'Base URL'}
                     value={modelConfig.base_url}
                     onChange={(e) => handleModelConfigChange('base_url', e.target.value)}
-                    placeholder="http://localhost:11434"
+                    placeholder={
+                      modelConfig.provider === 'ollama' 
+                        ? 'http://localhost:11434' 
+                        : modelConfig.provider === 'qwen'
+                        ? 'https://dashscope.aliyuncs.com/compatible-mode/v1'
+                        : modelConfig.provider === 'deepseek'
+                        ? 'https://api.deepseek.com/v1'
+                        : modelConfig.provider === 'moonshot'
+                        ? 'https://api.moonshot.cn/v1'
+                        : modelConfig.provider === 'xai'
+                        ? 'https://api.x.ai/v1'
+                        : ''
+                    }
+                    helperText={
+                      modelConfig.provider === 'ollama' 
+                        ? 'Local: http://localhost:11434, LAN: http://192.168.1.100:11434, Internet: https://your-domain.com:11434'
+                        : 'Custom API endpoint (optional)'
+                    }
+                    InputProps={modelConfig.provider === 'ollama' ? {
+                      endAdornment: (
+                        <IconButton
+                          onClick={() => loadOllamaModels(modelConfig.base_url || 'http://localhost:11434')}
+                          disabled={ollamaLoading}
+                          size="small"
+                        >
+                          <Refresh />
+                        </IconButton>
+                      )
+                    } : undefined}
                   />
                 </Grid>
               )}

@@ -40,6 +40,10 @@ export const apiService = {
   
   getCurrentModel: () => api.get('/models/current'),
   
+  // Ollama specific
+  getOllamaModels: (baseUrl = 'http://localhost:11434') => 
+    api.post('/ollama/models', { base_url: baseUrl }),
+  
   // Chat functionality
   sendChatMessage: (message, conversationId = null) => 
     api.post('/chat', { message, conversation_id: conversationId }),

@@ -55,6 +55,9 @@ class ModelConfigRequest(BaseModel):
     max_tokens: int = 2048
     temperature: float = 0.7
 
+class OllamaServerRequest(BaseModel):
+    base_url: str = "http://localhost:11434"
+
 class ChatMessage(BaseModel):
     role: str
     content: str
@@ -83,21 +86,33 @@ async def get_providers():
     providers = {
         "OpenAI": {
             "name": "openai",
-            "models": ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-3.5-turbo"],
+            "models": ["gpt-5", "gpt-5-mini", "gpt-5-nano"],
             "api_key_url": "https://platform.openai.com/api-keys",
-            "description": "GPT models from OpenAI"
+            "description": "Latest GPT-5 series models"
         },
         "Anthropic": {
             "name": "anthropic",
-            "models": ["claude-3-5-sonnet-20241022", "claude-3-sonnet-20240229", "claude-3-haiku-20240307"],
+            "models": ["claude-opus-4-1-20250805", "claude-sonnet-4-20250514", "claude-3-haiku-20240307"],
             "api_key_url": "https://console.anthropic.com/",
-            "description": "Claude models from Anthropic"
+            "description": "Advanced Claude-4 models"
         },
         "Google": {
-            "name": "vertex_ai",
-            "models": ["gemini-1.5-pro", "gemini-1.5-flash", "gemini-pro"],
-            "api_key_url": "https://console.cloud.google.com/",
-            "description": "Gemini models from Google"
+            "name": "google",
+            "models": ["gemini/gemini-2.5-pro", "gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"],
+            "api_key_url": "https://aistudio.google.com/app/apikey",
+            "description": "Gemini 2.5 models from Google AI Studio"
+        },
+        "Meta": {
+            "name": "openai",
+            "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
+            "api_key_url": "https://together.ai/ or https://replicate.com/",
+            "description": "Latest Llama models via providers"
+        },
+        "xAI": {
+            "name": "xai",
+            "models": ["grok-4-0709", "grok-3", "grok-3-mini"],
+            "api_key_url": "https://console.x.ai/",
+            "description": "Grok models from xAI"
         },
         "ZhipuAI": {
             "name": "zhipuai",
@@ -105,11 +120,29 @@ async def get_providers():
             "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
             "description": "GLM models from ZhipuAI"
         },
+        "Qwen": {
+            "name": "qwen",
+            "models": ["qwen3-235b-a22b-thinking-2507", "qwen3-coder-480b-a35b-instruct"],
+            "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
+            "description": "Qwen3 models via DashScope"
+        },
+        "DeepSeek": {
+            "name": "deepseek",
+            "models": ["deepseek-chat", "deepseek-reasoner"],
+            "api_key_url": "https://platform.deepseek.com/",
+            "description": "DeepSeek models with reasoning capabilities"
+        },
+        "Kimi": {
+            "name": "moonshot",
+            "models": ["kimi-k2-turbo-preview", "kimi-k2-0711-preview"],
+            "api_key_url": "https://platform.moonshot.cn/console/api-keys",
+            "description": "Kimi models from Moonshot AI"
+        },
         "Ollama": {
             "name": "ollama",
-            "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest"],
-            "api_key_url": "https://ollama.ai/ (No API key needed)",
-            "description": "Local models via Ollama"
+            "models": ["qwen3:4b", "gpt-oss:latest", "qwen3:30b"],
+            "api_key_url": "https://ollama.ai/ (No API key needed - supports local/network)",
+            "description": "Local/Network models via Ollama with custom server support"
         }
     }
     return providers
@@ -163,6 +196,39 @@ async def get_current_model():
         }
     else:
         return {"configured": False}
+
+@app.post("/api/ollama/models")
+async def get_ollama_models(request: OllamaServerRequest):
+    """Get available models from Ollama server"""
+    try:
+        import ollama
+        
+        # Create client with custom base URL
+        client = ollama.Client(host=request.base_url)
+        models = client.list()
+        
+        # Extract model names
+        model_list = []
+        if hasattr(models, 'models'):
+            model_list = [model.model for model in models.models]
+        
+        return {
+            "success": True,
+            "server_url": request.base_url,
+            "models": model_list,
+            "count": len(model_list)
+        }
+        
+    except ImportError:
+        raise HTTPException(status_code=400, detail="Ollama package not installed")
+    except Exception as e:
+        logger.error(f"Error getting Ollama models: {e}")
+        return {
+            "success": False,
+            "server_url": request.base_url,
+            "error": str(e),
+            "models": []
+        }
 
 @app.post("/api/chat")
 async def chat(request: ChatRequest):
