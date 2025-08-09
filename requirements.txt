@@ -16,3 +16,4 @@ typer
 prompt-toolkit
 requests
 PyJWT
+pyserial

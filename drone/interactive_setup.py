@@ -295,11 +295,19 @@ def get_api_key(provider_name: str, model_name: str) -> Optional[str]:
         console.print("[dim]Make sure Ollama is running: ollama serve[/dim]\n")
         return "local"  # Return a placeholder value
     
+    # Provider-specific tips
+    if provider_name.lower() == "zhipuai":
+        console.print("[yellow]格式提示：请填写以 id.secret 形式的 API Key（示例：abc123.def456）。[/yellow]")
+        console.print("[dim]该 Key 将用于生成 JWT 以调用 ZhipuAI API。[/dim]\n")
+    
     try:
         # Use getpass for secure password input (works in all environments)
         api_key = getpass.getpass("Enter your API key (hidden): ")
         
         if api_key and api_key.strip():
+            if provider_name.lower() == "zhipuai" and "." not in api_key.strip():
+                console.print("[red]❌ 无效的 ZhipuAI API Key，必须为 id.secret 形式[/red]")
+                return None
             return api_key.strip()
         
         console.print("[yellow]No API key provided[/yellow]")
@@ -326,9 +334,15 @@ def test_model_connection(model_config: ModelConfig) -> bool:
             
             live.stop()
             
+            # Treat textual error responses as failures too
             if result["success"]:
+                resp = str(result.get("response", ""))
+                lower_resp = resp.lower()
+                if any(x in lower_resp for x in ["❌", "error", "badrequest", "unauthorized", "invalid api key"]):
+                    console.print(f"[red]❌ Connection failed: {resp[:200]}[/red]\n")
+                    return False
                 console.print("[green]✅ Connection successful![/green]")
-                console.print(f"[dim]Response: {result['response'][:100]}...[/dim]\n")
+                console.print(f"[dim]Response: {resp[:100]}...[/dim]\n")
                 return True
             else:
                 console.print(f"[red]❌ Connection failed: {result['error']}[/red]\n")
