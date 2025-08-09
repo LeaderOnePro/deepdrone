@@ -34,7 +34,7 @@ class AppSettings(BaseSettings):
     models_file: Path = Field(default_factory=lambda: Path.home() / ".deepdrone" / "models.json")
     
     # Default model
-    default_model: str = "gpt-3.5-turbo"
+    default_model: str = "gpt-5"
     
     # Drone settings
     drone: DroneConfig = Field(default_factory=DroneConfig)
@@ -82,17 +82,24 @@ class ConfigManager:
     def _create_default_models(self):
         """Create default model configurations."""
         self.models = {
-            "gpt-3.5-turbo": ModelConfig(
-                name="gpt-3.5-turbo",
+            "gpt-5": ModelConfig(
+                name="gpt-5",
                 provider="openai",
-                model_id="gpt-3.5-turbo",
+                model_id="gpt-5",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "gpt-4": ModelConfig(
-                name="gpt-4",
+            "gpt-5-mini": ModelConfig(
+                name="gpt-5-mini",
                 provider="openai", 
-                model_id="gpt-4",
+                model_id="gpt-5-mini",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "gpt-5-nano": ModelConfig(
+                name="gpt-5-nano",
+                provider="openai", 
+                model_id="gpt-5-nano",
                 max_tokens=2048,
                 temperature=0.7
             ),
