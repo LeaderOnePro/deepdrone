@@ -51,11 +51,11 @@ PROVIDERS = {
         "api_key_url": "https://together.ai/ or https://replicate.com/",
         "description": "Llama models from Meta (via Together.ai/Replicate)"
     },
-    "Mistral": {
-        "name": "mistral",
-        "models": ["mistral-large-latest", "mistral-medium-latest", "mistral-small-latest"],
-        "api_key_url": "https://console.mistral.ai/",
-        "description": "Mistral AI models"
+    "xAI": {
+        "name": "xai",
+        "models": ["grok-4-0709", "grok-3", "grok-3-mini"],
+        "api_key_url": "https://console.x.ai/",
+        "description": "Grok models from xAI (OpenAI-compatible)"
     },
     "ZhipuAI": {
         "name": "zhipuai",
@@ -80,12 +80,6 @@ PROVIDERS = {
         "models": ["kimi-k2-turbo-preview", "kimi-k2-0711-preview"],
         "api_key_url": "https://platform.moonshot.cn/console/api-keys",
         "description": "Kimi models (OpenAI-compatible)"
-    },
-    "xAI": {
-        "name": "xai",
-        "models": ["grok-4-0709", "grok-3", "grok-3-mini"],
-        "api_key_url": "https://console.x.ai/",
-        "description": "Grok models from xAI (OpenAI-compatible)"
     },
     "Ollama": {
         "name": "ollama",
