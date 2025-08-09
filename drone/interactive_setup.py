@@ -25,37 +25,40 @@ from .drone_chat_interface import DroneChatInterface
 
 console = Console()
 
+# Global variable to store Ollama base URL
+ollama_base_url = "http://localhost:11434"
+
 # Provider configurations
 PROVIDERS = {
     "OpenAI": {
         "name": "openai",
-        "models": ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-3.5-turbo"],
+        "models": ["gpt-5", "gpt-5-mini", "gpt-5-nano"],
         "api_key_url": "https://platform.openai.com/api-keys",
         "description": "GPT models from OpenAI"
     },
     "Anthropic": {
         "name": "anthropic",
-        "models": ["claude-3-5-sonnet-20241022", "claude-3-sonnet-20240229", "claude-3-haiku-20240307"],
+        "models": ["claude-opus-4-1-20250805", "claude-sonnet-4-20250514", "claude-3-haiku-20240307"],
         "api_key_url": "https://console.anthropic.com/",
         "description": "Claude models from Anthropic"
     },
     "Google": {
-        "name": "vertex_ai",
-        "models": ["gemini-1.5-pro", "gemini-1.5-flash", "gemini-pro"],
-        "api_key_url": "https://console.cloud.google.com/",
-        "description": "Gemini models from Google"
+        "name": "google",
+        "models": ["gemini/gemini-2.5-pro", "gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"],
+        "api_key_url": "https://aistudio.google.com/app/apikey",
+        "description": "Gemini models from Google AI Studio"
     },
     "Meta": {
         "name": "openai",  # Using OpenAI format for Llama models via providers
-        "models": ["meta-llama/Meta-Llama-3.1-70B-Instruct", "meta-llama/Meta-Llama-3.1-8B-Instruct"],
+        "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
         "api_key_url": "https://together.ai/ or https://replicate.com/",
         "description": "Llama models from Meta (via Together.ai/Replicate)"
     },
-    "Mistral": {
-        "name": "mistral",
-        "models": ["mistral-large-latest", "mistral-medium-latest", "mistral-small-latest"],
-        "api_key_url": "https://console.mistral.ai/",
-        "description": "Mistral AI models"
+    "xAI": {
+        "name": "xai",
+        "models": ["grok-4-0709", "grok-3", "grok-3-mini"],
+        "api_key_url": "https://console.x.ai/",
+        "description": "Grok models from xAI (OpenAI-compatible)"
     },
     "ZhipuAI": {
         "name": "zhipuai",
@@ -63,11 +66,29 @@ PROVIDERS = {
         "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
         "description": "GLM models from ZhipuAI"
     },
+    "Qwen": {
+        "name": "qwen",
+        "models": ["qwen3-235b-a22b-thinking-2507", "qwen3-coder-480b-a35b-instruct"],
+        "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
+        "description": "Qwen3 models via DashScope (OpenAI-compatible)"
+    },
+    "DeepSeek": {
+        "name": "deepseek",
+        "models": ["deepseek-chat", "deepseek-reasoner"],
+        "api_key_url": "https://platform.deepseek.com/",
+        "description": "DeepSeek models (OpenAI-compatible)"
+    },
+    "Kimi": {
+        "name": "moonshot",
+        "models": ["kimi-k2-turbo-preview", "kimi-k2-0711-preview"],
+        "api_key_url": "https://platform.moonshot.cn/console/api-keys",
+        "description": "Kimi models (OpenAI-compatible)"
+    },
     "Ollama": {
         "name": "ollama",
-        "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest", "phi3:latest"],
-        "api_key_url": "https://ollama.ai/ (No API key needed - runs locally)",
-        "description": "Local models via Ollama (no API key required)"
+        "models": ["qwen3:4b", "gpt-oss:latest", "qwen3:30b"],
+        "api_key_url": "https://ollama.ai/ (No API key needed - supports local/network)",
+        "description": "Local/Network models via Ollama (supports custom server URL)"
     }
 }
 
@@ -127,32 +148,36 @@ def select_provider() -> Optional[Tuple[str, Dict]]:
         console.print("\n[yellow]Selection cancelled[/yellow]")
         return None
 
-def get_available_ollama_models() -> List[str]:
-    """Get list of locally available Ollama models."""
+def get_available_ollama_models(base_url: str = "http://localhost:11434") -> List[str]:
+    """Get list of available Ollama models from specified server."""
     try:
         import ollama
-        models = ollama.list()
+        # Create client with custom base URL
+        client = ollama.Client(host=base_url)
+        models = client.list()
         # The models are returned as Model objects with a 'model' attribute
         return [model.model for model in models.models] if hasattr(models, 'models') else []
     except ImportError:
         return []
     except Exception as e:
-        # For debugging, you can uncomment the next line
-        # print(f"Error getting Ollama models: {e}")
+        # Connection failed, return empty list
         return []
 
-def install_ollama_model(model_name: str) -> bool:
-    """Install an Ollama model."""
+def install_ollama_model(model_name: str, base_url: str = "http://localhost:11434") -> bool:
+    """Install an Ollama model on specified server."""
     try:
         import ollama
-        console.print(f"[yellow]📥 Installing {model_name}... This may take a few minutes.[/yellow]")
+        console.print(f"[yellow]📥 Installing {model_name} on {base_url}... This may take a few minutes.[/yellow]")
+        
+        # Create client with custom base URL
+        client = ollama.Client(host=base_url)
         
         with Live(
             Spinner("dots", text=f"Installing {model_name}..."),
             console=console,
             transient=True
         ) as live:
-            ollama.pull(model_name)
+            client.pull(model_name)
             live.stop()
         
         console.print(f"[green]✅ Successfully installed {model_name}[/green]")
@@ -170,15 +195,59 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
     
     # Special handling for Ollama
     if provider_name.lower() == "ollama":
+        # First get the base URL
+        console.print(f"\n[bold cyan]🌐 Ollama Server Configuration[/bold cyan]\n")
+        console.print("Ollama server options:")
+        console.print("  • [green]Local[/green]: [cyan]http://localhost:11434[/cyan] (default)")
+        console.print("  • [blue]LAN[/blue]: [cyan]http://192.168.1.100:11434[/cyan] (replace with your server IP)")
+        console.print("  • [blue]Internet[/blue]: [cyan]https://your-domain.com:11434[/cyan] (if exposed to internet)")
+        console.print("\n[dim]Make sure Ollama server is running with: ollama serve[/dim]")
+        console.print("[dim]For network access, start with: OLLAMA_HOST=0.0.0.0 ollama serve[/dim]\n")
+        
+        from rich.prompt import Prompt
+        
+        # Provide numbered options for common URLs
+        console.print("Quick options:")
+        console.print("  1. Local server (default)")
+        console.print("  2. Custom URL")
+        console.print()
+        
+        choice = Prompt.ask(
+            "Select option or enter custom URL",
+            default="1"
+        )
+        
+        # Store the base_url for later use
+        global ollama_base_url
+        
+        if choice == "1" or choice.lower() == "local":
+            ollama_base_url = "http://localhost:11434"
+        elif choice == "2" or choice.lower() == "custom":
+            custom_url = Prompt.ask(
+                "Enter custom Ollama server URL",
+                default="http://localhost:11434"
+            )
+            ollama_base_url = custom_url.strip() if custom_url and custom_url.strip() else "http://localhost:11434"
+        elif choice.startswith("http://") or choice.startswith("https://"):
+            # User directly entered a URL
+            ollama_base_url = choice.strip()
+        else:
+            # Default to local if invalid input
+            ollama_base_url = "http://localhost:11434"
+            console.print(f"[yellow]Invalid input, using default: {ollama_base_url}[/yellow]")
+        
+        console.print(f"\n[dim]Using Ollama server: {ollama_base_url}[/dim]")
+        console.print(f"\n[bold cyan]🤖 Select Model for {provider_name}[/bold cyan]\n")
+        
         # Check if Ollama is running and get local models
-        local_models = get_available_ollama_models()
+        local_models = get_available_ollama_models(ollama_base_url)
         
         if local_models:
-            console.print("[bold green]✅ Local Ollama models found:[/bold green]")
+            console.print("[bold green]✅ Ollama models found:[/bold green]")
             for i, model in enumerate(local_models, 1):
                 console.print(f"  {i}. [green]{model}[/green]")
             
-            console.print("\n[bold]Popular models (if not installed locally):[/bold]")
+            console.print("\n[bold]Popular models (if not installed):[/bold]")
             start_idx = len(local_models) + 1
             for i, model in enumerate(provider_config["models"], start_idx):
                 console.print(f"  {i}. [blue]{model}[/blue] [dim](will be downloaded)[/dim]")
@@ -186,8 +255,13 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
             all_options = local_models + provider_config["models"]
             
         else:
-            console.print("[yellow]⚠️  No local Ollama models found or Ollama not running[/yellow]")
-            console.print("Make sure Ollama is running: [cyan]ollama serve[/cyan]\n")
+            console.print(f"[yellow]⚠️  No models found on {ollama_base_url}[/yellow]")
+            if ollama_base_url == "http://localhost:11434":
+                console.print("Make sure Ollama is running locally: [cyan]ollama serve[/cyan]")
+            else:
+                console.print(f"Make sure Ollama server is running on: [cyan]{ollama_base_url}[/cyan]")
+                console.print("For network access, start with: [cyan]OLLAMA_HOST=0.0.0.0 ollama serve[/cyan]")
+            console.print()
             console.print("[bold]Popular models (will be downloaded):[/bold]")
             all_options = provider_config["models"]
             for i, model in enumerate(all_options, 1):
@@ -215,7 +289,7 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
                             console.print(f"[yellow]Model '{selected_model}' not found locally.[/yellow]")
                             from rich.prompt import Confirm
                             if Confirm.ask(f"Would you like to install {selected_model}?", default=True):
-                                if install_ollama_model(selected_model):
+                                if install_ollama_model(selected_model, ollama_base_url):
                                     return selected_model
                                 else:
                                     return None
@@ -233,7 +307,7 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
                     console.print(f"[yellow]Model '{model_name}' not found locally.[/yellow]")
                     from rich.prompt import Confirm
                     if Confirm.ask(f"Would you like to install {model_name}?", default=True):
-                        if install_ollama_model(model_name):
+                        if install_ollama_model(model_name, ollama_base_url):
                             return model_name
                         else:
                             return None
@@ -283,6 +357,7 @@ def get_model_name(provider_name: str, provider_config: Dict) -> Optional[str]:
             console.print("\n[yellow]Input cancelled[/yellow]")
             return None
 
+
 def get_api_key(provider_name: str, model_name: str) -> Optional[str]:
     """Get API key from user."""
     console.print(f"\n[bold cyan]🔑 API Key for {provider_name}[/bold cyan]\n")
@@ -295,11 +370,21 @@ def get_api_key(provider_name: str, model_name: str) -> Optional[str]:
         console.print("[dim]Make sure Ollama is running: ollama serve[/dim]\n")
         return "local"  # Return a placeholder value
     
+    # Provider-specific tips
+    if provider_name.lower() == "zhipuai":
+        console.print("[yellow]格式提示：请填写以 id.secret 形式的 API Key（示例：abc123.def456）。[/yellow]")
+        console.print("[dim]该 Key 将用于生成 JWT 以调用 ZhipuAI API。[/dim]\n")
+    elif provider_name.lower() == "qwen":
+        console.print("[yellow]提示：Qwen 使用 OpenAI 兼容通道，请填入 DashScope 的 API Key。[/yellow]\n")
+    
     try:
         # Use getpass for secure password input (works in all environments)
         api_key = getpass.getpass("Enter your API key (hidden): ")
         
         if api_key and api_key.strip():
+            if provider_name.lower() == "zhipuai" and "." not in api_key.strip():
+                console.print("[red]❌ 无效的 ZhipuAI API Key，必须为 id.secret 形式[/red]")
+                return None
             return api_key.strip()
         
         console.print("[yellow]No API key provided[/yellow]")
@@ -326,9 +411,15 @@ def test_model_connection(model_config: ModelConfig) -> bool:
             
             live.stop()
             
+            # Treat textual error responses as failures too
             if result["success"]:
+                resp = str(result.get("response", ""))
+                lower_resp = resp.lower()
+                if any(x in lower_resp for x in ["❌", "error", "badrequest", "unauthorized", "invalid api key"]):
+                    console.print(f"[red]❌ Connection failed: {resp[:200]}[/red]\n")
+                    return False
                 console.print("[green]✅ Connection successful![/green]")
-                console.print(f"[dim]Response: {result['response'][:100]}...[/dim]\n")
+                console.print(f"[dim]Response: {resp[:100]}...[/dim]\n")
                 return True
             else:
                 console.print(f"[red]❌ Connection failed: {result['error']}[/red]\n")
@@ -360,17 +451,24 @@ def start_interactive_session():
             console.print("[yellow]Setup cancelled. Goodbye![/yellow]")
             return
         
-        # Step 3: Get API key
-        console.print("[bold]Step 3: Enter API key[/bold]")
-        api_key = get_api_key(provider_name, model_name)
-        if not api_key:
-            console.print("[yellow]Setup cancelled. Goodbye![/yellow]")
-            return
-        
-        # Create model configuration
-        base_url = None
+        # Step 3: Get API key (Ollama base_url already configured in step 2)
         if provider_name.lower() == "ollama":
-            base_url = "http://localhost:11434"
+            console.print("[bold]Step 3: API key (not needed for Ollama)[/bold]")
+            console.print("[green]✅ Ollama runs locally - no API key required![/green]")
+            console.print(f"[dim]Using server: {ollama_base_url}[/dim]\n")
+            api_key = "local"  # Ollama doesn't need API key
+            base_url = ollama_base_url
+        else:
+            console.print("[bold]Step 3: Enter API key[/bold]")
+            api_key = get_api_key(provider_name, model_name)
+            if not api_key:
+                console.print("[yellow]Setup cancelled. Goodbye![/yellow]")
+                return
+            base_url = None
+        
+        # Set base URLs for other providers
+        if provider_name.lower() == "qwen":
+            base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
         
         model_config = ModelConfig(
             name=f"{provider_name.lower()}-session",

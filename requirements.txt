@@ -16,6 +16,7 @@ typer
 prompt-toolkit
 requests
 PyJWT
+pyserial
 fastapi
 uvicorn[standard]
 python-multipart
