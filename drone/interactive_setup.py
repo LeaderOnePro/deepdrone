@@ -47,7 +47,7 @@ PROVIDERS = {
     },
     "Meta": {
         "name": "openai",  # Using OpenAI format for Llama models via providers
-        "models": ["meta-llama/Meta-Llama-3.1-70B-Instruct", "meta-llama/Meta-Llama-3.1-8B-Instruct"],
+        "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
         "api_key_url": "https://together.ai/ or https://replicate.com/",
         "description": "Llama models from Meta (via Together.ai/Replicate)"
     },
@@ -83,7 +83,7 @@ PROVIDERS = {
     },
     "Ollama": {
         "name": "ollama",
-        "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest", "phi3:latest"],
+        "models": ["qwen3:4b", "gpt-oss:latest", "qwen3:30b"],
         "api_key_url": "https://ollama.ai/ (No API key needed - runs locally)",
         "description": "Local models via Ollama (no API key required)"
     }

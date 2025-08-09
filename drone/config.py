@@ -145,18 +145,40 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "llama3.1": ModelConfig(
-                name="llama3.1",
+            "llama-4-maverick-17b-128e-instruct-fp8": ModelConfig(
+                name="llama-4-maverick-17b-128e-instruct-fp8",
+                provider="openai",
+                model_id="meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "llama-3.3-70b-instruct-turbo": ModelConfig(
+                name="llama-3.3-70b-instruct-turbo",
+                provider="openai",
+                model_id="llama/Llama-3.3-70B-Instruct-Turbo",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "qwen3-4b": ModelConfig(
+                name="qwen3-4b",
                 provider="ollama",
-                model_id="llama3.1:latest",
+                model_id="qwen3:4b",
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "codestral": ModelConfig(
-                name="codestral",
+            "gpt-oss-latest": ModelConfig(
+                name="gpt-oss-latest",
                 provider="ollama",
-                model_id="codestral:latest",
+                model_id="gpt-oss:latest",
+                base_url="http://localhost:11434",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "qwen3-30b": ModelConfig(
+                name="qwen3-30b",
+                provider="ollama",
+                model_id="qwen3:30b",
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
