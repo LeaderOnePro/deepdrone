@@ -118,7 +118,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
       <Grid container spacing={3}>
         {/* System Status Card */}
         <Grid item xs={12} md={6} lg={3}>
-          <Card>
+          <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Settings sx={{ mr: 1, color: 'primary.main' }} />
@@ -138,7 +138,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
 
         {/* AI Model Card */}
         <Grid item xs={12} md={6} lg={3}>
-          <Card>
+          <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Chat sx={{ mr: 1, color: 'primary.main' }} />
@@ -174,7 +174,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
 
         {/* Drone Status Card */}
         <Grid item xs={12} md={6} lg={3}>
-          <Card>
+          <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <FlightTakeoff sx={{ mr: 1, color: 'primary.main' }} />
@@ -218,7 +218,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
 
         {/* Quick Actions Card */}
         <Grid item xs={12} md={6} lg={3}>
-          <Card>
+          <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 快速操作
@@ -249,7 +249,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
         {/* Location Card (if drone connected) */}
         {droneStatus?.connected && (
           <Grid item xs={12} md={6}>
-            <Card>
+            <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <LocationOn sx={{ mr: 1, color: 'primary.main' }} />
@@ -271,7 +271,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
 
         {/* System Info Card */}
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
                 系统信息

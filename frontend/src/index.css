@@ -58,6 +58,20 @@ code {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* Disable hover effects for better UX */
+.MuiCard-root:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.MuiButton-root:hover {
+  transform: none !important;
+}
+
+.MuiFab-root:hover {
+  transform: none !important;
+}
+
 /* Gen Z 风格聊天消息 */
 .chat-message {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -67,9 +81,7 @@ code {
 }
 
 .chat-message:hover {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
-  transform: translateX(4px);
+  /* Removed hover effects for better UX */
 }
 
 /* Gen Z 风格状态指示器 */

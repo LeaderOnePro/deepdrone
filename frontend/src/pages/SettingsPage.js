@@ -248,7 +248,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       )}
 
       {/* Tabs */}
-      <Card>
+      <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
         <Tabs 
           value={activeTab} 
           onChange={(e, newValue) => setActiveTab(newValue)}

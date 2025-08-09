@@ -195,7 +195,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
       <Grid container spacing={3}>
         {/* Chat Interface */}
         <Grid item xs={12} lg={8}>
-          <Card sx={{ height: '70vh', display: 'flex', flexDirection: 'column' }}>
+          <Card sx={{ height: '70vh', display: 'flex', flexDirection: 'column', '&:hover': { transform: 'none', boxShadow: 'none' } }}>
             <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
               {/* Chat Header */}
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -298,7 +298,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           <Grid container spacing={2}>
             {/* Quick Commands */}
             <Grid item xs={12}>
-              <Card>
+              <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     Quick Commands
@@ -355,7 +355,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
 
             {/* Drone Status */}
             <Grid item xs={12}>
-              <Card>
+              <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     Drone Status
@@ -390,7 +390,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
 
             {/* AI Model Status */}
             <Grid item xs={12}>
-              <Card>
+              <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     AI Model
