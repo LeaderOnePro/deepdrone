@@ -156,6 +156,23 @@ class ConfigManager:
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7
+            ),
+            # DeepSeek via OpenAI-compatible
+            "deepseek-chat": ModelConfig(
+                name="deepseek-chat",
+                provider="deepseek",
+                model_id="deepseek-chat",
+                base_url="https://api.deepseek.com/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "deepseek-reasoner": ModelConfig(
+                name="deepseek-reasoner",
+                provider="deepseek",
+                model_id="deepseek-reasoner",
+                base_url="https://api.deepseek.com/v1",
+                max_tokens=2048,
+                temperature=0.7
             )
         }
         self.save_models()
@@ -213,7 +230,7 @@ class ConfigManager:
         """Get list of models that require API keys."""
         api_models = []
         for name, config in self.models.items():
-            if config.provider in ["openai", "anthropic", "zhipuai", "qwen"]:
+            if config.provider in ["openai", "anthropic", "zhipuai", "qwen", "deepseek"]:
                 api_models.append(name)
         return api_models
 

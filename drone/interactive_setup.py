@@ -69,6 +69,12 @@ PROVIDERS = {
         "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
         "description": "Qwen3 models via DashScope (OpenAI-compatible)"
     },
+    "DeepSeek": {
+        "name": "deepseek",
+        "models": ["deepseek-chat", "deepseek-reasoner"],
+        "api_key_url": "https://platform.deepseek.com/",
+        "description": "DeepSeek models (OpenAI-compatible)"
+    },
     "Ollama": {
         "name": "ollama",
         "models": ["llama3.1:latest", "codestral:latest", "qwen2.5-coder:latest", "phi3:latest"],

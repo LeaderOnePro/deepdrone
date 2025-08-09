@@ -267,6 +267,8 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
             console.print("Get your ZhipuAI API key from: https://open.bigmodel.cn/usercenter/apikeys")
         elif model_config.provider == "qwen":
             console.print("Get your DashScope API key from: https://bailian.console.aliyun.com/ai/ak")
+        elif model_config.provider == "deepseek":
+            console.print("Get your DeepSeek API key from: https://platform.deepseek.com/ ")
         
         api_key = getpass.getpass("Enter API key (hidden): ")
     

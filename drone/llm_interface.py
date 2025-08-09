@@ -26,7 +26,7 @@ class LLMInterface:
             self._setup_ollama()
         elif self.model_config.provider == "zhipuai":
             self._setup_zhipuai()
-        elif self.model_config.provider in ["qwen"]:
+        elif self.model_config.provider in ["qwen", "deepseek"]:
             # Use OpenAI-compatible HTTP for providers with OpenAI-style endpoints
             self._setup_openai_compatible()
         else:
@@ -138,6 +138,8 @@ class LLMInterface:
                 # Provide sensible defaults if not configured
                 if self.model_config.provider == "qwen":
                     base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+                elif self.model_config.provider == "deepseek":
+                    base_url = "https://api.deepseek.com/v1"
                 else:
                     raise ValueError("Base URL required for OpenAI-compatible provider")
 
