@@ -41,7 +41,7 @@ PROVIDERS = {
     },
     "Google": {
         "name": "vertex_ai",
-        "models": ["gemini-1.5-pro", "gemini-1.5-flash", "gemini-pro"],
+        "models": ["gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.5-flash-lite"],
         "api_key_url": "https://console.cloud.google.com/",
         "description": "Gemini models from Google"
     },
