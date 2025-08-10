@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+/* Disable all animations and transitions globally */
+*, *::before, *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
 body {
   margin: 0;
   font-family: "Inter", "SF Pro Display", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -58,46 +66,55 @@ code {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Disable hover effects for better UX */
-* {
+/* Completely disable all hover effects and transitions */
+*, *::before, *::after {
   transition: none !important;
+  animation: none !important;
 }
 
-.MuiCard-root {
+/* Force disable Material-UI hover effects */
+.MuiCard-root,
+.MuiPaper-root,
+.MuiButton-root,
+.MuiFab-root,
+.MuiIconButton-root,
+.MuiChip-root {
   transition: none !important;
+  animation: none !important;
 }
 
-.MuiCard-root:hover {
-  transform: none !important;
-  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12) !important;
-  elevation: 1 !important;
-}
-
-.MuiButton-root {
-  transition: none !important;
-}
-
-.MuiButton-root:hover {
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-.MuiFab-root {
-  transition: none !important;
-}
-
-.MuiFab-root:hover {
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-.MuiPaper-root {
-  transition: none !important;
-}
-
+.MuiCard-root:hover,
 .MuiPaper-root:hover {
   transform: none !important;
   box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12) !important;
+  elevation: 1 !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.MuiButton-root:hover,
+.MuiFab-root:hover,
+.MuiIconButton-root:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Override any CSS animations */
+@keyframes none {
+  0%, 100% { transform: none; }
+}
+
+/* Force static positioning */
+.MuiCard-root,
+.MuiPaper-root {
+  position: static !important;
+}
+
+/* Disable pointer events that might trigger animations */
+.MuiCard-root:hover,
+.MuiPaper-root:hover,
+.MuiButton-root:hover {
+  pointer-events: auto !important;
 }
 
 /* Gen Z 风格聊天消息 */
