@@ -59,17 +59,45 @@ code {
 }
 
 /* Disable hover effects for better UX */
+* {
+  transition: none !important;
+}
+
+.MuiCard-root {
+  transition: none !important;
+}
+
 .MuiCard-root:hover {
   transform: none !important;
-  box-shadow: none !important;
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12) !important;
+  elevation: 1 !important;
+}
+
+.MuiButton-root {
+  transition: none !important;
 }
 
 .MuiButton-root:hover {
   transform: none !important;
+  box-shadow: none !important;
+}
+
+.MuiFab-root {
+  transition: none !important;
 }
 
 .MuiFab-root:hover {
   transform: none !important;
+  box-shadow: none !important;
+}
+
+.MuiPaper-root {
+  transition: none !important;
+}
+
+.MuiPaper-root:hover {
+  transform: none !important;
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12) !important;
 }
 
 /* Gen Z 风格聊天消息 */
