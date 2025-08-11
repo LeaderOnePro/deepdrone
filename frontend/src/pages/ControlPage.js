@@ -17,7 +17,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
         {
           id: 1,
           type: 'system',
-          content: 'DeepDrone Control Interface Ready. Use natural language to control your drone.',
+          content: 'DeepDrone 控制界面已就绪。使用自然语言控制您的无人机。',
           timestamp: new Date().toISOString(),
         },
       ]);
@@ -60,12 +60,12 @@ const ControlPage = ({ currentModel, droneStatus }) => {
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       console.error('Chat error:', error);
-      setError('Failed to send message. Please try again.');
+      setError('发送消息失败，请重试。');
       
       const errorMessage = {
         id: Date.now() + 1,
         type: 'error',
-        content: 'Failed to communicate with AI. Please check your connection.',
+        content: '与 AI 通信失败，请检查您的连接。',
         timestamp: new Date().toISOString(),
       };
 
@@ -83,11 +83,11 @@ const ControlPage = ({ currentModel, droneStatus }) => {
   };
 
   const quickCommands = [
-    'Connect to drone and take off to 30 meters',
-    'Show current battery status and location',
-    'Fly in a square pattern with 50 meter sides',
-    'Return to home and land safely',
-    'Emergency stop and hover in place'
+    '连接无人机并起飞到30米高度',
+    '显示当前电池状态和位置信息',
+    '执行边长50米的正方形飞行路线',
+    '返回起飞点并安全降落',
+    '紧急停止并悬停在当前位置'
   ];
 
   const isSystemReady = currentModel?.configured && droneStatus?.connected;
@@ -107,15 +107,15 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           alignItems: 'center'
         }}>
           <span style={{ fontSize: 'var(--font-size-sm)' }}>
-            {!currentModel?.configured && 'AI Model not configured. '}
-            {!droneStatus?.connected && 'Drone not connected. '}
-            Please check your settings before controlling the drone.
+            {!currentModel?.configured && 'AI 模型未配置。'}
+            {!droneStatus?.connected && '无人机未连接。'}
+            请在控制无人机前检查您的设置。
           </span>
           <button 
             className="button button--primary"
             onClick={() => navigate('/settings')}
           >
-            Settings
+            设置
           </button>
         </div>
       )}
@@ -132,14 +132,14 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               alignItems: 'center'
             }}>
               <h2 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 600 }}>
-                AI Control Interface
+                AI 控制界面
               </h2>
               <button 
                 className="button button--secondary"
                 onClick={() => setMessages([])}
                 style={{ fontSize: 'var(--font-size-xs)' }}
               >
-                Clear
+                清空
               </button>
             </div>
 
@@ -165,9 +165,9 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                              message.type === 'error' ? 'var(--color-error)' : 
                              'var(--color-secondary)'
                     }}>
-                      {message.type === 'user' ? '👤 You' : 
-                       message.type === 'error' ? '❌ Error' : 
-                       message.type === 'system' ? 'ℹ️ System' : '🤖 AI'}
+                      {message.type === 'user' ? '👤 您' : 
+                       message.type === 'error' ? '❌ 错误' : 
+                       message.type === 'system' ? 'ℹ️ 系统' : '🤖 AI'}
                     </span>
                     <span style={{ 
                       fontSize: 'var(--font-size-xs)',
@@ -197,7 +197,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                   color: 'var(--color-secondary)',
                   fontSize: 'var(--font-size-sm)'
                 }}>
-                  🤖 AI is processing...
+                  🤖 AI 正在处理中...
                 </div>
               )}
               
@@ -215,7 +215,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Type your drone command here... (e.g., 'Take off to 30 meters')"
+                placeholder="在此输入无人机指令... (例如：'起飞到30米高度')"
                 disabled={!isSystemReady || isLoading}
                 style={{
                   flex: 1,
@@ -237,7 +237,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                   opacity: (!inputMessage.trim() || !isSystemReady || isLoading) ? 0.5 : 1
                 }}
               >
-                Send
+                发送
               </button>
             </div>
 
@@ -266,7 +266,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               fontWeight: 600,
               marginBottom: 'var(--space-md)'
             }}>
-              Quick Commands
+              快捷指令
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
               {quickCommands.map((command, index) => (
@@ -294,24 +294,24 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               fontWeight: 600,
               marginBottom: 'var(--space-md)'
             }}>
-              Drone Status
+              无人机状态
             </h3>
             {droneStatus?.connected ? (
               <div style={{ fontSize: 'var(--font-size-sm)' }}>
                 <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
                   <div className="status-dot"></div>
-                  Battery: {droneStatus.battery}%
+                  电量: {droneStatus.battery}%
                 </div>
                 <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
-                  Mode: {droneStatus.mode}<br/>
-                  Altitude: {droneStatus.altitude}m<br/>
-                  Armed: {droneStatus.armed ? 'Yes' : 'No'}
+                  模式: {droneStatus.mode}<br/>
+                  高度: {droneStatus.altitude}m<br/>
+                  解锁: {droneStatus.armed ? '是' : '否'}
                 </p>
               </div>
             ) : (
               <div className="status status--error">
                 <div className="status-dot"></div>
-                Drone not connected
+                无人机未连接
               </div>
             )}
           </div>
@@ -323,23 +323,23 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               fontWeight: 600,
               marginBottom: 'var(--space-md)'
             }}>
-              AI Model
+              AI 模型
             </h3>
             {currentModel?.configured ? (
               <div style={{ fontSize: 'var(--font-size-sm)' }}>
                 <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
                   <div className="status-dot"></div>
-                  Ready
+                  就绪
                 </div>
                 <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
-                  Provider: {currentModel.model_info?.provider}<br/>
-                  Model: {currentModel.model_info?.model_id}
+                  提供商: {currentModel.model_info?.provider}<br/>
+                  模型: {currentModel.model_info?.model_id}
                 </p>
               </div>
             ) : (
               <div className="status status--error">
                 <div className="status-dot"></div>
-                No AI model configured
+                未配置 AI 模型
               </div>
             )}
           </div>

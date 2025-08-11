@@ -9,9 +9,9 @@ const Navigation = () => {
   const isMobile = window.innerWidth < 768;
 
   const navigationItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { path: '/control', label: 'Control', icon: '🎮' },
-    { path: '/settings', label: 'Settings', icon: '⚙️' }
+    { path: '/dashboard', label: '仪表盘', icon: '📊' },
+    { path: '/control', label: '控制台', icon: '🎮' },
+    { path: '/settings', label: '设置', icon: '⚙️' }
   ];
 
   const handleNavigation = (path) => {

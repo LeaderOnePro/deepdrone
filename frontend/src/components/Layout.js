@@ -18,13 +18,24 @@ const Layout = ({ children }) => {
             alignItems: 'center', 
             justifyContent: 'space-between' 
           }}>
-            <h1 style={{ 
-              fontSize: 'var(--font-size-xl)', 
-              fontWeight: 700,
-              color: 'var(--color-primary)'
-            }}>
-              DeepDrone
-            </h1>
+            <div>
+              <h1 style={{ 
+                fontSize: 'var(--font-size-xl)', 
+                fontWeight: 700,
+                color: 'var(--color-primary)',
+                margin: 0
+              }}>
+                DeepDrone
+              </h1>
+              <p style={{
+                fontSize: 'var(--font-size-xs)',
+                color: 'var(--color-tertiary)',
+                margin: 0,
+                marginTop: 'var(--space-xs)'
+              }}>
+                臻巅科技
+              </p>
+            </div>
             
             <nav style={{ display: 'flex', gap: 'var(--space-lg)' }}>
               <a href="/dashboard" style={{ 
@@ -32,21 +43,21 @@ const Layout = ({ children }) => {
                 color: 'var(--color-secondary)',
                 fontWeight: 500
               }}>
-                Dashboard
+                仪表盘
               </a>
               <a href="/control" style={{ 
                 fontSize: 'var(--font-size-sm)',
                 color: 'var(--color-secondary)',
                 fontWeight: 500
               }}>
-                Control
+                控制台
               </a>
               <a href="/settings" style={{ 
                 fontSize: 'var(--font-size-sm)',
                 color: 'var(--color-secondary)',
                 fontWeight: 500
               }}>
-                Settings
+                设置
               </a>
             </nav>
           </div>

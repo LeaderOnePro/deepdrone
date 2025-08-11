@@ -204,7 +204,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               minWidth: 'auto'
             }}
           >
-            ← Back
+            ← 返回
           </button>
           <div>
             <h1 style={{ 
@@ -214,14 +214,14 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               marginBottom: 'var(--space-xs)',
               color: 'var(--color-primary)'
             }}>
-              ⚙️ System Settings
+              ⚙️ 系统设置
             </h1>
             <p style={{ 
               fontSize: 'var(--font-size-md)', 
               color: 'var(--color-secondary)',
               margin: 0
             }}>
-              Configure AI model and drone connection
+              配置 AI 模型和无人机连接
             </p>
           </div>
         </div>
@@ -266,13 +266,13 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
             className={`tab ${activeTab === 0 ? 'tab--active' : ''}`}
             onClick={() => setActiveTab(0)}
           >
-            AI Model Configuration
+            AI 模型配置
           </button>
           <button
             className={`tab ${activeTab === 1 ? 'tab--active' : ''}`}
             onClick={() => setActiveTab(1)}
           >
-            Drone Connection
+            无人机连接
           </button>
         </div>
 
@@ -286,27 +286,27 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 margin: 0,
                 marginBottom: 'var(--space-xs)'
               }}>
-                AI Model Configuration
+                AI 模型配置
               </h3>
               <p style={{ 
                 fontSize: 'var(--font-size-sm)', 
                 color: 'var(--color-secondary)',
                 margin: 0
               }}>
-                Configure your AI model for natural language drone control
+                为自然语言无人机控制配置您的 AI 模型
               </p>
             </div>
 
             <div className="grid grid--2" style={{ gap: 'var(--space-lg)' }}>
               {/* Provider Selection */}
               <div className="form-group">
-                <label className="form-label">AI Provider</label>
+                <label className="form-label">AI 提供商</label>
                 <select
                   className="form-select"
                   value={modelConfig.provider}
                   onChange={(e) => handleProviderChange(e.target.value)}
                 >
-                  <option value="">Select a provider</option>
+                  <option value="">选择提供商</option>
                   {Object.entries(providers).map(([key, provider]) => (
                     <option key={key} value={provider.name}>
                       {key} - {provider.description}
@@ -317,14 +317,14 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
 
               {/* Model Selection */}
               <div className="form-group">
-                <label className="form-label">Model</label>
+                <label className="form-label">模型</label>
                 <select
                   className="form-select"
                   value={modelConfig.model_id}
                   onChange={(e) => handleModelConfigChange('model_id', e.target.value)}
                   disabled={!selectedProvider}
                 >
-                  <option value="">Select a model</option>
+                  <option value="">选择模型</option>
                   {/* Show detected Ollama models if available */}
                   {modelConfig.provider === 'ollama' && ollamaModels.length > 0 ? (
                     <>
@@ -336,7 +336,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                       <option disabled>──────────</option>
                       {selectedProvider?.models.map((model) => (
                         <option key={model} value={model}>
-                          {model} (will download)
+                          {model} (将下载)
                         </option>
                       ))}
                     </>
@@ -350,33 +350,33 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 </select>
                 {modelConfig.provider === 'ollama' && ollamaLoading && (
                   <div className="form-helper">
-                    Detecting models...
+                    正在检测模型...
                   </div>
                 )}
               </div>
 
               {/* Configuration Name */}
               <div className="form-group">
-                <label className="form-label">Configuration Name</label>
+                <label className="form-label">配置名称</label>
                 <input
                   className="form-input"
                   type="text"
                   value={modelConfig.name}
                   onChange={(e) => handleModelConfigChange('name', e.target.value)}
-                  placeholder="e.g., openai-gpt4"
+                  placeholder="例如：openai-gpt4"
                 />
               </div>
 
               {/* API Key */}
               {selectedProvider?.name !== 'ollama' && (
                 <div className="form-group">
-                  <label className="form-label">API Key</label>
+                  <label className="form-label">API 密钥</label>
                   <input
                     className="form-input"
                     type="password"
                     value={modelConfig.api_key}
                     onChange={(e) => handleModelConfigChange('api_key', e.target.value)}
-                    placeholder="Enter your API key"
+                    placeholder="输入您的 API 密钥"
                   />
                   {selectedProvider?.api_key_url && (
                     <div className="form-helper">
@@ -385,7 +385,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
-                        Get API key from {selectedProvider.api_key_url}
+                        从 {selectedProvider.api_key_url} 获取 API 密钥
                       </a>
                     </div>
                   )}
@@ -396,7 +396,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               {(modelConfig.provider === 'ollama' || modelConfig.provider === 'qwen' || modelConfig.provider === 'deepseek' || modelConfig.provider === 'moonshot' || modelConfig.provider === 'xai') && (
                 <div className="form-group" style={{ gridColumn: 'span 2' }}>
                   <label className="form-label">
-                    {modelConfig.provider === 'ollama' ? 'Ollama Server URL' : 'Base URL'}
+                    {modelConfig.provider === 'ollama' ? 'Ollama 服务器地址' : '基础 URL'}
                   </label>
                   <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
                     <input
@@ -431,8 +431,8 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   </div>
                   <div className="form-helper">
                     {modelConfig.provider === 'ollama' 
-                      ? 'Local: http://localhost:11434, LAN: http://192.168.1.100:11434, Internet: https://your-domain.com:11434'
-                      : 'Custom API endpoint (optional)'
+                      ? '本地: http://localhost:11434, 局域网: http://192.168.1.100:11434, 互联网: https://your-domain.com:11434'
+                      : '自定义 API 端点（可选）'
                     }
                   </div>
                 </div>
@@ -446,12 +446,12 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               fontWeight: 600,
               marginBottom: 'var(--space-lg)'
             }}>
-              Advanced Settings
+              高级设置
             </h4>
 
             <div className="grid grid--2" style={{ gap: 'var(--space-lg)' }}>
               <div className="form-group">
-                <label className="form-label">Max Tokens</label>
+                <label className="form-label">最大令牌数</label>
                 <input
                   className="form-input"
                   type="number"
@@ -463,7 +463,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Temperature</label>
+                <label className="form-label">温度</label>
                 <input
                   className="form-input"
                   type="number"
@@ -487,14 +487,14 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 onClick={handleTestConnection}
                 disabled={loading || !modelConfig.provider || !modelConfig.model_id}
               >
-                🧪 Test Connection
+                🧪 测试连接
               </button>
               <button
                 className="button button--primary"
                 onClick={handleSaveModel}
                 disabled={loading || !modelConfig.provider || !modelConfig.model_id}
               >
-                💾 Save Configuration
+                💾 保存配置
               </button>
             </div>
           </div>
@@ -510,20 +510,20 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 margin: 0,
                 marginBottom: 'var(--space-xs)'
               }}>
-                Drone Connection
+                无人机连接
               </h3>
               <p style={{ 
                 fontSize: 'var(--font-size-sm)', 
                 color: 'var(--color-secondary)',
                 margin: 0
               }}>
-                Configure connection to your drone or simulator
+                配置与您的无人机或模拟器的连接
               </p>
             </div>
 
             <div style={{ display: 'flex', gap: 'var(--space-md)', alignItems: 'flex-end' }}>
               <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
-                <label className="form-label">Connection String</label>
+                <label className="form-label">连接字符串</label>
                 <input
                   className="form-input"
                   type="text"
@@ -532,7 +532,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   placeholder="udp:127.0.0.1:14550"
                 />
                 <div className="form-helper">
-                  Examples: udp:127.0.0.1:14550 (simulator), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)
+                  示例: udp:127.0.0.1:14550 (模拟器), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)
                 </div>
               </div>
 
@@ -542,7 +542,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 disabled={loading}
                 style={{ height: '40px' }}
               >
-                🔗 Connect Drone
+                🔗 连接无人机
               </button>
             </div>
 
@@ -553,7 +553,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 fontWeight: 600,
                 marginBottom: 'var(--space-md)'
               }}>
-                Connection Examples:
+                连接示例:
               </h4>
               <div style={{ 
                 fontSize: 'var(--font-size-sm)', 
@@ -561,16 +561,16 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                 lineHeight: 1.6
               }}>
                 <div style={{ marginBottom: 'var(--space-xs)' }}>
-                  • <strong>Simulator:</strong> udp:127.0.0.1:14550
+                  • <strong>模拟器:</strong> udp:127.0.0.1:14550
                 </div>
                 <div style={{ marginBottom: 'var(--space-xs)' }}>
-                  • <strong>USB Connection:</strong> /dev/ttyACM0 (Linux) or COM3 (Windows)
+                  • <strong>USB 连接:</strong> /dev/ttyACM0 (Linux) 或 COM3 (Windows)
                 </div>
                 <div style={{ marginBottom: 'var(--space-xs)' }}>
-                  • <strong>TCP Connection:</strong> tcp:192.168.1.100:5760
+                  • <strong>TCP 连接:</strong> tcp:192.168.1.100:5760
                 </div>
                 <div style={{ marginBottom: 'var(--space-xs)' }}>
-                  • <strong>UDP Connection:</strong> udp:192.168.1.100:14550
+                  • <strong>UDP 连接:</strong> udp:192.168.1.100:14550
                 </div>
               </div>
             </div>

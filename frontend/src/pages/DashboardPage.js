@@ -19,10 +19,10 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
 
   const getSystemStatus = () => {
     switch (systemStatus) {
-      case 'ready': return { status: 'success', value: 'System Ready' };
-      case 'no_model': return { status: 'warning', value: 'AI Model Not Configured' };
-      case 'no_drone': return { status: 'error', value: 'Drone Not Connected' };
-      default: return { status: 'error', value: 'Unknown Status' };
+      case 'ready': return { status: 'success', value: '系统就绪' };
+      case 'no_model': return { status: 'warning', value: 'AI 模型未配置' };
+      case 'no_drone': return { status: 'error', value: '无人机未连接' };
+      default: return { status: 'error', value: '未知状态' };
     }
   };
 
@@ -49,7 +49,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
             className="button button--primary"
             onClick={() => navigate('/settings')}
           >
-            Configure Now
+            立即配置
           </button>
         </div>
       )}
@@ -57,54 +57,54 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
       {/* 主要状态卡片 */}
       <div className="grid grid--4" style={{ marginBottom: 'var(--space-xxl)' }}>
         <StatusCard
-          title="System Status"
+          title="系统状态"
           status={systemStatusData.status}
           value={systemStatusData.value}
-          description="Overall system health and readiness"
+          description="系统整体健康状态和就绪情况"
         />
 
         <StatusCard
-          title="AI Model"
+          title="AI 模型"
           status={currentModel?.configured ? 'success' : 'error'}
           value={currentModel?.configured ? 
             `${currentModel.model_info?.provider} - ${currentModel.model_info?.model_id}` : 
-            'Not Configured'
+            '未配置'
           }
-          description="AI model for natural language control"
+          description="用于自然语言控制的 AI 模型"
           action={!currentModel?.configured && (
             <button 
               className="button button--secondary"
               onClick={() => navigate('/settings')}
             >
-              Configure
+              配置
             </button>
           )}
         />
 
         <StatusCard
-          title="Drone Status"
+          title="无人机状态"
           status={droneStatus?.connected ? 'success' : 'error'}
           value={droneStatus?.connected ? 
-            `Connected - ${droneStatus.battery}% Battery` : 
-            'Not Connected'
+            `已连接 - 电量 ${droneStatus.battery}%` : 
+            '未连接'
           }
           description={droneStatus?.connected ? 
-            `Mode: ${droneStatus.mode} | Altitude: ${droneStatus.altitude}m` :
-            'Drone connection required for control'
+            `模式: ${droneStatus.mode} | 高度: ${droneStatus.altitude}m` :
+            '需要连接无人机才能进行控制'
           }
           action={!droneStatus?.connected && (
             <button 
               className="button button--secondary"
               onClick={() => navigate('/settings')}
             >
-              Connect
+              连接
             </button>
           )}
         />
 
         <StatusCard
-          title="Quick Actions"
-          description="Start controlling your drone"
+          title="快捷操作"
+          description="开始控制您的无人机"
           action={
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
               <button
@@ -116,13 +116,13 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
                   cursor: systemStatus !== 'ready' ? 'not-allowed' : 'pointer'
                 }}
               >
-                Start Control
+                开始控制
               </button>
               <button
                 className="button button--secondary"
                 onClick={() => navigate('/settings')}
               >
-                Settings
+                设置
               </button>
             </div>
           }
@@ -133,17 +133,17 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
       {droneStatus?.connected && (
         <div className="grid grid--2">
           <StatusCard
-            title="Location Information"
+            title="位置信息"
             description={`
-              Latitude: ${droneStatus.location?.lat || 'N/A'}
-              Longitude: ${droneStatus.location?.lon || 'N/A'}
-              Altitude: ${droneStatus.altitude || 0}m
+              纬度: ${droneStatus.location?.lat || '未知'}
+              经度: ${droneStatus.location?.lon || '未知'}
+              高度: ${droneStatus.altitude || 0}m
             `}
           />
 
           <StatusCard
-            title="System Information"
-            description="DeepDrone 2.0 - AI-powered drone control system with natural language processing, multi-model AI support, real-time telemetry monitoring, and safety flight mode protection."
+            title="系统信息"
+            description="DeepDrone 2.0 - 由臻巅科技开发的 AI 驱动无人机控制系统，支持自然语言处理、多模型 AI 支持、实时遥测监控和安全飞行模式保护。"
           />
         </div>
       )}
