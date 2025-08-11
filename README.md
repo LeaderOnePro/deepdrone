@@ -121,21 +121,7 @@ python web_api.py
 # Then visit: http://localhost:8000
 ```
 
-### 📱 Web Interface Pages
 
-- **🏠 Dashboard** (`/dashboard`): System status overview and quick actions
-- **🎮 Control** (`/control`): AI chat interface with natural language commands
-- **⚙️ Settings** (`/settings`): AI model and drone connection configuration
-
-### 🎯 Web Usage Examples
-
-```
-# Natural language commands in web chat:
-"Take off to 30 meters"
-"Fly in a square pattern with 50m sides"
-"Return home and land safely"
-"Show current battery status"
-```
 
 ### 🛠️ Web Tech Stack
 
@@ -169,7 +155,7 @@ python web_api.py
 
 ### Web Interface Issues
 
-**Frontend build fails:**
+**Frontend issues:**
 ```bash
 cd frontend
 rm -rf node_modules package-lock.json
@@ -177,7 +163,7 @@ npm install
 npm run build
 ```
 
-**Backend startup fails:**
+**Backend issues:**
 ```bash
 pip install -r requirements.txt
 # Check if port 8000 is available
@@ -198,7 +184,7 @@ pip install -r requirements.txt
 **Ollama connection fails:**
 - Verify Ollama server is running
 - Check base URL configuration
-- Ensure models are installed: `ollama pull qwen3:4b`
+- Ensure models are installed: `ollama pull 模型名称`
 
 **Simulator not responding:**
 - Restart simulator: `python simulate_drone.py`
@@ -213,27 +199,23 @@ pip install -r requirements.txt
 python main.py
 
 # Web interface with hot reload
-cd frontend && npm start  # Frontend (port 3000)
+cd frontend
+npm start  # Frontend (port 3000)
+# In another terminal:
 uvicorn web_api:app --reload  # Backend (port 8000)
 ```
 
 ### Production
 ```bash
 # Build frontend
-cd frontend && npm run build
+cd frontend
+npm run build
 
 # Start production server
 python start_web.py
 ```
 
-## 📈 Roadmap
 
-- [ ] 3D flight visualization
-- [ ] Multi-drone support
-- [ ] Flight path planning
-- [ ] Mobile app
-- [ ] Cloud deployment
-- [ ] Advanced telemetry dashboard
 
 ## 🤝 Contributing
 
