@@ -55,9 +55,21 @@ const ControlPage = ({ currentModel, droneStatus }) => {
         type: 'assistant',
         content: response.data.response,
         timestamp: new Date().toISOString(),
+        execution_results: response.data.execution_results || []
       };
 
       setMessages(prev => [...prev, aiMessage]);
+      
+      // Add execution results as separate messages if present
+      if (response.data.execution_results && response.data.execution_results.length > 0) {
+        const executionMessage = {
+          id: Date.now() + 2,
+          type: 'execution',
+          content: response.data.execution_results,
+          timestamp: new Date().toISOString(),
+        };
+        setMessages(prev => [...prev, executionMessage]);
+      }
     } catch (error) {
       console.error('Chat error:', error);
       setError('发送消息失败，请重试。');
@@ -163,11 +175,13 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                       fontWeight: 600,
                       color: message.type === 'user' ? 'var(--color-primary)' : 
                              message.type === 'error' ? 'var(--color-error)' : 
+                             message.type === 'execution' ? 'var(--color-success)' :
                              'var(--color-secondary)'
                     }}>
                       {message.type === 'user' ? '👤 您' : 
                        message.type === 'error' ? '❌ 错误' : 
-                       message.type === 'system' ? 'ℹ️ 系统' : '🤖 AI'}
+                       message.type === 'system' ? 'ℹ️ 系统' : 
+                       message.type === 'execution' ? '⚙️ 执行结果' : '🤖 AI'}
                     </span>
                     <span style={{ 
                       fontSize: 'var(--font-size-xs)',
@@ -184,7 +198,49 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                     fontSize: 'var(--font-size-sm)',
                     whiteSpace: 'pre-wrap'
                   }}>
-                    {message.content}
+                    {message.type === 'execution' ? (
+                      <div>
+                        {message.content.map((result, index) => (
+                          <div key={index} style={{ 
+                            marginBottom: index < message.content.length - 1 ? 'var(--space-sm)' : 0,
+                            padding: 'var(--space-sm)',
+                            backgroundColor: result.success ? '#d4edda' : '#f8d7da',
+                            border: `1px solid ${result.success ? '#c3e6cb' : '#f5c6cb'}`,
+                            borderRadius: 'var(--radius-sm)'
+                          }}>
+                            <div style={{ 
+                              fontSize: 'var(--font-size-xs)', 
+                              fontWeight: 600,
+                              marginBottom: 'var(--space-xs)',
+                              color: result.success ? '#155724' : '#721c24'
+                            }}>
+                              {result.success ? '✅ 执行成功' : '❌ 执行失败'}
+                            </div>
+                            {result.output && (
+                              <div style={{ 
+                                fontSize: 'var(--font-size-xs)',
+                                color: '#155724',
+                                fontFamily: 'monospace',
+                                whiteSpace: 'pre-wrap'
+                              }}>
+                                {result.output}
+                              </div>
+                            )}
+                            {result.error && (
+                              <div style={{ 
+                                fontSize: 'var(--font-size-xs)',
+                                color: '#721c24',
+                                fontFamily: 'monospace'
+                              }}>
+                                {result.error}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      message.content
+                    )}
                   </div>
                 </div>
               ))}

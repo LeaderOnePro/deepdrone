@@ -409,7 +409,16 @@ Always prioritize safety and explain each operation clearly in the user's langua
         # Extract and execute Python code blocks if present
         execution_results = []
         if "```python" in response:
-            execution_results = await execute_drone_code_from_response(response)
+            try:
+                execution_results = await execute_drone_code_from_response(response)
+            except Exception as exec_error:
+                logger.error(f"Code execution error: {exec_error}")
+                execution_results = [{
+                    "block_number": 1,
+                    "code": "# Code execution failed",
+                    "success": False,
+                    "error": f"Execution error: {str(exec_error)}"
+                }]
         
         return {
             "success": True,
@@ -550,7 +559,16 @@ Always prioritize safety and explain each operation clearly in the user's langua
                     # Extract and execute Python code blocks if present
                     execution_results = []
                     if "```python" in response:
-                        execution_results = await execute_drone_code_from_response(response)
+                        try:
+                            execution_results = await execute_drone_code_from_response(response)
+                        except Exception as exec_error:
+                            logger.error(f"Code execution error: {exec_error}")
+                            execution_results = [{
+                                "block_number": 1,
+                                "code": "# Code execution failed",
+                                "success": False,
+                                "error": f"Execution error: {str(exec_error)}"
+                            }]
                     
                     # Send response back
                     await websocket.send_text(json.dumps({
