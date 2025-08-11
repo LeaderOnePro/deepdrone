@@ -154,21 +154,7 @@ python simulate_drone.py
 
 ## 🐛 故障排除
 
-### Web 界面问题
 
-**前端问题：**
-```bash
-cd frontend
-rm -rf node_modules package-lock.json
-npm install
-npm run build
-```
-
-**后端问题：**
-```bash
-pip install -r requirements.txt
-# 检查端口 8000 是否可用
-```
 
 **AI 模型连接失败：**
 - 验证 API 密钥是否正确

@@ -153,21 +153,7 @@ python web_api.py
 
 ## 🐛 Troubleshooting
 
-### Web Interface Issues
 
-**Frontend issues:**
-```bash
-cd frontend
-rm -rf node_modules package-lock.json
-npm install
-npm run build
-```
-
-**Backend issues:**
-```bash
-pip install -r requirements.txt
-# Check if port 8000 is available
-```
 
 **AI model connection fails:**
 - Verify API key is correct
@@ -184,7 +170,7 @@ pip install -r requirements.txt
 **Ollama connection fails:**
 - Verify Ollama server is running
 - Check base URL configuration
-- Ensure models are installed: `ollama pull 模型名称`
+- Ensure models are installed: `ollama pull model_name`
 
 **Simulator not responding:**
 - Restart simulator: `python simulate_drone.py`
