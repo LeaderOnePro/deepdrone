@@ -77,12 +77,25 @@ async def execute_drone_code_from_response(response: str) -> List[Dict[str, Any]
     
     for i, code in enumerate(code_blocks, 1):
         try:
-            result = execute_drone_code_safely(code)
+            # Execute with timeout to prevent blocking
+            result = await asyncio.wait_for(
+                asyncio.get_event_loop().run_in_executor(
+                    None, execute_drone_code_safely, code
+                ),
+                timeout=45.0  # 45 second timeout
+            )
             results.append({
                 "block_number": i,
                 "code": code,
                 "success": True,
                 "output": result
+            })
+        except asyncio.TimeoutError:
+            results.append({
+                "block_number": i,
+                "code": code,
+                "success": False,
+                "error": "Code execution timed out (45 seconds)"
             })
         except Exception as e:
             results.append({

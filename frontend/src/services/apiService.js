@@ -3,7 +3,7 @@ import axios from 'axios';
 // Create axios instance with base configuration
 const api = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:8000/api',
-  timeout: 30000,
+  timeout: 60000, // Increase timeout to 60 seconds for drone operations
   headers: {
     'Content-Type': 'application/json',
   },
