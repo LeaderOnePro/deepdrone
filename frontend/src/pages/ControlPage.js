@@ -49,6 +49,12 @@ const ControlPage = ({ currentModel, droneStatus }) => {
 
     try {
       const response = await apiService.sendChatMessage(inputMessage);
+      console.log('Chat response received:', response.data);
+      
+      // Check if response has the expected structure
+      if (!response.data || typeof response.data.response !== 'string') {
+        throw new Error('Invalid response format from server');
+      }
       
       const aiMessage = {
         id: Date.now() + 1,
@@ -71,7 +77,10 @@ const ControlPage = ({ currentModel, droneStatus }) => {
         setMessages(prev => [...prev, executionMessage]);
       }
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error('Chat error details:', error);
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+      
       setError('发送消息失败，请重试。');
       
       const errorMessage = {
