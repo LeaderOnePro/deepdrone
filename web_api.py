@@ -14,11 +14,14 @@ import asyncio
 import json
 import logging
 import os
+import re
+import time
 from datetime import datetime
 
 from drone.config import ModelConfig, config_manager
 from drone.llm_interface import LLMInterface
 from drone.drone_chat_interface import DroneChatInterface
+from drone.drone_tools import DroneToolsManager
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -44,6 +47,93 @@ app.add_middleware(
 active_connections: List[WebSocket] = []
 current_llm: Optional[LLMInterface] = None
 current_drone_interface: Optional[DroneChatInterface] = None
+drone_tools: Optional[DroneToolsManager] = None
+
+# Initialize drone tools with default connection
+def initialize_drone_tools():
+    """Initialize drone tools manager"""
+    global drone_tools
+    if drone_tools is None:
+        drone_tools = DroneToolsManager("udp:127.0.0.1:14550")
+
+# Code execution functions
+
+def extract_code_blocks(text: str) -> List[str]:
+    """Extract Python code blocks from markdown text."""
+    pattern = r'```(?:python)?\n(.*?)\n```'
+    matches = re.findall(pattern, text, re.DOTALL)
+    return [match.strip() for match in matches if match.strip()]
+
+async def execute_drone_code_from_response(response: str) -> List[Dict[str, Any]]:
+    """Extract and execute Python code blocks from AI response."""
+    global drone_tools
+    
+    # Initialize drone tools if not already done
+    if drone_tools is None:
+        initialize_drone_tools()
+    
+    code_blocks = extract_code_blocks(response)
+    results = []
+    
+    for i, code in enumerate(code_blocks, 1):
+        try:
+            result = execute_drone_code_safely(code)
+            results.append({
+                "block_number": i,
+                "code": code,
+                "success": True,
+                "output": result
+            })
+        except Exception as e:
+            results.append({
+                "block_number": i,
+                "code": code,
+                "success": False,
+                "error": str(e)
+            })
+    
+    return results
+
+def execute_drone_code_safely(code: str) -> str:
+    """Execute drone code safely with limited scope."""
+    global drone_tools
+    
+    # Create safe execution environment
+    safe_globals = {
+        '__builtins__': {
+            'print': print,
+            'len': len,
+            'str': str,
+            'int': int,
+            'float': float,
+            'dict': dict,
+            'list': list,
+            'range': range,
+        },
+        'connect_drone': drone_tools.connect_drone,
+        'disconnect_drone': drone_tools.disconnect_drone,
+        'takeoff': drone_tools.takeoff,
+        'land': drone_tools.land,
+        'return_home': drone_tools.return_home,
+        'fly_to': drone_tools.fly_to,
+        'get_location': drone_tools.get_location,
+        'get_battery': drone_tools.get_battery,
+        'execute_mission': drone_tools.execute_mission,
+        'time': time,
+    }
+    
+    # Capture output
+    output_lines = []
+    
+    def capture_print(*args, **kwargs):
+        output_lines.append(' '.join(str(arg) for arg in args))
+    
+    safe_globals['print'] = capture_print
+    
+    # Execute code
+    exec(code, safe_globals)
+    
+    return '\n'.join(output_lines) if output_lines else "Code executed successfully"
 
 # Pydantic models
 class ModelConfigRequest(BaseModel):
@@ -240,13 +330,18 @@ async def chat(request: ChatRequest):
     
     try:
         # Create system prompt for drone operations
-        system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You understand both Chinese and English commands and should respond in the same language the user uses.
+        system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
-Your main functions:
-1. Understand user's natural language commands (Chinese or English)
-2. Explain drone operations and flight principles
-3. Provide safe flight recommendations
-4. Answer questions about drone status and operations
+Available drone functions (use these in Python code blocks):
+- connect_drone(connection_string): Connect to drone / 连接到无人机
+- takeoff(altitude): Take off to specified altitude in meters / 起飞到指定高度（米）
+- land(): Land the drone / 降落无人机
+- return_home(): Return to launch point / 返回起飞点
+- fly_to(lat, lon, alt): Fly to GPS coordinates / 飞行到GPS坐标
+- get_location(): Get current GPS position / 获取当前GPS位置
+- get_battery(): Get battery status / 获取电池状态
+- execute_mission(waypoints): Execute mission with waypoints list / 执行航点任务
+- disconnect_drone(): Disconnect from drone / 断开无人机连接
 
 Language adaptation rules:
 - If user writes in Chinese, respond in Chinese
@@ -254,21 +349,53 @@ Language adaptation rules:
 - If mixed languages, use the primary language of the user's message
 - Always prioritize safety and provide clear explanations
 
-When users ask about drone operations:
-- Clearly explain operation steps in their language
-- Emphasize safety precautions
-- Provide professional but understandable advice
-- Maintain a friendly and professional tone
+When user asks for drone operations:
+1. Explain what you'll do in the same language as the user
+2. Provide Python code in ```python code blocks
+3. The code will be executed automatically
+4. Provide status updates
 
 Example response styles:
 
 English user: "Take off to 30 meters"
-Response: "I'll help you with taking off to 30 meters. First, ensure the drone is connected and pre-flight checks are completed, then execute the takeoff command. Please make sure the surrounding environment is safe with no obstacles. Monitor the drone during takeoff."
+Response: "I'll connect to the drone and take off to 30 meters altitude.
+
+```python
+# Connect to the drone
+connect_drone('udp:127.0.0.1:14550')
+
+# Take off to 30 meters
+takeoff(30)
+
+# Get status
+location = get_location()
+battery = get_battery()
+print(f"Location: {location}")
+print(f"Battery: {battery}")
+```
+
+The drone should now be airborne at 30 meters altitude."
 
 Chinese user: "起飞到30米"
-Response: "好的，我来为您解释起飞到30米的操作。首先需要确保无人机已连接并完成预检，然后执行起飞指令。请确保周围环境安全，无障碍物。起飞过程中请保持对无人机的监控。"
+Response: "我将连接到无人机并起飞到30米高度。
 
-Always prioritize flight safety and communicate in the user's preferred language."""
+```python
+# 连接到无人机
+connect_drone('udp:127.0.0.1:14550')
+
+# 起飞到30米
+takeoff(30)
+
+# 获取状态
+location = get_location()
+battery = get_battery()
+print(f"位置: {location}")
+print(f"电池: {battery}")
+```
+
+无人机现在应该已经在30米高度悬停。"
+
+Always prioritize safety and explain each operation clearly in the user's language."""
         
         # Prepare messages with system prompt
         messages = [
@@ -279,9 +406,15 @@ Always prioritize flight safety and communicate in the user's preferred language
         # Get AI response
         response = current_llm.chat(messages)
         
+        # Extract and execute Python code blocks if present
+        execution_results = []
+        if "```python" in response:
+            execution_results = await execute_drone_code_from_response(response)
+        
         return {
             "success": True,
             "response": response,
+            "execution_results": execution_results,
             "timestamp": datetime.now().isoformat()
         }
         
@@ -340,13 +473,18 @@ async def websocket_endpoint(websocket: WebSocket):
             if message_data.get("type") == "chat":
                 if current_llm:
                     # Create system prompt for drone operations
-                    system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You understand both Chinese and English commands and should respond in the same language the user uses.
+                    system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
-Your main functions:
-1. Understand user's natural language commands (Chinese or English)
-2. Explain drone operations and flight principles
-3. Provide safe flight recommendations
-4. Answer questions about drone status and operations
+Available drone functions (use these in Python code blocks):
+- connect_drone(connection_string): Connect to drone / 连接到无人机
+- takeoff(altitude): Take off to specified altitude in meters / 起飞到指定高度（米）
+- land(): Land the drone / 降落无人机
+- return_home(): Return to launch point / 返回起飞点
+- fly_to(lat, lon, alt): Fly to GPS coordinates / 飞行到GPS坐标
+- get_location(): Get current GPS position / 获取当前GPS位置
+- get_battery(): Get battery status / 获取电池状态
+- execute_mission(waypoints): Execute mission with waypoints list / 执行航点任务
+- disconnect_drone(): Disconnect from drone / 断开无人机连接
 
 Language adaptation rules:
 - If user writes in Chinese, respond in Chinese
@@ -354,21 +492,53 @@ Language adaptation rules:
 - If mixed languages, use the primary language of the user's message
 - Always prioritize safety and provide clear explanations
 
-When users ask about drone operations:
-- Clearly explain operation steps in their language
-- Emphasize safety precautions
-- Provide professional but understandable advice
-- Maintain a friendly and professional tone
+When user asks for drone operations:
+1. Explain what you'll do in the same language as the user
+2. Provide Python code in ```python code blocks
+3. The code will be executed automatically
+4. Provide status updates
 
 Example response styles:
 
 English user: "Take off to 30 meters"
-Response: "I'll help you with taking off to 30 meters. First, ensure the drone is connected and pre-flight checks are completed, then execute the takeoff command. Please make sure the surrounding environment is safe with no obstacles. Monitor the drone during takeoff."
+Response: "I'll connect to the drone and take off to 30 meters altitude.
+
+```python
+# Connect to the drone
+connect_drone('udp:127.0.0.1:14550')
+
+# Take off to 30 meters
+takeoff(30)
+
+# Get status
+location = get_location()
+battery = get_battery()
+print(f"Location: {location}")
+print(f"Battery: {battery}")
+```
+
+The drone should now be airborne at 30 meters altitude."
 
 Chinese user: "起飞到30米"
-Response: "好的，我来为您解释起飞到30米的操作。首先需要确保无人机已连接并完成预检，然后执行起飞指令。请确保周围环境安全，无障碍物。起飞过程中请保持对无人机的监控。"
+Response: "我将连接到无人机并起飞到30米高度。
 
-Always prioritize flight safety and communicate in the user's preferred language."""
+```python
+# 连接到无人机
+connect_drone('udp:127.0.0.1:14550')
+
+# 起飞到30米
+takeoff(30)
+
+# 获取状态
+location = get_location()
+battery = get_battery()
+print(f"位置: {location}")
+print(f"电池: {battery}")
+```
+
+无人机现在应该已经在30米高度悬停。"
+
+Always prioritize safety and explain each operation clearly in the user's language."""
                     
                     # Get AI response with system prompt
                     messages = [
@@ -377,10 +547,16 @@ Always prioritize flight safety and communicate in the user's preferred language
                     ]
                     response = current_llm.chat(messages)
                     
+                    # Extract and execute Python code blocks if present
+                    execution_results = []
+                    if "```python" in response:
+                        execution_results = await execute_drone_code_from_response(response)
+                    
                     # Send response back
                     await websocket.send_text(json.dumps({
                         "type": "chat_response",
                         "content": response,
+                        "execution_results": execution_results,
                         "timestamp": datetime.now().isoformat()
                     }))
                 else:
@@ -464,4 +640,12 @@ else:
 
 if __name__ == "__main__":
     import uvicorn
+    
+    # Initialize drone tools
+    initialize_drone_tools()
+    
+    print("🚀 Starting DeepDrone API server...")
+    print("📡 API will be available at: http://localhost:8000")
+    print("📖 API docs at: http://localhost:8000/docs")
+    
     uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
