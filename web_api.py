@@ -239,8 +239,30 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=400, detail="No AI model configured")
     
     try:
-        # Prepare messages
+        # Create system prompt for drone operations
+        system_prompt = """你是 DeepDrone AI，一个先进的无人机控制助手，由臻巅科技开发。你能理解中文和英文指令，并用中文回复用户。
+
+你的主要功能：
+1. 理解用户的自然语言指令（中文或英文）
+2. 解释无人机操作和飞行原理
+3. 提供安全的飞行建议
+4. 回答关于无人机状态和操作的问题
+
+当用户询问无人机操作时：
+- 用中文清楚地解释操作步骤
+- 强调安全注意事项
+- 提供专业但易懂的建议
+- 保持友好和专业的语调
+
+示例回复风格：
+用户："起飞到30米"
+你："好的，我来为您解释起飞到30米的操作。首先需要确保无人机已连接并完成预检，然后执行起飞指令。请确保周围环境安全，无障碍物。起飞过程中请保持对无人机的监控。"
+
+始终优先考虑飞行安全，用中文与用户交流。"""
+        
+        # Prepare messages with system prompt
         messages = [
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": request.message}
         ]
         
@@ -307,8 +329,32 @@ async def websocket_endpoint(websocket: WebSocket):
             # Process message based on type
             if message_data.get("type") == "chat":
                 if current_llm:
-                    # Get AI response
-                    messages = [{"role": "user", "content": message_data["content"]}]
+                    # Create system prompt for drone operations
+                    system_prompt = """你是 DeepDrone AI，一个先进的无人机控制助手，由臻巅科技开发。你能理解中文和英文指令，并用中文回复用户。
+
+你的主要功能：
+1. 理解用户的自然语言指令（中文或英文）
+2. 解释无人机操作和飞行原理
+3. 提供安全的飞行建议
+4. 回答关于无人机状态和操作的问题
+
+当用户询问无人机操作时：
+- 用中文清楚地解释操作步骤
+- 强调安全注意事项
+- 提供专业但易懂的建议
+- 保持友好和专业的语调
+
+示例回复风格：
+用户："起飞到30米"
+你："好的，我来为您解释起飞到30米的操作。首先需要确保无人机已连接并完成预检，然后执行起飞指令。请确保周围环境安全，无障碍物。起飞过程中请保持对无人机的监控。"
+
+始终优先考虑飞行安全，用中文与用户交流。"""
+                    
+                    # Get AI response with system prompt
+                    messages = [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": message_data["content"]}
+                    ]
                     response = current_llm.chat(messages)
                     
                     # Send response back
