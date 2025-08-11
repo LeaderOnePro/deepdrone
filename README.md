@@ -149,8 +149,7 @@ python web_api.py
 - **Ollama Network Support**: Connect to Ollama servers on LAN or internet
 - **Custom Server URLs**: Configure remote Ollama instances
 - **Auto Model Detection**: Automatically detect available models on any server
-- **Flexible Deployment**: Run models locally or on powerful remote servers
-## 
+- **Flexible Deployment**: Run models locally or on powerful remote servers## 
 🔧 Web Interface Configuration
 
 ### Connection Examples
