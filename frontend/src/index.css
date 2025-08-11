@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* Disable all animations and transitions globally */
+*, *::before, *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "SF Pro Display", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #fafafa 0%, #f0f9ff 100%);
+  color: #1f2937;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: 'Courier New', source-code-pro, Menlo, Monaco, Consolas,
+    monospace;
+}
+
+/* Gen Z 风格滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1, #ec4899);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4f46e5, #db2777);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Completely disable all hover effects and transitions */
+*, *::before, *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Force disable Material-UI hover effects */
+.MuiCard-root,
+.MuiPaper-root,
+.MuiButton-root,
+.MuiFab-root,
+.MuiIconButton-root,
+.MuiChip-root {
+  transition: none !important;
+  animation: none !important;
+}
+
+.MuiCard-root:hover,
+.MuiPaper-root:hover {
+  transform: none !important;
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12) !important;
+  elevation: 1 !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.MuiButton-root:hover,
+.MuiFab-root:hover,
+.MuiIconButton-root:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Override any CSS animations */
+@keyframes none {
+  0%, 100% { transform: none; }
+}
+
+/* Force static positioning */
+.MuiCard-root,
+.MuiPaper-root {
+  position: static !important;
+}
+
+/* Disable pointer events that might trigger animations */
+.MuiCard-root:hover,
+.MuiPaper-root:hover,
+.MuiButton-root:hover {
+  pointer-events: auto !important;
+}
+
+/* Gen Z 风格聊天消息 */
+.chat-message {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 16px;
+  padding: 12px 16px;
+  backdrop-filter: blur(10px);
+}
+
+.chat-message:hover {
+  /* Removed hover effects for better UX */
+}
+
+/* Gen Z 风格状态指示器 */
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+  position: relative;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-indicator::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.3;
+  animation: statusRipple 2s ease-in-out infinite;
+}
+
+.status-connected {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+}
+
+.status-disconnected {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+.status-warning {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+}
+
+/* Gen Z 风格动画效果 */
+@keyframes statusPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes statusRipple {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.8), 0 0 60px rgba(236, 72, 153, 0.4);
+  }
+}
+
+.gen-z-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.gen-z-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* 霓虹效果 */
+.neon-text {
+  text-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 15px currentColor,
+    0 0 20px #6366f1,
+    0 0 35px #6366f1,
+    0 0 40px #6366f1;
+  animation: neonFlicker 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonFlicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
