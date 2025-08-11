@@ -4,6 +4,14 @@
 
 **Control drones with natural language using the latest AI models from 10 major providers: OpenAI GPT-5, Anthropic Claude-4, Google Gemini-2.5, Meta Llama-4, xAI Grok, ZhipuAI, Qwen, DeepSeek, Kimi, and local/network Ollama models.**
 
+---
+
+**🌐 Language Versions | 语言版本**
+
+[![English](https://img.shields.io/badge/English-README-blue?style=for-the-badge)](README.md) [![中文](https://img.shields.io/badge/中文-README-red?style=for-the-badge)](README_ZH.md)
+
+---
+
 ## 🚀 Quick Start
 
 ### Terminal Interface
