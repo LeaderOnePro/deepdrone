@@ -1,25 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Alert,
-  Tabs,
-  Tab,
-  Divider,
-  Link,
-  IconButton,
-} from '@mui/material';
-import { Save, Science, Refresh, ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import Layout from '../components/Layout';
 import { apiService } from '../services/apiService';
 
 const SettingsPage = ({ currentModel, onModelUpdate }) => {
@@ -210,314 +191,393 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
   )];
 
   return (
-    <Box>
+    <Layout>
       {/* Header */}
-      <Box sx={{ mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <IconButton 
+      <div style={{ marginBottom: 'var(--space-xl)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 'var(--space-md)' }}>
+          <button 
+            className="button button--secondary"
             onClick={() => navigate('/dashboard')}
-            sx={{ mr: 2, color: 'primary.main' }}
-            size="large"
+            style={{ 
+              marginRight: 'var(--space-md)',
+              padding: 'var(--space-sm)',
+              minWidth: 'auto'
+            }}
           >
-            <ArrowBack />
-          </IconButton>
-          <Box>
-            <Typography variant="h4" sx={{ 
-              color: 'primary.main', 
-              mb: 0,
+            ← Back
+          </button>
+          <div>
+            <h1 style={{ 
+              fontSize: 'var(--font-size-xl)', 
               fontWeight: 700,
-              background: 'linear-gradient(45deg, #1976d2, #00bcd4)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              margin: 0,
+              marginBottom: 'var(--space-xs)',
+              color: 'var(--color-primary)'
             }}>
-              ⚙️ 系统设置
-            </Typography>
-            <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.1rem' }}>
-              配置AI模型和无人机连接
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+              ⚙️ System Settings
+            </h1>
+            <p style={{ 
+              fontSize: 'var(--font-size-md)', 
+              color: 'var(--color-secondary)',
+              margin: 0
+            }}>
+              Configure AI model and drone connection
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Message Alert */}
       {message && (
-        <Alert severity={message.type} sx={{ mb: 3 }} onClose={() => setMessage(null)}>
-          {message.text}
-        </Alert>
+        <div style={{
+          padding: 'var(--space-md)',
+          backgroundColor: message.type === 'success' ? '#d4edda' : '#f8d7da',
+          border: `1px solid ${message.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+          borderRadius: 'var(--radius-md)',
+          marginBottom: 'var(--space-xl)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <span style={{ fontSize: 'var(--font-size-sm)' }}>
+            {message.text}
+          </span>
+          <button 
+            className="button button--secondary"
+            onClick={() => setMessage(null)}
+            style={{ 
+              padding: 'var(--space-xs)',
+              minWidth: 'auto',
+              fontSize: 'var(--font-size-xs)'
+            }}
+          >
+            ✕
+          </button>
+        </div>
       )}
 
       {/* Tabs */}
-      <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
-        <Tabs 
-          value={activeTab} 
-          onChange={(e, newValue) => setActiveTab(newValue)}
-          sx={{ borderBottom: 1, borderColor: 'divider' }}
-        >
-          <Tab label="AI Model Configuration" />
-          <Tab label="Drone Connection" />
-        </Tabs>
+      <div className="card">
+        <div style={{ 
+          borderBottom: '1px solid var(--color-border)',
+          display: 'flex'
+        }}>
+          <button
+            className={`tab ${activeTab === 0 ? 'tab--active' : ''}`}
+            onClick={() => setActiveTab(0)}
+          >
+            AI Model Configuration
+          </button>
+          <button
+            className={`tab ${activeTab === 1 ? 'tab--active' : ''}`}
+            onClick={() => setActiveTab(1)}
+          >
+            Drone Connection
+          </button>
+        </div>
 
         {/* AI Model Configuration Tab */}
         {activeTab === 0 && (
-          <CardContent>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom>
-                  AI Model Configuration
-                </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  Configure your AI model for natural language drone control
-                </Typography>
-              </Grid>
+          <div style={{ padding: 'var(--space-lg)' }}>
+            <div style={{ marginBottom: 'var(--space-xl)' }}>
+              <h3 style={{ 
+                fontSize: 'var(--font-size-lg)', 
+                fontWeight: 600,
+                margin: 0,
+                marginBottom: 'var(--space-xs)'
+              }}>
+                AI Model Configuration
+              </h3>
+              <p style={{ 
+                fontSize: 'var(--font-size-sm)', 
+                color: 'var(--color-secondary)',
+                margin: 0
+              }}>
+                Configure your AI model for natural language drone control
+              </p>
+            </div>
 
+            <div className="grid grid--2" style={{ gap: 'var(--space-lg)' }}>
               {/* Provider Selection */}
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth>
-                  <InputLabel>AI Provider</InputLabel>
-                  <Select
-                    value={modelConfig.provider}
-                    label="AI Provider"
-                    onChange={(e) => handleProviderChange(e.target.value)}
-                  >
-                    {Object.entries(providers).map(([key, provider]) => (
-                      <MenuItem key={key} value={provider.name}>
-                        {key} - {provider.description}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+              <div className="form-group">
+                <label className="form-label">AI Provider</label>
+                <select
+                  className="form-select"
+                  value={modelConfig.provider}
+                  onChange={(e) => handleProviderChange(e.target.value)}
+                >
+                  <option value="">Select a provider</option>
+                  {Object.entries(providers).map(([key, provider]) => (
+                    <option key={key} value={provider.name}>
+                      {key} - {provider.description}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               {/* Model Selection */}
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth disabled={!selectedProvider}>
-                  <InputLabel>Model</InputLabel>
-                  <Select
-                    value={modelConfig.model_id}
-                    label="Model"
-                    onChange={(e) => handleModelConfigChange('model_id', e.target.value)}
-                  >
-                    {/* Show detected Ollama models if available */}
-                    {modelConfig.provider === 'ollama' && ollamaModels.length > 0 ? (
-                      <>
-                        {ollamaModels.map((model) => (
-                          <MenuItem key={model} value={model}>
-                            {model} ✅
-                          </MenuItem>
-                        ))}
-                        <Divider />
-                        {selectedProvider?.models.map((model) => (
-                          <MenuItem key={model} value={model}>
-                            {model} (will download)
-                          </MenuItem>
-                        ))}
-                      </>
-                    ) : (
-                      selectedProvider?.models.map((model) => (
-                        <MenuItem key={model} value={model}>
-                          {model}
-                        </MenuItem>
-                      ))
-                    )}
-                  </Select>
-                </FormControl>
+              <div className="form-group">
+                <label className="form-label">Model</label>
+                <select
+                  className="form-select"
+                  value={modelConfig.model_id}
+                  onChange={(e) => handleModelConfigChange('model_id', e.target.value)}
+                  disabled={!selectedProvider}
+                >
+                  <option value="">Select a model</option>
+                  {/* Show detected Ollama models if available */}
+                  {modelConfig.provider === 'ollama' && ollamaModels.length > 0 ? (
+                    <>
+                      {ollamaModels.map((model) => (
+                        <option key={model} value={model}>
+                          {model} ✅
+                        </option>
+                      ))}
+                      <option disabled>──────────</option>
+                      {selectedProvider?.models.map((model) => (
+                        <option key={model} value={model}>
+                          {model} (will download)
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    selectedProvider?.models.map((model) => (
+                      <option key={model} value={model}>
+                        {model}
+                      </option>
+                    ))
+                  )}
+                </select>
                 {modelConfig.provider === 'ollama' && ollamaLoading && (
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
+                  <div className="form-helper">
                     Detecting models...
-                  </Typography>
+                  </div>
                 )}
-              </Grid>
+              </div>
 
               {/* Configuration Name */}
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label="Configuration Name"
+              <div className="form-group">
+                <label className="form-label">Configuration Name</label>
+                <input
+                  className="form-input"
+                  type="text"
                   value={modelConfig.name}
                   onChange={(e) => handleModelConfigChange('name', e.target.value)}
                   placeholder="e.g., openai-gpt4"
                 />
-              </Grid>
+              </div>
 
               {/* API Key */}
               {selectedProvider?.name !== 'ollama' && (
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    fullWidth
+                <div className="form-group">
+                  <label className="form-label">API Key</label>
+                  <input
+                    className="form-input"
                     type="password"
-                    label="API Key"
                     value={modelConfig.api_key}
                     onChange={(e) => handleModelConfigChange('api_key', e.target.value)}
                     placeholder="Enter your API key"
-                    helperText={
-                      <Link 
-                        href={selectedProvider?.api_key_url} 
-                        target="_blank" 
-                        rel="noopener"
-                      >
-                        Get API key from {selectedProvider?.api_key_url}
-                      </Link>
-                    }
                   />
-                </Grid>
+                  {selectedProvider?.api_key_url && (
+                    <div className="form-helper">
+                      <a 
+                        href={selectedProvider.api_key_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        Get API key from {selectedProvider.api_key_url}
+                      </a>
+                    </div>
+                  )}
+                </div>
               )}
 
               {/* Base URL (for Ollama and other providers) */}
               {(modelConfig.provider === 'ollama' || modelConfig.provider === 'qwen' || modelConfig.provider === 'deepseek' || modelConfig.provider === 'moonshot' || modelConfig.provider === 'xai') && (
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    fullWidth
-                    label={modelConfig.provider === 'ollama' ? 'Ollama Server URL' : 'Base URL'}
-                    value={modelConfig.base_url}
-                    onChange={(e) => handleModelConfigChange('base_url', e.target.value)}
-                    placeholder={
-                      modelConfig.provider === 'ollama' 
-                        ? 'http://localhost:11434' 
-                        : modelConfig.provider === 'qwen'
-                        ? 'https://dashscope.aliyuncs.com/compatible-mode/v1'
-                        : modelConfig.provider === 'deepseek'
-                        ? 'https://api.deepseek.com/v1'
-                        : modelConfig.provider === 'moonshot'
-                        ? 'https://api.moonshot.cn/v1'
-                        : modelConfig.provider === 'xai'
-                        ? 'https://api.x.ai/v1'
-                        : ''
+                <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                  <label className="form-label">
+                    {modelConfig.provider === 'ollama' ? 'Ollama Server URL' : 'Base URL'}
+                  </label>
+                  <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
+                    <input
+                      className="form-input"
+                      type="text"
+                      value={modelConfig.base_url}
+                      onChange={(e) => handleModelConfigChange('base_url', e.target.value)}
+                      placeholder={
+                        modelConfig.provider === 'ollama' 
+                          ? 'http://localhost:11434' 
+                          : modelConfig.provider === 'qwen'
+                          ? 'https://dashscope.aliyuncs.com/compatible-mode/v1'
+                          : modelConfig.provider === 'deepseek'
+                          ? 'https://api.deepseek.com/v1'
+                          : modelConfig.provider === 'moonshot'
+                          ? 'https://api.moonshot.cn/v1'
+                          : modelConfig.provider === 'xai'
+                          ? 'https://api.x.ai/v1'
+                          : ''
+                      }
+                    />
+                    {modelConfig.provider === 'ollama' && (
+                      <button
+                        className="button button--secondary"
+                        onClick={() => loadOllamaModels(modelConfig.base_url || 'http://localhost:11434')}
+                        disabled={ollamaLoading}
+                        style={{ minWidth: 'auto', padding: 'var(--space-sm)' }}
+                      >
+                        🔄
+                      </button>
+                    )}
+                  </div>
+                  <div className="form-helper">
+                    {modelConfig.provider === 'ollama' 
+                      ? 'Local: http://localhost:11434, LAN: http://192.168.1.100:11434, Internet: https://your-domain.com:11434'
+                      : 'Custom API endpoint (optional)'
                     }
-                    helperText={
-                      modelConfig.provider === 'ollama' 
-                        ? 'Local: http://localhost:11434, LAN: http://192.168.1.100:11434, Internet: https://your-domain.com:11434'
-                        : 'Custom API endpoint (optional)'
-                    }
-                    InputProps={modelConfig.provider === 'ollama' ? {
-                      endAdornment: (
-                        <IconButton
-                          onClick={() => loadOllamaModels(modelConfig.base_url || 'http://localhost:11434')}
-                          disabled={ollamaLoading}
-                          size="small"
-                        >
-                          <Refresh />
-                        </IconButton>
-                      )
-                    } : undefined}
-                  />
-                </Grid>
+                  </div>
+                </div>
               )}
+            </div>
 
-              {/* Advanced Settings */}
-              <Grid item xs={12}>
-                <Divider sx={{ my: 2 }} />
-                <Typography variant="h6" gutterBottom>
-                  Advanced Settings
-                </Typography>
-              </Grid>
+            {/* Advanced Settings */}
+            <div className="divider"></div>
+            <h4 style={{ 
+              fontSize: 'var(--font-size-lg)', 
+              fontWeight: 600,
+              marginBottom: 'var(--space-lg)'
+            }}>
+              Advanced Settings
+            </h4>
 
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
+            <div className="grid grid--2" style={{ gap: 'var(--space-lg)' }}>
+              <div className="form-group">
+                <label className="form-label">Max Tokens</label>
+                <input
+                  className="form-input"
                   type="number"
-                  label="Max Tokens"
                   value={modelConfig.max_tokens}
                   onChange={(e) => handleModelConfigChange('max_tokens', parseInt(e.target.value))}
-                  inputProps={{ min: 100, max: 4000 }}
+                  min="100"
+                  max="4000"
                 />
-              </Grid>
+              </div>
 
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
+              <div className="form-group">
+                <label className="form-label">Temperature</label>
+                <input
+                  className="form-input"
                   type="number"
-                  label="Temperature"
                   value={modelConfig.temperature}
                   onChange={(e) => handleModelConfigChange('temperature', parseFloat(e.target.value))}
-                  inputProps={{ min: 0, max: 2, step: 0.1 }}
+                  min="0"
+                  max="2"
+                  step="0.1"
                 />
-              </Grid>
+              </div>
+            </div>
 
-              {/* Action Buttons */}
-              <Grid item xs={12}>
-                <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-                  <Button
-                    variant="outlined"
-                    startIcon={<Science />}
-                    onClick={handleTestConnection}
-                    disabled={loading || !modelConfig.provider || !modelConfig.model_id}
-                  >
-                    Test Connection
-                  </Button>
-                  <Button
-                    variant="contained"
-                    startIcon={<Save />}
-                    onClick={handleSaveModel}
-                    disabled={loading || !modelConfig.provider || !modelConfig.model_id}
-                  >
-                    Save Configuration
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-          </CardContent>
+            {/* Action Buttons */}
+            <div style={{ 
+              display: 'flex', 
+              gap: 'var(--space-md)', 
+              marginTop: 'var(--space-xl)' 
+            }}>
+              <button
+                className="button button--secondary"
+                onClick={handleTestConnection}
+                disabled={loading || !modelConfig.provider || !modelConfig.model_id}
+              >
+                🧪 Test Connection
+              </button>
+              <button
+                className="button button--primary"
+                onClick={handleSaveModel}
+                disabled={loading || !modelConfig.provider || !modelConfig.model_id}
+              >
+                💾 Save Configuration
+              </button>
+            </div>
+          </div>
         )}
 
         {/* Drone Connection Tab */}
         {activeTab === 1 && (
-          <CardContent>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom>
-                  Drone Connection
-                </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  Configure connection to your drone or simulator
-                </Typography>
-              </Grid>
+          <div style={{ padding: 'var(--space-lg)' }}>
+            <div style={{ marginBottom: 'var(--space-xl)' }}>
+              <h3 style={{ 
+                fontSize: 'var(--font-size-lg)', 
+                fontWeight: 600,
+                margin: 0,
+                marginBottom: 'var(--space-xs)'
+              }}>
+                Drone Connection
+              </h3>
+              <p style={{ 
+                fontSize: 'var(--font-size-sm)', 
+                color: 'var(--color-secondary)',
+                margin: 0
+              }}>
+                Configure connection to your drone or simulator
+              </p>
+            </div>
 
-              <Grid item xs={12} md={8}>
-                <TextField
-                  fullWidth
-                  label="Connection String"
+            <div style={{ display: 'flex', gap: 'var(--space-md)', alignItems: 'flex-end' }}>
+              <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
+                <label className="form-label">Connection String</label>
+                <input
+                  className="form-input"
+                  type="text"
                   value={droneConfig.connection_string}
                   onChange={(e) => setDroneConfig(prev => ({ ...prev, connection_string: e.target.value }))}
                   placeholder="udp:127.0.0.1:14550"
-                  helperText="Examples: udp:127.0.0.1:14550 (simulator), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)"
                 />
-              </Grid>
+                <div className="form-helper">
+                  Examples: udp:127.0.0.1:14550 (simulator), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)
+                </div>
+              </div>
 
-              <Grid item xs={12} md={4}>
-                <Button
-                  variant="contained"
-                  onClick={handleConnectDrone}
-                  disabled={loading}
-                  fullWidth
-                  sx={{ height: '56px' }}
-                >
-                  Connect Drone
-                </Button>
-              </Grid>
+              <button
+                className="button button--primary"
+                onClick={handleConnectDrone}
+                disabled={loading}
+                style={{ height: '40px' }}
+              >
+                🔗 Connect Drone
+              </button>
+            </div>
 
-              {/* Connection Examples */}
-              <Grid item xs={12}>
-                <Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
-                  Connection Examples:
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+            {/* Connection Examples */}
+            <div style={{ marginTop: 'var(--space-xl)' }}>
+              <h4 style={{ 
+                fontSize: 'var(--font-size-md)', 
+                fontWeight: 600,
+                marginBottom: 'var(--space-md)'
+              }}>
+                Connection Examples:
+              </h4>
+              <div style={{ 
+                fontSize: 'var(--font-size-sm)', 
+                color: 'var(--color-secondary)',
+                lineHeight: 1.6
+              }}>
+                <div style={{ marginBottom: 'var(--space-xs)' }}>
                   • <strong>Simulator:</strong> udp:127.0.0.1:14550
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+                </div>
+                <div style={{ marginBottom: 'var(--space-xs)' }}>
                   • <strong>USB Connection:</strong> /dev/ttyACM0 (Linux) or COM3 (Windows)
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+                </div>
+                <div style={{ marginBottom: 'var(--space-xs)' }}>
                   • <strong>TCP Connection:</strong> tcp:192.168.1.100:5760
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+                </div>
+                <div style={{ marginBottom: 'var(--space-xs)' }}>
                   • <strong>UDP Connection:</strong> udp:192.168.1.100:14550
-                </Typography>
-              </Grid>
-            </Grid>
-          </CardContent>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
-      </Card>
-    </Box>
+      </div>
+    </Layout>
   );
 };
 

@@ -1,27 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  TextField,
-  Button,
-  Paper,
-  Grid,
-  Chip,
-  IconButton,
-  Alert,
-} from '@mui/material';
-import {
-  Send,
-  FlightTakeoff,
-  FlightLand,
-  Stop,
-  Refresh,
-  Clear,
-  ArrowBack,
-} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import Layout from '../components/Layout';
 import { apiService } from '../services/apiService';
 
 const ControlPage = ({ currentModel, droneStatus }) => {
@@ -33,21 +12,19 @@ const ControlPage = ({ currentModel, droneStatus }) => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    // Add welcome message
     if (messages.length === 0) {
       setMessages([
         {
           id: 1,
           type: 'system',
-          content: 'Welcome to DeepDrone Control! You can use natural language to control your drone.',
+          content: 'DeepDrone Control Interface Ready. Use natural language to control your drone.',
           timestamp: new Date().toISOString(),
         },
       ]);
     }
-  }, []);
+  }, [messages.length]);
 
   useEffect(() => {
-    // Scroll to bottom when new messages are added
     scrollToBottom();
   }, [messages]);
 
@@ -61,7 +38,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
     const userMessage = {
       id: Date.now(),
       type: 'user',
-      content: inputMessage.trim(),
+      content: inputMessage,
       timestamp: new Date().toISOString(),
     };
 
@@ -71,13 +48,13 @@ const ControlPage = ({ currentModel, droneStatus }) => {
     setError(null);
 
     try {
-      const response = await apiService.sendChatMessage(userMessage.content);
+      const response = await apiService.sendChatMessage(inputMessage);
       
       const aiMessage = {
         id: Date.now() + 1,
         type: 'assistant',
         content: response.data.response,
-        timestamp: response.data.timestamp,
+        timestamp: new Date().toISOString(),
       };
 
       setMessages(prev => [...prev, aiMessage]);
@@ -88,7 +65,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
       const errorMessage = {
         id: Date.now() + 1,
         type: 'error',
-        content: 'Sorry, I encountered an error processing your request.',
+        content: 'Failed to communicate with AI. Please check your connection.',
         timestamp: new Date().toISOString(),
       };
 
@@ -98,325 +75,277 @@ const ControlPage = ({ currentModel, droneStatus }) => {
     }
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyDown = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       handleSendMessage();
     }
   };
 
-  const handleQuickCommand = (command) => {
-    setInputMessage(command);
-  };
+  const quickCommands = [
+    'Connect to drone and take off to 30 meters',
+    'Show current battery status and location',
+    'Fly in a square pattern with 50 meter sides',
+    'Return to home and land safely',
+    'Emergency stop and hover in place'
+  ];
 
-  const clearMessages = () => {
-    setMessages([
-      {
-        id: 1,
-        type: 'system',
-        content: 'Chat cleared. Ready for new commands.',
-        timestamp: new Date().toISOString(),
-      },
-    ]);
-  };
-
-  const getMessageColor = (type) => {
-    switch (type) {
-      case 'user': return 'primary.main';
-      case 'assistant': return 'success.main';
-      case 'system': return 'info.main';
-      case 'error': return 'error.main';
-      default: return 'text.primary';
-    }
-  };
-
-  const getMessageIcon = (type) => {
-    switch (type) {
-      case 'user': return '👤';
-      case 'assistant': return '🤖';
-      case 'system': return 'ℹ️';
-      case 'error': return '❌';
-      default: return '';
-    }
-  };
-
-  // Check if system is ready
   const isSystemReady = currentModel?.configured && droneStatus?.connected;
 
   return (
-    <Box>
-      {/* Header */}
-      <Box sx={{ mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <IconButton 
-            onClick={() => navigate('/dashboard')}
-            sx={{ mr: 2, color: 'primary.main' }}
-            size="large"
-          >
-            <ArrowBack />
-          </IconButton>
-          <Box>
-            <Typography variant="h4" sx={{ 
-              mb: 0,
-              fontWeight: 800,
-              fontSize: '2.5rem',
-              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              letterSpacing: '-0.02em',
-            }}>
-              🎮 控制中心 2.0
-            </Typography>
-            <Typography variant="subtitle1" sx={{ 
-              color: 'text.secondary', 
-              fontSize: '1.2rem',
-              fontWeight: 500,
-            }}>
-              用自然语言释放无人机的无限可能 ✨
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-
-      {/* System Status Alert */}
+    <Layout>
+      {/* 系统状态检查 */}
       {!isSystemReady && (
-        <Alert severity="warning" sx={{ 
-          mb: 3,
-          borderRadius: 2,
-          '& .MuiAlert-message': { fontSize: '1rem' }
+        <div style={{
+          padding: 'var(--space-md)',
+          backgroundColor: '#f8d7da',
+          border: '1px solid #f5c6cb',
+          borderRadius: 'var(--radius-md)',
+          marginBottom: 'var(--space-xl)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}>
-          {!currentModel?.configured && 'AI模型未配置。'}
-          {!droneStatus?.connected && '无人机未连接。'}
-          请在控制无人机前检查您的设置。
-        </Alert>
+          <span style={{ fontSize: 'var(--font-size-sm)' }}>
+            {!currentModel?.configured && 'AI Model not configured. '}
+            {!droneStatus?.connected && 'Drone not connected. '}
+            Please check your settings before controlling the drone.
+          </span>
+          <button 
+            className="button button--primary"
+            onClick={() => navigate('/settings')}
+          >
+            Settings
+          </button>
+        </div>
       )}
 
-      <Grid container spacing={3}>
-        {/* Chat Interface */}
-        <Grid item xs={12} lg={8}>
-          <Card sx={{ height: '70vh', display: 'flex', flexDirection: 'column', '&:hover': { transform: 'none', boxShadow: 'none' } }}>
-            <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-              {/* Chat Header */}
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h6">AI聊天界面</Typography>
-                <Box>
-                  <IconButton onClick={clearMessages} size="small">
-                    <Clear />
-                  </IconButton>
-                  <IconButton onClick={scrollToBottom} size="small">
-                    <Refresh />
-                  </IconButton>
-                </Box>
-              </Box>
+      <div className="grid grid--3" style={{ gap: 'var(--space-xl)' }}>
+        {/* 聊天界面 */}
+        <div style={{ gridColumn: 'span 2' }}>
+          <div className="card" style={{ height: '70vh', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ 
+              borderBottom: '1px solid var(--color-border)',
+              padding: 'var(--space-md)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <h2 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 600 }}>
+                AI Control Interface
+              </h2>
+              <button 
+                className="button button--secondary"
+                onClick={() => setMessages([])}
+                style={{ fontSize: 'var(--font-size-xs)' }}
+              >
+                Clear
+              </button>
+            </div>
 
-              {/* Messages Area */}
-              <Paper 
-                sx={{ 
-                  flexGrow: 1, 
-                  p: 2, 
-                  mb: 2, 
-                  overflow: 'auto',
-                  bgcolor: 'background.default',
-                  border: '1px solid #333'
+            {/* 消息区域 */}
+            <div style={{ 
+              flex: 1,
+              padding: 'var(--space-md)',
+              overflowY: 'auto',
+              backgroundColor: 'var(--color-surface)'
+            }}>
+              {messages.map((message) => (
+                <div key={message.id} style={{ marginBottom: 'var(--space-md)' }}>
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 'var(--space-xs)',
+                    marginBottom: 'var(--space-xs)'
+                  }}>
+                    <span style={{ 
+                      fontSize: 'var(--font-size-xs)',
+                      fontWeight: 600,
+                      color: message.type === 'user' ? 'var(--color-primary)' : 
+                             message.type === 'error' ? 'var(--color-error)' : 
+                             'var(--color-secondary)'
+                    }}>
+                      {message.type === 'user' ? '👤 You' : 
+                       message.type === 'error' ? '❌ Error' : 
+                       message.type === 'system' ? 'ℹ️ System' : '🤖 AI'}
+                    </span>
+                    <span style={{ 
+                      fontSize: 'var(--font-size-xs)',
+                      color: 'var(--color-tertiary)'
+                    }}>
+                      {new Date(message.timestamp).toLocaleTimeString()}
+                    </span>
+                  </div>
+                  <div style={{ 
+                    padding: 'var(--space-sm)',
+                    backgroundColor: message.type === 'user' ? 'var(--color-primary)' : 'var(--color-background)',
+                    color: message.type === 'user' ? 'var(--color-background)' : 'var(--color-primary)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: 'var(--font-size-sm)',
+                    whiteSpace: 'pre-wrap'
+                  }}>
+                    {message.content}
+                  </div>
+                </div>
+              ))}
+              
+              {isLoading && (
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 'var(--space-xs)',
+                  color: 'var(--color-secondary)',
+                  fontSize: 'var(--font-size-sm)'
+                }}>
+                  🤖 AI is processing...
+                </div>
+              )}
+              
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* 输入区域 */}
+            <div style={{ 
+              padding: 'var(--space-md)',
+              borderTop: '1px solid var(--color-border)',
+              display: 'flex',
+              gap: 'var(--space-sm)'
+            }}>
+              <textarea
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Type your drone command here... (e.g., 'Take off to 30 meters')"
+                disabled={!isSystemReady || isLoading}
+                style={{
+                  flex: 1,
+                  minHeight: '60px',
+                  resize: 'vertical',
+                  padding: 'var(--space-sm)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: 'var(--font-size-sm)',
+                  fontFamily: 'inherit'
+                }}
+              />
+              <button
+                className="button button--primary"
+                onClick={handleSendMessage}
+                disabled={!inputMessage.trim() || !isSystemReady || isLoading}
+                style={{ 
+                  alignSelf: 'flex-end',
+                  opacity: (!inputMessage.trim() || !isSystemReady || isLoading) ? 0.5 : 1
                 }}
               >
-                {messages.map((message) => (
-                  <Box key={message.id} sx={{ mb: 2 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                      <Typography variant="caption" sx={{ mr: 1 }}>
-                        {getMessageIcon(message.type)}
-                      </Typography>
-                      <Typography 
-                        variant="caption" 
-                        sx={{ color: getMessageColor(message.type), fontWeight: 'bold' }}
-                      >
-                        {message.type.charAt(0).toUpperCase() + message.type.slice(1)}
-                      </Typography>
-                      <Typography variant="caption" sx={{ ml: 'auto', color: 'text.secondary' }}>
-                        {new Date(message.timestamp).toLocaleTimeString()}
-                      </Typography>
-                    </Box>
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
-                        whiteSpace: 'pre-wrap',
-                        bgcolor: message.type === 'user' ? 'primary.dark' : 'transparent',
-                        p: message.type === 'user' ? 1 : 0,
-                        borderRadius: message.type === 'user' ? 1 : 0,
-                      }}
-                    >
-                      {message.content}
-                    </Typography>
-                  </Box>
-                ))}
-                {isLoading && (
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      🤖 AI is thinking...
-                    </Typography>
-                  </Box>
-                )}
-                <div ref={messagesEndRef} />
-              </Paper>
+                Send
+              </button>
+            </div>
 
-              {/* Input Area */}
-              <Box sx={{ display: 'flex', gap: 1 }}>
-                <TextField
-                  fullWidth
-                  multiline
-                  maxRows={3}
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type your drone command here... (e.g., 'Take off to 30 meters')"
-                  disabled={!isSystemReady || isLoading}
-                  variant="outlined"
-                  size="small"
-                />
-                <Button
-                  variant="contained"
-                  onClick={handleSendMessage}
-                  disabled={!inputMessage.trim() || !isSystemReady || isLoading}
-                  startIcon={<Send />}
+            {error && (
+              <div style={{
+                padding: 'var(--space-sm)',
+                backgroundColor: '#f8d7da',
+                border: '1px solid #f5c6cb',
+                borderRadius: 'var(--radius-sm)',
+                margin: 'var(--space-md)',
+                fontSize: 'var(--font-size-sm)',
+                color: 'var(--color-error)'
+              }}>
+                {error}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* 侧边栏 */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
+          {/* 快速命令 */}
+          <div className="card">
+            <h3 style={{ 
+              fontSize: 'var(--font-size-lg)', 
+              fontWeight: 600,
+              marginBottom: 'var(--space-md)'
+            }}>
+              Quick Commands
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
+              {quickCommands.map((command, index) => (
+                <button
+                  key={index}
+                  className="button button--secondary"
+                  onClick={() => setInputMessage(command)}
+                  disabled={!isSystemReady}
+                  style={{ 
+                    textAlign: 'left',
+                    fontSize: 'var(--font-size-xs)',
+                    opacity: !isSystemReady ? 0.5 : 1
+                  }}
                 >
-                  Send
-                </Button>
-              </Box>
+                  {command}
+                </button>
+              ))}
+            </div>
+          </div>
 
-              {error && (
-                <Alert severity="error" sx={{ mt: 1 }}>
-                  {error}
-                </Alert>
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
+          {/* 无人机状态 */}
+          <div className="card">
+            <h3 style={{ 
+              fontSize: 'var(--font-size-lg)', 
+              fontWeight: 600,
+              marginBottom: 'var(--space-md)'
+            }}>
+              Drone Status
+            </h3>
+            {droneStatus?.connected ? (
+              <div style={{ fontSize: 'var(--font-size-sm)' }}>
+                <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
+                  <div className="status-dot"></div>
+                  Battery: {droneStatus.battery}%
+                </div>
+                <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
+                  Mode: {droneStatus.mode}<br/>
+                  Altitude: {droneStatus.altitude}m<br/>
+                  Armed: {droneStatus.armed ? 'Yes' : 'No'}
+                </p>
+              </div>
+            ) : (
+              <div className="status status--error">
+                <div className="status-dot"></div>
+                Drone not connected
+              </div>
+            )}
+          </div>
 
-        {/* Control Panel */}
-        <Grid item xs={12} lg={4}>
-          <Grid container spacing={2}>
-            {/* Quick Commands */}
-            <Grid item xs={12}>
-              <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Quick Commands
-                  </Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    <Button
-                      variant="outlined"
-                      startIcon={<FlightTakeoff />}
-                      onClick={() => handleQuickCommand('Connect to drone and take off to 30 meters')}
-                      disabled={!isSystemReady}
-                      fullWidth
-                    >
-                      Take Off (30m)
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleQuickCommand('Fly in a square pattern with 50 meter sides')}
-                      disabled={!isSystemReady}
-                      fullWidth
-                    >
-                      Square Pattern
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      onClick={() => handleQuickCommand('Show current battery status and location')}
-                      disabled={!isSystemReady}
-                      fullWidth
-                    >
-                      Status Check
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      startIcon={<FlightLand />}
-                      onClick={() => handleQuickCommand('Return to home and land safely')}
-                      disabled={!isSystemReady}
-                      fullWidth
-                    >
-                      Return Home
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      startIcon={<Stop />}
-                      onClick={() => handleQuickCommand('Emergency stop and hover in place')}
-                      disabled={!isSystemReady}
-                      fullWidth
-                    >
-                      Emergency Stop
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Drone Status */}
-            <Grid item xs={12}>
-              <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Drone Status
-                  </Typography>
-                  {droneStatus?.connected ? (
-                    <Box>
-                      <Box sx={{ mb: 1 }}>
-                        <Chip 
-                          label={`Battery: ${droneStatus.battery}%`} 
-                          color={droneStatus.battery > 50 ? 'success' : droneStatus.battery > 20 ? 'warning' : 'error'}
-                          size="small"
-                        />
-                      </Box>
-                      <Typography variant="body2">
-                        Mode: {droneStatus.mode}
-                      </Typography>
-                      <Typography variant="body2">
-                        Altitude: {droneStatus.altitude}m
-                      </Typography>
-                      <Typography variant="body2">
-                        Armed: {droneStatus.armed ? 'Yes' : 'No'}
-                      </Typography>
-                    </Box>
-                  ) : (
-                    <Typography variant="body2" color="text.secondary">
-                      Drone not connected
-                    </Typography>
-                  )}
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* AI Model Status */}
-            <Grid item xs={12}>
-              <Card sx={{ '&:hover': { transform: 'none', boxShadow: 'none' } }}>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    AI Model
-                  </Typography>
-                  {currentModel?.configured ? (
-                    <Box>
-                      <Typography variant="body2">
-                        Provider: {currentModel.model_info?.provider}
-                      </Typography>
-                      <Typography variant="body2">
-                        Model: {currentModel.model_info?.model_id}
-                      </Typography>
-                      <Chip label="Ready" color="success" size="small" sx={{ mt: 1 }} />
-                    </Box>
-                  ) : (
-                    <Typography variant="body2" color="text.secondary">
-                      No AI model configured
-                    </Typography>
-                  )}
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Box>
+          {/* AI 模型状态 */}
+          <div className="card">
+            <h3 style={{ 
+              fontSize: 'var(--font-size-lg)', 
+              fontWeight: 600,
+              marginBottom: 'var(--space-md)'
+            }}>
+              AI Model
+            </h3>
+            {currentModel?.configured ? (
+              <div style={{ fontSize: 'var(--font-size-sm)' }}>
+                <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
+                  <div className="status-dot"></div>
+                  Ready
+                </div>
+                <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
+                  Provider: {currentModel.model_info?.provider}<br/>
+                  Model: {currentModel.model_info?.model_id}
+                </p>
+              </div>
+            ) : (
+              <div className="status status--error">
+                <div className="status-dot"></div>
+                No AI model configured
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </Layout>
   );
 };
 
