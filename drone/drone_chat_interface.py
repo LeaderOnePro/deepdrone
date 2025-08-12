@@ -34,7 +34,7 @@ class DroneChatInterface:
     def __init__(self, model_config: ModelConfig, connection_string: Optional[str] = None):
         self.console = Console()
         self.model_config = model_config
-        self.connection_string = connection_string or "udp:127.0.0.1:14550"
+        self.connection_string = connection_string or "tcp:127.0.0.1:5762"
         
         # Initialize components
         self.llm = LLMInterface(model_config)
@@ -218,32 +218,40 @@ class DroneChatInterface:
     
     def _create_drone_system_prompt(self) -> str:
         """Create system prompt for drone operations."""
-        return f"""You are DeepDrone AI, an advanced drone control assistant. You can control real drones through Python code.
+        return f"""You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
 Current drone status:
-- Connected: {'Yes' if self.drone_tools.is_connected() else 'No'}
+- Connected: {'Yes' if self.drone_tools.is_connected() else 'No'} / 连接状态: {'已连接' if self.drone_tools.is_connected() else '未连接'}
 - Connection: {self.connection_string}
-- Mission active: {'Yes' if self.drone_tools.mission_in_progress else 'No'}
+- Mission active: {'Yes' if self.drone_tools.mission_in_progress else 'No'} / 任务状态: {'执行中' if self.drone_tools.mission_in_progress else '待机'}
 
 Available drone functions (use these in Python code blocks):
-- connect_drone(connection_string): Connect to drone
-- takeoff(altitude): Take off to specified altitude in meters
-- land(): Land the drone
-- return_home(): Return to launch point
-- fly_to(lat, lon, alt): Fly to GPS coordinates
-- get_location(): Get current GPS position
-- get_battery(): Get battery status
-- execute_mission(waypoints): Execute mission with waypoints list
-- disconnect_drone(): Disconnect from drone
+- connect_drone(connection_string): Connect to drone / 连接到无人机
+- takeoff(altitude): Take off to specified altitude in meters / 起飞到指定高度（米）
+- land(): Land the drone / 降落无人机
+- return_home(): Return to launch point / 返回起飞点
+- fly_to(lat, lon, alt): Fly to GPS coordinates / 飞行到GPS坐标
+- get_location(): Get current GPS position / 获取当前GPS位置
+- get_battery(): Get battery status / 获取电池状态
+- execute_mission(waypoints): Execute mission with waypoints list / 执行航点任务
+- disconnect_drone(): Disconnect from drone / 断开无人机连接
 
 When user asks for drone operations:
-1. Explain what you'll do
+1. Explain what you'll do in the same language as the user
 2. Provide Python code in ```python code blocks
 3. The code will be executed automatically
 4. Provide status updates
 
-Example response:
-"I'll connect to the drone and take off to 30 meters altitude.
+Language adaptation rules:
+- If user writes in Chinese, respond in Chinese
+- If user writes in English, respond in English
+- If mixed languages, use the primary language of the user's message
+- Always prioritize safety and explain each operation clearly
+
+Example responses:
+
+English user: "Take off to 30 meters"
+Response: "I'll connect to the drone and take off to 30 meters altitude.
 
 ```python
 # Connect to the drone
@@ -261,7 +269,26 @@ print(f"Battery: {{battery}}")
 
 The drone should now be airborne at 30 meters altitude."
 
-Always prioritize safety and explain each operation clearly."""
+Chinese user: "起飞到30米"
+Response: "我将连接到无人机并起飞到30米高度。
+
+```python
+# 连接到无人机
+connect_drone('{self.connection_string}')
+
+# 起飞到30米
+takeoff(30)
+
+# 获取状态
+location = get_location()
+battery = get_battery()
+print(f"位置: {{location}}")
+print(f"电池: {{battery}}")
+```
+
+无人机现在应该已经在30米高度悬停。"
+
+Always prioritize safety and explain each operation clearly in the user's language."""
     
     def _process_ai_response(self, response: str):
         """Process AI response and execute any drone commands."""

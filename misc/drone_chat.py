@@ -179,7 +179,7 @@ class DroneAssistant(CodeAgent):
         # EXAMPLE OF COMPLETE WORKING MISSION:
         ```python
         # Connect to a drone simulator
-        connect_to_real_drone('udp:127.0.0.1:14550')
+        connect_to_real_drone('tcp:127.0.0.1:5762')
         
         # Take off to a specific altitude (always use integer or simple float values)
         drone_takeoff(30)  # Not 30. 0 or other invalid syntax
@@ -541,14 +541,14 @@ def connect_to_real_drone(connection_string: str = None) -> str:
     """Connect to a real drone using DroneKit.
     
     Args:
-        connection_string: Connection string for the drone (e.g., 'udp:127.0.0.1:14550' for SITL,
+        connection_string: Connection string for the drone (e.g., 'tcp:127.0.0.1:5762' for SITL,
                           '/dev/ttyACM0' for serial, or 'tcp:192.168.1.1:5760' for remote connection)
         
     Returns:
         str: Status of the connection
     """
     if connection_string is None:
-        return "Error: Connection string is required. Examples: 'udp:127.0.0.1:14550' for simulation, '/dev/ttyACM0' for USB, or 'tcp:192.168.1.1:5760' for WiFi"
+        return "Error: Connection string is required. Examples: 'tcp:127.0.0.1:5762' for simulation, '/dev/ttyACM0' for USB, or 'tcp:192.168.1.1:5760' for WiFi"
     
     try:
         # Update mission status

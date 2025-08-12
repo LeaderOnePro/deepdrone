@@ -21,7 +21,7 @@ class ModelConfig(BaseModel):
 
 class DroneConfig(BaseModel):
     """Configuration for drone connection."""
-    default_connection_string: str = "udp:127.0.0.1:14550"
+    default_connection_string: str = "tcp:127.0.0.1:5762"
     timeout: int = 30
     default_altitude: float = 30.0
     max_altitude: float = 100.0

@@ -24,7 +24,7 @@ class DroneController:
         Initialize the drone controller.
         
         Args:
-            connection_string: Connection string for the drone (e.g., 'udp:127.0.0.1:14550' for SITL,
+            connection_string: Connection string for the drone (e.g., 'tcp:127.0.0.1:5762' for SITL,
                               '/dev/ttyACM0' for serial, or 'tcp:192.168.1.1:5760' for remote connection)
         """
         self.vehicle = None
