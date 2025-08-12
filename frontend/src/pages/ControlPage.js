@@ -130,13 +130,19 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           <span style={{ fontSize: 'var(--font-size-sm)' }}>
             {!currentModel?.configured && 'AI 模型未配置。'}
             {!droneStatus?.connected && '无人机未连接。'}
-            请在控制无人机前检查您的设置。
+            需要连接无人机才能进行控制
           </span>
           <button 
             className="button button--primary"
-            onClick={() => navigate('/settings')}
+            onClick={() => {
+              if (!droneStatus?.connected) {
+                navigate('/settings?tab=drone');
+              } else {
+                navigate('/settings');
+              }
+            }}
           >
-            设置
+            {!droneStatus?.connected ? '连接' : '设置'}
           </button>
         </div>
       )}
@@ -374,9 +380,25 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                 </p>
               </div>
             ) : (
-              <div className="status status--error">
-                <div className="status-dot"></div>
-                无人机未连接
+              <div>
+                <div className="status status--error" style={{ marginBottom: 'var(--space-md)' }}>
+                  <div className="status-dot"></div>
+                  未连接
+                </div>
+                <p style={{ 
+                  color: 'var(--color-secondary)', 
+                  fontSize: 'var(--font-size-sm)',
+                  marginBottom: 'var(--space-md)'
+                }}>
+                  需要连接无人机才能进行控制
+                </p>
+                <button 
+                  className="button button--secondary"
+                  onClick={() => navigate('/settings?tab=drone')}
+                  style={{ width: '100%' }}
+                >
+                  连接
+                </button>
               </div>
             )}
           </div>

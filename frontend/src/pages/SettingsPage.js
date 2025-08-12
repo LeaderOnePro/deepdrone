@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { apiService } from '../services/apiService';
 
 const SettingsPage = ({ currentModel, onModelUpdate }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(0);
   const [providers, setProviders] = useState({});
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,16 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
   // Ollama specific state
   const [ollamaModels, setOllamaModels] = useState([]);
   const [ollamaLoading, setOllamaLoading] = useState(false);
+
+  // Handle URL parameters for tab switching
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab === 'drone') {
+      setActiveTab(1);
+    } else if (tab === 'model') {
+      setActiveTab(0);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     loadProviders();
