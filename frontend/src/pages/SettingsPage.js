@@ -156,10 +156,10 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
     setMessage(null);
 
     try {
-      const response = await apiService.configureModel(modelConfig);
+      const response = await apiService.testModelConnection(modelConfig);
       
       if (response.data.success) {
-        setMessage({ type: 'success', text: '连接测试成功！' });
+        setMessage({ type: 'success', text: response.data.message });
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }

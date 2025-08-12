@@ -277,13 +277,26 @@ async def configure_model(config: ModelConfigRequest):
         if test_result["success"]:
             return {
                 "success": True,
-                "message": "Model configured successfully",
+                "message": "AI模型配置成功！",
                 "model_info": current_llm.get_model_info()
             }
         else:
+            # Translate error messages to Chinese
+            error_msg = test_result["error"]
+            if "api key" in error_msg.lower():
+                error_msg = "API密钥错误，请检查您的API密钥"
+            elif "quota" in error_msg.lower() or "billing" in error_msg.lower():
+                error_msg = "配额不足或账单问题，请检查您的账户"
+            elif "model" in error_msg.lower() and "not found" in error_msg.lower():
+                error_msg = f"模型 '{test_result['model']}' 未找到"
+            elif "connection" in error_msg.lower() or "network" in error_msg.lower():
+                error_msg = "网络连接失败，请检查网络连接"
+            elif "timeout" in error_msg.lower():
+                error_msg = "连接超时，请重试"
+            
             return {
                 "success": False,
-                "message": f"Model configuration failed: {test_result['error']}"
+                "message": f"模型配置失败：{error_msg}"
             }
             
     except Exception as e:
@@ -300,6 +313,74 @@ async def get_current_model():
         }
     else:
         return {"configured": False}
+
+@app.post("/api/models/test")
+async def test_model_connection(config: ModelConfigRequest):
+    """Test AI model connection without saving configuration"""
+    try:
+        # Create temporary model configuration
+        model_config = ModelConfig(
+            name=config.name,
+            provider=config.provider,
+            model_id=config.model_id,
+            api_key=config.api_key,
+            base_url=config.base_url,
+            max_tokens=config.max_tokens,
+            temperature=config.temperature
+        )
+        
+        # Initialize temporary LLM interface
+        temp_llm = LLMInterface(model_config)
+        
+        # Test connection
+        test_result = temp_llm.test_connection()
+        
+        if test_result["success"]:
+            return {
+                "success": True,
+                "message": "连接测试成功！",
+                "provider": test_result["provider"],
+                "model": test_result["model"]
+            }
+        else:
+            # Translate error messages to Chinese
+            error_msg = test_result["error"]
+            if "api key" in error_msg.lower():
+                error_msg = "API密钥错误，请检查您的API密钥"
+            elif "quota" in error_msg.lower() or "billing" in error_msg.lower():
+                error_msg = "配额不足或账单问题，请检查您的账户"
+            elif "model" in error_msg.lower() and "not found" in error_msg.lower():
+                error_msg = f"模型 '{test_result['model']}' 未找到"
+            elif "connection" in error_msg.lower() or "network" in error_msg.lower():
+                error_msg = "网络连接失败，请检查网络连接"
+            elif "timeout" in error_msg.lower():
+                error_msg = "连接超时，请重试"
+            
+            return {
+                "success": False,
+                "message": error_msg,
+                "provider": test_result["provider"],
+                "model": test_result["model"]
+            }
+            
+    except Exception as e:
+        logger.error(f"Error testing model connection: {e}")
+        error_msg = str(e)
+        
+        # Translate common error messages to Chinese
+        if "api key" in error_msg.lower():
+            error_msg = "API密钥错误，请检查您的API密钥"
+        elif "connection" in error_msg.lower():
+            error_msg = "连接失败，请检查网络连接"
+        elif "timeout" in error_msg.lower():
+            error_msg = "连接超时，请重试"
+        else:
+            error_msg = f"连接测试失败：{error_msg}"
+        
+        return {
+            "success": False,
+            "message": error_msg
+        }
 
 @app.post("/api/ollama/models")
 async def get_ollama_models(request: OllamaServerRequest):

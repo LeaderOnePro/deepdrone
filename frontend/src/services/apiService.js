@@ -38,6 +38,8 @@ export const apiService = {
   
   configureModel: (config) => api.post('/models/configure', config),
   
+  testModelConnection: (config) => api.post('/models/test', config),
+  
   getCurrentModel: () => api.get('/models/current'),
   
   // Ollama specific
