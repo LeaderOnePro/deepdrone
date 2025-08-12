@@ -200,29 +200,23 @@ class LLMInterface:
                 except:
                     pass
                 
-                error_msg = f"❌ Model '{self.model_config.model_id}' not found in Ollama.\n\n"
+                error_msg = f"Model '{self.model_config.model_id}' not found in Ollama."
                 
                 if available_models:
-                    error_msg += f"📋 Available local models:\n"
-                    for model in available_models:
-                        error_msg += f"  • {model}\n"
-                    error_msg += f"\n💡 To install {self.model_config.model_id}, run:\n"
-                    error_msg += f"   ollama pull {self.model_config.model_id}\n"
+                    error_msg += f" Available models: {', '.join(available_models[:5])}"
+                    if len(available_models) > 5:
+                        error_msg += f" and {len(available_models) - 5} more"
                 else:
-                    error_msg += "📭 No models found locally.\n\n"
-                    error_msg += f"💡 To install {self.model_config.model_id}, run:\n"
-                    error_msg += f"   ollama pull {self.model_config.model_id}\n\n"
-                    error_msg += "🎯 Popular models to try:\n"
-                    error_msg += "   • ollama pull llama3.1\n"
-                    error_msg += "   • ollama pull codestral\n"
-                    error_msg += "   • ollama pull qwen2.5-coder\n"
+                    error_msg += " No models found locally."
                 
-                return error_msg
+                error_msg += f" To install: ollama pull {self.model_config.model_id}"
+                
+                raise Exception(error_msg)
             
             elif "connection" in error_str or "refused" in error_str:
-                return "❌ Cannot connect to Ollama.\n\n💡 Make sure Ollama is running:\n   ollama serve\n\n📥 Download Ollama from: https://ollama.com/download"
+                raise Exception("Cannot connect to Ollama. Make sure Ollama is running: ollama serve")
             
-            return f"❌ Ollama error: {str(e)}"
+            raise e
 
     def _chat_openai_compatible(self, messages: List[Dict[str, str]]) -> str:
         """Chat using OpenAI-compatible HTTP API (e.g., DashScope/Qwen)."""
@@ -252,7 +246,12 @@ class LLMInterface:
                             msg += f": {err['message']}"
                 except Exception:
                     msg += f": {resp.text}"
-                return f"❌ {msg}"
+                
+                # Check if it's an authentication error
+                if resp.status_code in [401, 403] or "api key" in msg.lower() or "unauthorized" in msg.lower():
+                    raise Exception("API key error. Please check your API key")
+                
+                raise Exception(msg)
 
             j = resp.json()
             if not isinstance(j, dict) or "choices" not in j or not j.get("choices"):
@@ -263,12 +262,12 @@ class LLMInterface:
         except Exception as e:
             s = str(e).lower()
             if "api key" in s or "unauthorized" in s:
-                return "❌ API key error. Please check your API key"
+                raise Exception("API key error. Please check your API key")
             if "timeout" in s:
-                return "❌ API timeout. Please try again."
+                raise Exception("API timeout. Please try again.")
             if "connection" in s or "failed to establish" in s:
-                return "❌ Cannot connect to API. Please check your network."
-            return f"❌ OpenAI-compatible error: {str(e)}"
+                raise Exception("Cannot connect to API. Please check your network.")
+            raise e
     
     def _generate_zhipuai_token(self) -> str:
         """Generate JWT token for ZhipuAI API authentication."""
@@ -350,7 +349,12 @@ class LLMInterface:
                     error_msg += f": {response.text}"
                 
                 logger.error(error_msg)
-                return f"❌ {error_msg}"
+                
+                # Check if it's an authentication error
+                if response.status_code in [401, 403] or "api key" in error_msg.lower() or "authentication" in error_msg.lower():
+                    raise Exception(f"ZhipuAI API key error. Please check your API key format (should be 'id.secret')")
+                
+                raise Exception(error_msg)
             
             # Parse response
             response_data = response.json()
@@ -368,17 +372,17 @@ class LLMInterface:
         except Exception as e:
             error_str = str(e).lower()
             
-            if "invalid api key" in error_str or "authentication" in error_str:
-                return "❌ ZhipuAI API key error. Please check your API key format (should be 'id.secret')"
+            if "invalid api key" in error_str or "authentication" in error_str or "api key error" in error_str:
+                raise Exception(f"ZhipuAI API key error. Please check your API key format (should be 'id.secret')")
             elif "quota" in error_str or "billing" in error_str:
-                return "❌ ZhipuAI quota exceeded. Please check your account balance."
+                raise Exception(f"ZhipuAI quota exceeded. Please check your account balance.")
             elif "timeout" in error_str:
-                return "❌ ZhipuAI API timeout. Please try again."
+                raise Exception(f"ZhipuAI API timeout. Please try again.")
             elif "connection" in error_str:
-                return "❌ Cannot connect to ZhipuAI API. Please check your network connection."
+                raise Exception(f"Cannot connect to ZhipuAI API. Please check your network connection.")
             
             logger.error(f"ZhipuAI API error: {e}")
-            return f"❌ ZhipuAI error: {str(e)}"
+            raise e
     
     def _chat_litellm(self, messages: List[Dict[str, str]]) -> str:
         """Chat using LiteLLM."""
@@ -393,12 +397,13 @@ class LLMInterface:
             return response.choices[0].message.content
             
         except Exception as e:
-            if "api key" in str(e).lower():
-                return f"API key error for {self.model_config.provider}. Please set your API key with: deepdrone models set-key {self.model_config.name}"
-            elif "quota" in str(e).lower() or "billing" in str(e).lower():
-                return f"Billing/quota error for {self.model_config.provider}. Please check your account."
-            elif "model" in str(e).lower() and "not found" in str(e).lower():
-                return f"Model '{self.model_config.model_id}' not found for {self.model_config.provider}."
+            error_str = str(e).lower()
+            if "api key" in error_str or "authentication" in error_str or "unauthorized" in error_str:
+                raise Exception(f"API key error for {self.model_config.provider}. Please check your API key.")
+            elif "quota" in error_str or "billing" in error_str:
+                raise Exception(f"Billing/quota error for {self.model_config.provider}. Please check your account.")
+            elif "model" in error_str and "not found" in error_str:
+                raise Exception(f"Model '{self.model_config.model_id}' not found for {self.model_config.provider}.")
             
             raise e
     
@@ -429,6 +434,32 @@ class LLMInterface:
             ]
             
             response = self.chat(test_messages)
+            
+            # Check if response indicates an error
+            response_lower = response.lower()
+            error_indicators = [
+                "❌", "error", "api key", "authentication", "unauthorized", 
+                "invalid", "quota", "billing", "timeout", "connection",
+                "not found", "failed", "denied"
+            ]
+            
+            # If response contains error indicators, treat as failure
+            if any(indicator in response_lower for indicator in error_indicators):
+                return {
+                    "success": False,
+                    "error": response,
+                    "provider": self.model_config.provider,
+                    "model": self.model_config.model_id
+                }
+            
+            # Additional check: response should be reasonable length and not just an error message
+            if len(response.strip()) < 5:
+                return {
+                    "success": False,
+                    "error": "Received empty or very short response, connection may have failed",
+                    "provider": self.model_config.provider,
+                    "model": self.model_config.model_id
+                }
             
             return {
                 "success": True,
