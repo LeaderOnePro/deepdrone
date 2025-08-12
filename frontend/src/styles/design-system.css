@@ -203,11 +203,12 @@
 
 .form-helper a {
   color: var(--color-primary);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .form-helper a:hover {
   text-decoration: underline;
+  opacity: 0.8;
 }
 
 /* 分隔线 */

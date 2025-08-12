@@ -208,7 +208,8 @@ async def get_providers():
         "Meta": {
             "name": "meta",
             "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
-            "api_key_url": "https://together.ai/ or https://replicate.com/",
+            "api_key_url": "https://together.ai/",
+            "api_key_alternatives": ["https://replicate.com/", "https://openrouter.ai/"],
             "description": "Latest Llama models via providers"
         },
         "xAI": {

@@ -380,13 +380,30 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   />
                   {selectedProvider?.api_key_url && (
                     <div className="form-helper">
-                      <a 
+                      从 <a 
                         href={selectedProvider.api_key_url} 
                         target="_blank" 
                         rel="noopener noreferrer"
                       >
-                        从 {selectedProvider.api_key_url} 获取 API 密钥
-                      </a>
+                        {selectedProvider.api_key_url}
+                      </a> 获取 API 密钥
+                      {selectedProvider?.api_key_alternatives && (
+                        <span>
+                          {' 或 '}
+                          {selectedProvider.api_key_alternatives.map((url, index) => (
+                            <span key={url}>
+                              <a 
+                                href={url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                              >
+                                {url}
+                              </a>
+                              {index < selectedProvider.api_key_alternatives.length - 1 ? ', ' : ''}
+                            </span>
+                          ))}
+                        </span>
+                      )}
                     </div>
                   )}
                 </div>
