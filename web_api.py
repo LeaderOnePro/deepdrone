@@ -466,18 +466,57 @@ async def connect_drone(request: DroneConnectionRequest):
 @app.get("/api/drone/status")
 async def get_drone_status():
     """Get drone status"""
-    # Mock drone status - in real implementation, this would query actual drone
-    return {
-        "connected": True,
-        "battery": 85,
-        "altitude": 0,
-        "location": {
-            "lat": 37.7749,
-            "lon": -122.4194
-        },
-        "mode": "STABILIZE",
-        "armed": False
-    }
+    global drone_tools
+    
+    # Initialize drone tools if not already done
+    if drone_tools is None:
+        initialize_drone_tools()
+    
+    try:
+        # Check if drone is actually connected
+        if hasattr(drone_tools, 'vehicle') and drone_tools.vehicle is not None:
+            # Get real drone status
+            location = drone_tools.get_location()
+            battery = drone_tools.get_battery()
+            
+            return {
+                "connected": True,
+                "battery": battery.get("level", 0) if isinstance(battery, dict) else 0,
+                "altitude": location.get("alt", 0) if isinstance(location, dict) else 0,
+                "location": {
+                    "lat": location.get("lat", 0) if isinstance(location, dict) else 0,
+                    "lon": location.get("lon", 0) if isinstance(location, dict) else 0
+                },
+                "mode": "STABILIZE",  # Default mode when connected
+                "armed": False
+            }
+        else:
+            # Return disconnected status
+            return {
+                "connected": False,
+                "battery": 0,
+                "altitude": 0,
+                "location": {
+                    "lat": 0,
+                    "lon": 0
+                },
+                "mode": "UNKNOWN",
+                "armed": False
+            }
+    except Exception as e:
+        logger.error(f"Error getting drone status: {e}")
+        # Return disconnected status on error
+        return {
+            "connected": False,
+            "battery": 0,
+            "altitude": 0,
+            "location": {
+                "lat": 0,
+                "lon": 0
+            },
+            "mode": "ERROR",
+            "armed": False
+        }
 
 # WebSocket for real-time communication
 @app.websocket("/ws")

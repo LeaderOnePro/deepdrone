@@ -318,36 +318,46 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               {/* Model Selection */}
               <div className="form-group">
                 <label className="form-label">模型</label>
-                <select
-                  className="form-select"
+                <input
+                  className="form-input"
+                  type="text"
+                  list="model-suggestions"
                   value={modelConfig.model_id}
                   onChange={(e) => handleModelConfigChange('model_id', e.target.value)}
+                  placeholder={selectedProvider ? "选择预设模型或输入自定义模型名称" : "请先选择提供商"}
                   disabled={!selectedProvider}
-                >
-                  <option value="">选择模型</option>
-                  {/* Show detected Ollama models if available */}
-                  {modelConfig.provider === 'ollama' && ollamaModels.length > 0 ? (
-                    <>
-                      {ollamaModels.map((model) => (
-                        <option key={model} value={model}>
-                          {model} ✅
-                        </option>
-                      ))}
-                      <option disabled>──────────</option>
-                      {selectedProvider?.models.map((model) => (
-                        <option key={model} value={model}>
-                          {model} (将下载)
-                        </option>
-                      ))}
-                    </>
-                  ) : (
-                    selectedProvider?.models.map((model) => (
+                />
+                {selectedProvider && (
+                  <datalist id="model-suggestions">
+                    {/* Show detected Ollama models if available */}
+                    {modelConfig.provider === 'ollama' && ollamaModels.length > 0 && (
+                      <>
+                        {ollamaModels.map((model) => (
+                          <option key={model} value={model}>
+                            {model} (已安装)
+                          </option>
+                        ))}
+                      </>
+                    )}
+                    {/* Show provider's default models */}
+                    {selectedProvider?.models.map((model) => (
                       <option key={model} value={model}>
                         {model}
                       </option>
-                    ))
+                    ))}
+                  </datalist>
+                )}
+                <div className="form-helper">
+                  {selectedProvider && (
+                    <>
+                      推荐模型: {selectedProvider.models.slice(0, 3).join(', ')}
+                      {selectedProvider.models.length > 3 && '...'}
+                      {modelConfig.provider === 'ollama' && ollamaModels.length > 0 && (
+                        <><br/>已安装: {ollamaModels.join(', ')}</>
+                      )}
+                    </>
                   )}
-                </select>
+                </div>
                 {modelConfig.provider === 'ollama' && ollamaLoading && (
                   <div className="form-helper">
                     正在检测模型...
@@ -363,8 +373,11 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   type="text"
                   value={modelConfig.name}
                   onChange={(e) => handleModelConfigChange('name', e.target.value)}
-                  placeholder="例如：openai-gpt4"
+                  placeholder="例如：gemini-pro-config"
                 />
+                <div className="form-helper">
+                  为此配置起一个便于识别的名称，用于保存和管理多个模型配置
+                </div>
               </div>
 
               {/* API Key */}
@@ -468,7 +481,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
 
             <div className="grid grid--2" style={{ gap: 'var(--space-lg)' }}>
               <div className="form-group">
-                <label className="form-label">最大令牌数</label>
+                <label className="form-label">最大Token数</label>
                 <input
                   className="form-input"
                   type="number"
@@ -477,6 +490,9 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   min="100"
                   max="4000"
                 />
+                <div className="form-helper">
+                  控制AI回复的最大长度，较大值允许更详细的回复但消耗更多资源
+                </div>
               </div>
 
               <div className="form-group">
@@ -490,6 +506,9 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   max="2"
                   step="0.1"
                 />
+                <div className="form-helper">
+                  控制AI回复的创造性，0.0-1.0为保守回复，1.0-2.0为创造性回复
+                </div>
               </div>
             </div>
 
