@@ -206,7 +206,7 @@ async def get_providers():
             "description": "Gemini 2.5 models from Google AI Studio"
         },
         "Meta": {
-            "name": "openai",
+            "name": "meta",
             "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
             "api_key_url": "https://together.ai/ or https://replicate.com/",
             "description": "Latest Llama models via providers"

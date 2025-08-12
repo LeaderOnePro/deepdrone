@@ -30,6 +30,7 @@ class LLMInterface:
             # Use OpenAI-compatible HTTP for providers with OpenAI-style endpoints
             self._setup_openai_compatible()
         else:
+            # Use LiteLLM for other providers (OpenAI, Anthropic, Google, Meta, etc.)
             self._setup_litellm()
     
     def _setup_ollama(self):
@@ -103,6 +104,9 @@ class LLMInterface:
                     os.environ["GOOGLE_API_KEY"] = self.model_config.api_key
                 elif self.model_config.provider == "zhipuai":
                     os.environ["ZHIPUAI_API_KEY"] = self.model_config.api_key
+                elif self.model_config.provider == "meta":
+                    # Meta models via Together AI or other providers use OPENAI_API_KEY
+                    os.environ["OPENAI_API_KEY"] = self.model_config.api_key
                 elif self.model_config.provider == "qwen":
                     # DashScope OpenAI 兼容通道使用 OPENAI_API_KEY 头
                     os.environ["OPENAI_API_KEY"] = self.model_config.api_key
