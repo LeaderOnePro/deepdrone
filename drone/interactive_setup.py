@@ -496,15 +496,15 @@ def start_interactive_session():
             result = subprocess.run(['ps', 'aux'], capture_output=True, text=True)
             if 'mavproxy' in result.stdout.lower() or 'sitl' in result.stdout.lower():
                 console.print("[green]✅ Detected running drone simulator![/green]")
-                default_connection = "udp:127.0.0.1:14550"
+                default_connection = "tcp:127.0.0.1:5762"
             else:
                 console.print("[yellow]⚠️  No simulator detected[/yellow]")
-                default_connection = "udp:127.0.0.1:14550"
+                default_connection = "tcp:127.0.0.1:5762"
         except:
-            default_connection = "udp:127.0.0.1:14550"
+            default_connection = "tcp:127.0.0.1:5762"
         
         console.print("Connection options:")
-        console.print("  • [green]Simulator[/green]: [cyan]udp:127.0.0.1:14550[/cyan] (default)")
+        console.print("  • [green]Simulator[/green]: [cyan]tcp:127.0.0.1:5762[/cyan] (default)")
         console.print("  • [blue]Real Drone USB[/blue]: [cyan]/dev/ttyACM0[/cyan] (Linux) or [cyan]COM3[/cyan] (Windows)")
         console.print("  • [blue]Real Drone TCP[/blue]: [cyan]tcp:192.168.1.100:5760[/cyan]")
         console.print("  • [blue]Real Drone UDP[/blue]: [cyan]udp:192.168.1.100:14550[/cyan]\n")
@@ -516,8 +516,8 @@ def start_interactive_session():
         )
         
         if not connection_string:
-            console.print("[yellow]Using default connection: udp:127.0.0.1:14550[/yellow]")
-            connection_string = "udp:127.0.0.1:14550"
+            console.print("[yellow]Using default connection: tcp:127.0.0.1:5762[/yellow]")
+            connection_string = "tcp:127.0.0.1:5762"
         
         console.print(f"[dim]Will connect to: {connection_string}[/dim]\n")
         

@@ -34,7 +34,7 @@ class DroneChatInterface:
     def __init__(self, model_config: ModelConfig, connection_string: Optional[str] = None):
         self.console = Console()
         self.model_config = model_config
-        self.connection_string = connection_string or "udp:127.0.0.1:14550"
+        self.connection_string = connection_string or "tcp:127.0.0.1:5762"
         
         # Initialize components
         self.llm = LLMInterface(model_config)

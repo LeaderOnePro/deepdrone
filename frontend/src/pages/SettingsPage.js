@@ -24,7 +24,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
 
   // Drone Configuration
   const [droneConfig, setDroneConfig] = useState({
-    connection_string: 'udp:127.0.0.1:14550',
+    connection_string: 'tcp:127.0.0.1:5762',
   });
 
   // Ollama specific state
@@ -576,7 +576,7 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   type="text"
                   value={droneConfig.connection_string}
                   onChange={(e) => setDroneConfig(prev => ({ ...prev, connection_string: e.target.value }))}
-                  placeholder="udp:127.0.0.1:14550"
+                  placeholder="tcp:127.0.0.1:5762"
                 />
                 <div className="form-helper">
                   示例: udp:127.0.0.1:14550 (模拟器), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)

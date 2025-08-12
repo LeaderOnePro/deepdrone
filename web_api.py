@@ -54,7 +54,7 @@ def initialize_drone_tools():
     """Initialize drone tools manager"""
     global drone_tools
     if drone_tools is None:
-        drone_tools = DroneToolsManager("udp:127.0.0.1:14550")
+        drone_tools = DroneToolsManager("tcp:127.0.0.1:5762")
 
 # Code execution functions
 
@@ -349,13 +349,13 @@ async def chat(request: ChatRequest):
 Available drone functions (use these in Python code blocks):
 - connect_drone(connection_string): Connect to drone / 连接到无人机
 - takeoff(altitude): Take off to specified altitude in meters / 起飞到指定高度（米）
-- land(): Land the drone / 降落无人机
-- return_home(): Return to launch point / 返回起飞点
+- land(): Land the drone / 降落无人�?
+- return_home(): Return to launch point / 返回起飞�?
 - fly_to(lat, lon, alt): Fly to GPS coordinates / 飞行到GPS坐标
 - get_location(): Get current GPS position / 获取当前GPS位置
-- get_battery(): Get battery status / 获取电池状态
+- get_battery(): Get battery status / 获取电池状�?
 - execute_mission(waypoints): Execute mission with waypoints list / 执行航点任务
-- disconnect_drone(): Disconnect from drone / 断开无人机连接
+- disconnect_drone(): Disconnect from drone / 断开无人机连�?
 
 Language adaptation rules:
 - If user writes in Chinese, respond in Chinese
@@ -376,7 +376,7 @@ Response: "I'll connect to the drone and take off to 30 meters altitude.
 
 ```python
 # Connect to the drone
-connect_drone('udp:127.0.0.1:14550')
+connect_drone('tcp:127.0.0.1:5762')
 
 # Take off to 30 meters
 takeoff(30)
@@ -390,24 +390,24 @@ print(f"Battery: {battery}")
 
 The drone should now be airborne at 30 meters altitude."
 
-Chinese user: "起飞到30米"
-Response: "我将连接到无人机并起飞到30米高度。
+Chinese user: "起飞�?0�?
+Response: "我将连接到无人机并起飞到30米高度�?
 
 ```python
 # 连接到无人机
-connect_drone('udp:127.0.0.1:14550')
+connect_drone('tcp:127.0.0.1:5762')
 
-# 起飞到30米
+# 起飞�?0�?
 takeoff(30)
 
-# 获取状态
+# 获取状�?
 location = get_location()
 battery = get_battery()
 print(f"位置: {location}")
 print(f"电池: {battery}")
 ```
 
-无人机现在应该已经在30米高度悬停。"
+无人机现在应该已经在30米高度悬停�?
 
 Always prioritize safety and explain each operation clearly in the user's language."""
         
@@ -540,13 +540,13 @@ async def websocket_endpoint(websocket: WebSocket):
 Available drone functions (use these in Python code blocks):
 - connect_drone(connection_string): Connect to drone / 连接到无人机
 - takeoff(altitude): Take off to specified altitude in meters / 起飞到指定高度（米）
-- land(): Land the drone / 降落无人机
-- return_home(): Return to launch point / 返回起飞点
+- land(): Land the drone / 降落无人�?
+- return_home(): Return to launch point / 返回起飞�?
 - fly_to(lat, lon, alt): Fly to GPS coordinates / 飞行到GPS坐标
 - get_location(): Get current GPS position / 获取当前GPS位置
-- get_battery(): Get battery status / 获取电池状态
+- get_battery(): Get battery status / 获取电池状�?
 - execute_mission(waypoints): Execute mission with waypoints list / 执行航点任务
-- disconnect_drone(): Disconnect from drone / 断开无人机连接
+- disconnect_drone(): Disconnect from drone / 断开无人机连�?
 
 Language adaptation rules:
 - If user writes in Chinese, respond in Chinese
@@ -567,7 +567,7 @@ Response: "I'll connect to the drone and take off to 30 meters altitude.
 
 ```python
 # Connect to the drone
-connect_drone('udp:127.0.0.1:14550')
+connect_drone('tcp:127.0.0.1:5762')
 
 # Take off to 30 meters
 takeoff(30)
@@ -581,24 +581,24 @@ print(f"Battery: {battery}")
 
 The drone should now be airborne at 30 meters altitude."
 
-Chinese user: "起飞到30米"
-Response: "我将连接到无人机并起飞到30米高度。
+Chinese user: "起飞�?0�?
+Response: "我将连接到无人机并起飞到30米高度�?
 
 ```python
 # 连接到无人机
-connect_drone('udp:127.0.0.1:14550')
+connect_drone('tcp:127.0.0.1:5762')
 
-# 起飞到30米
+# 起飞�?0�?
 takeoff(30)
 
-# 获取状态
+# 获取状�?
 location = get_location()
 battery = get_battery()
 print(f"位置: {location}")
 print(f"电池: {battery}")
 ```
 
-无人机现在应该已经在30米高度悬停。"
+无人机现在应该已经在30米高度悬停�?
 
 Always prioritize safety and explain each operation clearly in the user's language."""
                     

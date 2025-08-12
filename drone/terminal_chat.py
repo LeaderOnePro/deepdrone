@@ -271,7 +271,7 @@ Always explain what you're doing and provide status updates.
 Example:
 ```python
 # Connect to drone simulator
-connect_drone('udp:127.0.0.1:14550')
+connect_drone('tcp:127.0.0.1:5762')
 
 # Take off to 30 meters
 takeoff(30)
@@ -392,7 +392,7 @@ Be safety-conscious and explain each operation."""
 [bold cyan]/models[/bold cyan] - Show current model info
 
 [bold]Drone Commands (natural language):[/bold]
-- "Connect to simulator at udp:127.0.0.1:14550"
+- "Connect to simulator at tcp:127.0.0.1:5762"
 - "Take off to 30 meters"
 - "Fly to coordinates 37.7749, -122.4194 at 50 meters"
 - "Show current location and battery status"
