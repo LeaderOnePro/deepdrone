@@ -336,6 +336,46 @@ async def test_model_connection(config: ModelConfigRequest):
         test_result = temp_llm.test_connection()
         
         if test_result["success"]:
+            # Check if response indicates an error (since test_connection might return success even with errors)
+            response = test_result.get("response", "")
+            response_lower = response.lower()
+            error_indicators = [
+                "❌", "error", "api key", "authentication", "unauthorized", 
+                "invalid", "quota", "billing", "timeout", "connection",
+                "not found", "failed", "denied"
+            ]
+            
+            # If response contains error indicators, treat as failure
+            if any(indicator in response_lower for indicator in error_indicators):
+                # Translate error messages to Chinese
+                error_msg = response
+                if "api key" in error_msg.lower():
+                    error_msg = "API密钥错误，请检查您的API密钥"
+                elif "quota" in error_msg.lower() or "billing" in error_msg.lower():
+                    error_msg = "配额不足或账单问题，请检查您的账户"
+                elif "model" in error_msg.lower() and "not found" in error_msg.lower():
+                    error_msg = f"模型 '{test_result['model']}' 未找到"
+                elif "connection" in error_msg.lower() or "network" in error_msg.lower():
+                    error_msg = "网络连接失败，请检查网络连接"
+                elif "timeout" in error_msg.lower():
+                    error_msg = "连接超时，请重试"
+                
+                return {
+                    "success": False,
+                    "message": error_msg,
+                    "provider": test_result["provider"],
+                    "model": test_result["model"]
+                }
+            
+            # Additional check: response should be reasonable length and not just an error message
+            if len(response.strip()) < 5:
+                return {
+                    "success": False,
+                    "message": "连接失败，未收到有效响应",
+                    "provider": test_result["provider"],
+                    "model": test_result["model"]
+                }
+            
             return {
                 "success": True,
                 "message": "连接测试成功！",
