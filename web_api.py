@@ -585,6 +585,11 @@ async def connect_drone(request: DroneConnectionRequest):
         if drone_tools is None:
             initialize_drone_tools()
         
+        # Disconnect any existing connection first
+        if (hasattr(drone_tools, 'connected') and drone_tools.connected):
+            logger.info("Disconnecting existing drone connection before reconnecting")
+            drone_tools.disconnect_drone()
+        
         # Attempt to connect to the drone
         logger.info(f"Attempting to connect to drone at: {request.connection_string}")
         
@@ -611,6 +616,37 @@ async def connect_drone(request: DroneConnectionRequest):
             "success": False,
             "message": f"连接失败：{str(e)}",
             "connection_string": request.connection_string
+        }
+
+@app.post("/api/drone/disconnect")
+async def disconnect_drone():
+    """Disconnect from drone"""
+    global drone_tools
+    
+    try:
+        # Initialize drone tools if not already done
+        if drone_tools is None:
+            initialize_drone_tools()
+        
+        # Check if there's an active connection
+        if hasattr(drone_tools, 'connected') and drone_tools.connected:
+            logger.info("Disconnecting from drone")
+            drone_tools.disconnect_drone()
+            return {
+                "success": True,
+                "message": "无人机已断开连接"
+            }
+        else:
+            return {
+                "success": True,
+                "message": "无人机未连接，无需断开"
+            }
+        
+    except Exception as e:
+        logger.error(f"Drone disconnection error: {e}")
+        return {
+            "success": False,
+            "message": f"断开连接失败：{str(e)}"
         }
 
 @app.get("/api/drone/status")

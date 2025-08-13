@@ -197,6 +197,29 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
     }
   };
 
+  const handleDisconnectDrone = async () => {
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      const response = await apiService.disconnectDrone();
+      
+      if (response.data.success) {
+        setMessage({ type: 'success', text: response.data.message });
+      } else {
+        setMessage({ type: 'error', text: response.data.message });
+      }
+    } catch (error) {
+      console.error('Drone disconnection error:', error);
+      setMessage({ 
+        type: 'error', 
+        text: error.response?.data?.detail || '断开连接失败' 
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const selectedProvider = providers[Object.keys(providers).find(key => 
     providers[key].name === modelConfig.provider
   )];
@@ -584,18 +607,30 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
                   </div>
                 </div>
 
-                <button
-                  className="button button--primary"
-                  onClick={handleConnectDrone}
-                  disabled={loading}
-                  style={{ 
-                    height: '40px',
-                    minWidth: '120px',
-                    flexShrink: 0
-                  }}
-                >
-                  🔗 连接无人机
-                </button>
+                <div style={{ display: 'flex', gap: 'var(--space-sm)', flexShrink: 0 }}>
+                  <button
+                    className="button button--primary"
+                    onClick={handleConnectDrone}
+                    disabled={loading}
+                    style={{ 
+                      height: '40px',
+                      minWidth: '120px'
+                    }}
+                  >
+                    🔗 连接无人机
+                  </button>
+                  <button
+                    className="button button--secondary"
+                    onClick={handleDisconnectDrone}
+                    disabled={loading}
+                    style={{ 
+                      height: '40px',
+                      minWidth: '100px'
+                    }}
+                  >
+                    🔌 断开连接
+                  </button>
+                </div>
               </div>
             </div>
 
