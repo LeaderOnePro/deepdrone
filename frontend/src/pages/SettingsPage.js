@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { apiService } from '../services/apiService';
 
-const SettingsPage = ({ currentModel, onModelUpdate }) => {
+const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(0);
@@ -183,6 +183,10 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       
       if (response.data.success) {
         setMessage({ type: 'success', text: '无人机连接成功！' });
+        // Update drone status in parent component
+        if (onDroneUpdate) {
+          onDroneUpdate();
+        }
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
@@ -206,6 +210,10 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       
       if (response.data.success) {
         setMessage({ type: 'success', text: response.data.message });
+        // Update drone status in parent component
+        if (onDroneUpdate) {
+          onDroneUpdate();
+        }
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
