@@ -338,14 +338,15 @@ async def test_model_connection(config: ModelConfigRequest):
         if test_result["success"]:
             # Check if response indicates an error (since test_connection might return success even with errors)
             response = test_result.get("response", "")
-            response_lower = response.lower()
+            response_lower = response.lower() if response else ""
             error_indicators = [
                 "❌", "error", "api key", "authentication", "unauthorized", 
-                "invalid", "quota", "billing", "timeout", "connection",
-                "not found", "failed", "denied"
+                "invalid", "quota", "billing", "timeout", "failed", "denied",
+                "connection refused", "connection failed", "network error"
             ]
             
             # If response contains error indicators, treat as failure
+            # Use more specific connection error patterns to avoid false positives
             if any(indicator in response_lower for indicator in error_indicators):
                 # Translate error messages to Chinese
                 error_msg = response
@@ -384,38 +385,46 @@ async def test_model_connection(config: ModelConfigRequest):
             }
         else:
             # Translate error messages to Chinese
-            error_msg = test_result["error"]
-            if "api key" in error_msg.lower():
-                error_msg = "API密钥错误，请检查您的API密钥"
-            elif "quota" in error_msg.lower() or "billing" in error_msg.lower():
-                error_msg = "配额不足或账单问题，请检查您的账户"
-            elif "model" in error_msg.lower() and "not found" in error_msg.lower():
-                error_msg = f"模型 '{test_result['model']}' 未找到"
-            elif "connection" in error_msg.lower() or "network" in error_msg.lower():
-                error_msg = "网络连接失败，请检查网络连接"
-            elif "timeout" in error_msg.lower():
-                error_msg = "连接超时，请重试"
+            error_msg = test_result.get("error", "未知错误")
+            if error_msg and isinstance(error_msg, str):
+                error_msg_lower = error_msg.lower()
+                if "api key" in error_msg_lower:
+                    error_msg = "API密钥错误，请检查您的API密钥"
+                elif "quota" in error_msg_lower or "billing" in error_msg_lower:
+                    error_msg = "配额不足或账单问题，请检查您的账户"
+                elif "model" in error_msg_lower and "not found" in error_msg_lower:
+                    error_msg = f"模型 '{test_result.get('model', '未知')}' 未找到"
+                elif "connection" in error_msg_lower or "network" in error_msg_lower:
+                    error_msg = "网络连接失败，请检查网络连接"
+                elif "timeout" in error_msg_lower:
+                    error_msg = "连接超时，请重试"
+            else:
+                error_msg = "连接测试失败，请重试"
             
             return {
                 "success": False,
                 "message": error_msg,
-                "provider": test_result["provider"],
-                "model": test_result["model"]
+                "provider": test_result.get("provider", "未知"),
+                "model": test_result.get("model", "未知")
             }
             
     except Exception as e:
         logger.error(f"Error testing model connection: {e}")
-        error_msg = str(e)
+        error_msg = str(e) if e else "未知错误"
         
         # Translate common error messages to Chinese
-        if "api key" in error_msg.lower():
-            error_msg = "API密钥错误，请检查您的API密钥"
-        elif "connection" in error_msg.lower():
-            error_msg = "连接失败，请检查网络连接"
-        elif "timeout" in error_msg.lower():
-            error_msg = "连接超时，请重试"
+        if error_msg:
+            error_msg_lower = error_msg.lower()
+            if "api key" in error_msg_lower:
+                error_msg = "API密钥错误，请检查您的API密钥"
+            elif "connection" in error_msg_lower:
+                error_msg = "连接失败，请检查网络连接"
+            elif "timeout" in error_msg_lower:
+                error_msg = "连接超时，请重试"
+            else:
+                error_msg = f"连接测试失败：{error_msg}"
         else:
-            error_msg = f"连接测试失败：{error_msg}"
+            error_msg = "连接测试失败，请重试"
         
         return {
             "success": False,
