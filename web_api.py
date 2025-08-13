@@ -342,7 +342,8 @@ async def test_model_connection(config: ModelConfigRequest):
             error_indicators = [
                 "❌", "error", "api key", "authentication", "unauthorized", 
                 "invalid", "quota", "billing", "timeout", "failed", "denied",
-                "connection refused", "connection failed", "network error"
+                "connection refused", "connection failed", "network error",
+                "internal server error", "internal error", "service unavailable"
             ]
             
             # If response contains error indicators, treat as failure
@@ -350,15 +351,18 @@ async def test_model_connection(config: ModelConfigRequest):
             if any(indicator in response_lower for indicator in error_indicators):
                 # Translate error messages to Chinese
                 error_msg = response
-                if "api key" in error_msg.lower():
+                error_msg_lower = error_msg.lower()
+                if "api key" in error_msg_lower:
                     error_msg = "API密钥错误，请检查您的API密钥"
-                elif "quota" in error_msg.lower() or "billing" in error_msg.lower():
+                elif "internal server error" in error_msg_lower or "internal error" in error_msg_lower:
+                    error_msg = "AI服务提供商内部错误，请稍后重试"
+                elif "quota" in error_msg_lower or "billing" in error_msg_lower:
                     error_msg = "配额不足或账单问题，请检查您的账户"
-                elif "model" in error_msg.lower() and "not found" in error_msg.lower():
+                elif "model" in error_msg_lower and "not found" in error_msg_lower:
                     error_msg = f"模型 '{test_result['model']}' 未找到"
-                elif "connection" in error_msg.lower() or "network" in error_msg.lower():
+                elif "connection" in error_msg_lower or "network" in error_msg_lower:
                     error_msg = "网络连接失败，请检查网络连接"
-                elif "timeout" in error_msg.lower():
+                elif "timeout" in error_msg_lower:
                     error_msg = "连接超时，请重试"
                 
                 return {
@@ -390,6 +394,8 @@ async def test_model_connection(config: ModelConfigRequest):
                 error_msg_lower = error_msg.lower()
                 if "api key" in error_msg_lower:
                     error_msg = "API密钥错误，请检查您的API密钥"
+                elif "internal server error" in error_msg_lower or "internal error" in error_msg_lower:
+                    error_msg = "AI服务提供商内部错误，请稍后重试"
                 elif "quota" in error_msg_lower or "billing" in error_msg_lower:
                     error_msg = "配额不足或账单问题，请检查您的账户"
                 elif "model" in error_msg_lower and "not found" in error_msg_lower:
@@ -417,10 +423,14 @@ async def test_model_connection(config: ModelConfigRequest):
             error_msg_lower = error_msg.lower()
             if "api key" in error_msg_lower:
                 error_msg = "API密钥错误，请检查您的API密钥"
+            elif "internal server error" in error_msg_lower or "internal error" in error_msg_lower:
+                error_msg = "AI服务提供商内部错误，请稍后重试"
             elif "connection" in error_msg_lower:
                 error_msg = "连接失败，请检查网络连接"
             elif "timeout" in error_msg_lower:
                 error_msg = "连接超时，请重试"
+            elif "quota" in error_msg_lower or "billing" in error_msg_lower:
+                error_msg = "配额不足或账单问题，请检查您的账户"
             else:
                 error_msg = f"连接测试失败：{error_msg}"
         else:
