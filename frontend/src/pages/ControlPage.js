@@ -106,7 +106,6 @@ const ControlPage = ({ currentModel, droneStatus }) => {
   const quickCommands = [
     '连接无人机并起飞到30米高度',
     '显示当前电池状态和位置信息',
-    '执行边长50米的正方形飞行路线',
     '返回起飞点并安全降落',
     '紧急停止并悬停在当前位置'
   ];
@@ -148,9 +147,9 @@ const ControlPage = ({ currentModel, droneStatus }) => {
       )}
 
       <div className="grid grid--3" style={{ gap: 'var(--space-xl)' }}>
-        {/* 聊天界面 */}
+        {/* AI控制界面 */}
         <div style={{ gridColumn: 'span 2' }}>
-          <div className="card" style={{ height: '70vh', display: 'flex', flexDirection: 'column' }}>
+          <div className="card" style={{ height: 'calc(100vh - 200px)', display: 'flex', flexDirection: 'column' }}>
             <div style={{ 
               borderBottom: '1px solid var(--color-border)',
               padding: 'var(--space-md)',
@@ -170,12 +169,51 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               </button>
             </div>
 
+            {/* 快捷指令区域 */}
+            <div style={{ 
+              padding: 'var(--space-md)',
+              borderBottom: '1px solid var(--color-border)',
+              backgroundColor: 'var(--color-surface)'
+            }}>
+              <h4 style={{ 
+                fontSize: 'var(--font-size-sm)', 
+                fontWeight: 600,
+                marginBottom: 'var(--space-sm)',
+                color: 'var(--color-secondary)'
+              }}>
+                快捷指令
+              </h4>
+              <div style={{ 
+                display: 'flex', 
+                flexWrap: 'wrap', 
+                gap: 'var(--space-xs)' 
+              }}>
+                {quickCommands.map((command, index) => (
+                  <button
+                    key={index}
+                    className="button button--secondary"
+                    onClick={() => setInputMessage(command)}
+                    disabled={!isSystemReady}
+                    style={{ 
+                      fontSize: 'var(--font-size-xs)',
+                      padding: 'var(--space-xs) var(--space-sm)',
+                      opacity: !isSystemReady ? 0.5 : 1,
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    {command}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* 消息区域 */}
             <div style={{ 
               flex: 1,
               padding: 'var(--space-md)',
               overflowY: 'auto',
-              backgroundColor: 'var(--color-surface)'
+              backgroundColor: 'var(--color-surface)',
+              minHeight: 0
             }}>
               {messages.map((message) => (
                 <div key={message.id} style={{ marginBottom: 'var(--space-md)' }}>
@@ -328,38 +366,10 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           </div>
         </div>
 
-        {/* 侧边栏 */}
+        {/* 状态侧边栏 */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
-          {/* 快速命令 */}
-          <div className="card">
-            <h3 style={{ 
-              fontSize: 'var(--font-size-lg)', 
-              fontWeight: 600,
-              marginBottom: 'var(--space-md)'
-            }}>
-              快捷指令
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-              {quickCommands.map((command, index) => (
-                <button
-                  key={index}
-                  className="button button--secondary"
-                  onClick={() => setInputMessage(command)}
-                  disabled={!isSystemReady}
-                  style={{ 
-                    textAlign: 'left',
-                    fontSize: 'var(--font-size-xs)',
-                    opacity: !isSystemReady ? 0.5 : 1
-                  }}
-                >
-                  {command}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* 无人机状态 */}
-          <div className="card">
+          <div className="card" style={{ flex: '1' }}>
             <h3 style={{ 
               fontSize: 'var(--font-size-lg)', 
               fontWeight: 600,
@@ -404,7 +414,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           </div>
 
           {/* AI 模型状态 */}
-          <div className="card">
+          <div className="card" style={{ flex: '1' }}>
             <h3 style={{ 
               fontSize: 'var(--font-size-lg)', 
               fontWeight: 600,
