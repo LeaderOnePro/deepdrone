@@ -34,6 +34,14 @@ def check_frontend():
         print("⚠️  Frontend not built")
         return False
 
+def check_npm():
+    """Check if npm is available"""
+    try:
+        subprocess.run(["npm", "--version"], capture_output=True, check=True)
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+
 def build_frontend():
     """Build the React frontend"""
     print("🔨 Building frontend...")
@@ -41,6 +49,17 @@ def build_frontend():
     frontend_dir = Path("frontend")
     if not frontend_dir.exists():
         print("❌ Frontend directory not found")
+        return False
+    
+    # Check if npm is available
+    if not check_npm():
+        print("❌ npm not found in PATH")
+        print("💡 Please ensure Node.js and npm are installed and available in your PATH")
+        print("💡 You may need to restart your terminal or activate the correct environment")
+        print("💡 Alternatively, you can manually build the frontend:")
+        print("   cd frontend")
+        print("   npm install")
+        print("   npm run build")
         return False
     
     # Check if node_modules exists
@@ -53,6 +72,10 @@ def build_frontend():
             print("❌ Failed to install frontend dependencies")
             print("Please make sure Node.js and npm are installed")
             return False
+        except FileNotFoundError:
+            print("❌ npm command not found")
+            print("Please make sure Node.js and npm are installed and in your PATH")
+            return False
     
     # Build the frontend
     try:
@@ -61,6 +84,10 @@ def build_frontend():
         return True
     except subprocess.CalledProcessError:
         print("❌ Failed to build frontend")
+        return False
+    except FileNotFoundError:
+        print("❌ npm command not found")
+        print("Please make sure Node.js and npm are installed and in your PATH")
         return False
 
 def start_server():
