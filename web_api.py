@@ -494,8 +494,13 @@ async def chat(request: ChatRequest):
         system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
 CURRENT DRONE STATUS: """ + connection_status + """
-- If CONNECTED: DO NOT call connect_drone() again, proceed directly with the requested operation
-- If DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first before any other operations
+
+CRITICAL CONNECTION RULES:
+- If status shows CONNECTED: NEVER call connect_drone() - the drone is already connected!
+- If status shows DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first
+- ALWAYS check the status above before deciding whether to connect
+
+IMPORTANT: When drone status is CONNECTED, skip connection and go directly to the requested operation!
 
 Available drone functions (use these in Python code blocks):
 - connect_drone(connection_string): Connect to drone / 连接到无人机 (ONLY if currently DISCONNECTED)
@@ -680,11 +685,8 @@ async def get_drone_status():
         initialize_drone_tools()
     
     try:
-        # Check if drone is actually connected
-        if (hasattr(drone_tools, 'connected') and drone_tools.connected and 
-            hasattr(drone_tools, 'controller') and 
-            hasattr(drone_tools.controller, 'vehicle') and 
-            drone_tools.controller.vehicle is not None):
+        # Check if drone is actually connected - simplified and more reliable check
+        if (hasattr(drone_tools, 'connected') and drone_tools.connected):
             # Get real drone status
             location = drone_tools.get_location()
             battery = drone_tools.get_battery()
@@ -753,8 +755,13 @@ async def websocket_endpoint(websocket: WebSocket):
                     system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
 CURRENT DRONE STATUS: """ + connection_status + """
-- If CONNECTED: DO NOT call connect_drone() again, proceed directly with the requested operation
-- If DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first before any other operations
+
+CRITICAL CONNECTION RULES:
+- If status shows CONNECTED: NEVER call connect_drone() - the drone is already connected!
+- If status shows DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first
+- ALWAYS check the status above before deciding whether to connect
+
+IMPORTANT: When drone status is CONNECTED, skip connection and go directly to the requested operation!
 
 Available drone functions (use these in Python code blocks):
 - connect_drone(connection_string): Connect to drone / 连接到无人机 (ONLY if currently DISCONNECTED)

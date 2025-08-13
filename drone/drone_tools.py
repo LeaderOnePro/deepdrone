@@ -27,6 +27,12 @@ class DroneToolsManager:
     
     def connect_drone(self, connection_string: str, timeout: int = 30) -> bool:
         """Connect to a drone."""
+        # Check if already connected
+        if self.connected:
+            logger.info("Drone is already connected, skipping connection attempt")
+            self._update_status("CONNECTED", "Drone is already connected")
+            return True
+            
         try:
             self._update_status("CONNECTING", f"Connecting to {connection_string}")
             
