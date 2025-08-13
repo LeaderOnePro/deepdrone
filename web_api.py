@@ -489,9 +489,9 @@ async def chat(request: ChatRequest):
         
         # Create system prompt for drone operations with current status
         connection_status = "CONNECTED" if is_connected else "DISCONNECTED"
-        system_prompt = f"""You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
+        system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
-CURRENT DRONE STATUS: {connection_status}
+CURRENT DRONE STATUS: """ + connection_status + """
 - If CONNECTED: DO NOT call connect_drone() again, proceed directly with the requested operation
 - If DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first before any other operations
 
@@ -748,9 +748,9 @@ async def websocket_endpoint(websocket: WebSocket):
                     connection_status = "CONNECTED" if is_connected else "DISCONNECTED"
                     
                     # Create system prompt for drone operations with current status
-                    system_prompt = f"""You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
+                    system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
-CURRENT DRONE STATUS: {connection_status}
+CURRENT DRONE STATUS: """ + connection_status + """
 - If CONNECTED: DO NOT call connect_drone() again, proceed directly with the requested operation
 - If DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first before any other operations
 
