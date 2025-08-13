@@ -578,20 +578,40 @@ Always prioritize safety and explain each operation clearly in the user's langua
 @app.post("/api/drone/connect")
 async def connect_drone(request: DroneConnectionRequest):
     """Connect to drone"""
-    global current_drone_interface
+    global drone_tools
     
     try:
-        # This would integrate with the actual drone connection logic
-        # For now, return a mock response
-        return {
-            "success": True,
-            "message": f"Connected to drone at {request.connection_string}",
-            "connection_string": request.connection_string
-        }
+        # Initialize drone tools if not already done
+        if drone_tools is None:
+            initialize_drone_tools()
+        
+        # Attempt to connect to the drone
+        logger.info(f"Attempting to connect to drone at: {request.connection_string}")
+        
+        # Use the drone tools to connect
+        success = drone_tools.connect_drone(request.connection_string)
+        
+        # Check if connection was successful
+        if success:
+            return {
+                "success": True,
+                "message": "无人机连接成功！",
+                "connection_string": request.connection_string
+            }
+        else:
+            return {
+                "success": False,
+                "message": "无人机连接失败，请检查连接字符串和网络设置",
+                "connection_string": request.connection_string
+            }
         
     except Exception as e:
         logger.error(f"Drone connection error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        return {
+            "success": False,
+            "message": f"连接失败：{str(e)}",
+            "connection_string": request.connection_string
+        }
 
 @app.get("/api/drone/status")
 async def get_drone_status():
@@ -604,7 +624,10 @@ async def get_drone_status():
     
     try:
         # Check if drone is actually connected
-        if hasattr(drone_tools, 'vehicle') and drone_tools.vehicle is not None:
+        if (hasattr(drone_tools, 'connected') and drone_tools.connected and 
+            hasattr(drone_tools, 'controller') and 
+            hasattr(drone_tools.controller, 'vehicle') and 
+            drone_tools.controller.vehicle is not None):
             # Get real drone status
             location = drone_tools.get_location()
             battery = drone_tools.get_battery()
