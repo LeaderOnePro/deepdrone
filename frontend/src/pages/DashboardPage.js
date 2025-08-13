@@ -1,32 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import StatusCard from '../components/StatusCard';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { useAppContext } from '../context/AppContext';
+import { apiService } from '../services/apiService';
+import { usePerformanceMonitor, useDebounce } from '../hooks/usePerformance';
 
-const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate }) => {
+const DashboardPage = () => {
   const navigate = useNavigate();
-  const [systemStatus, setSystemStatus] = useState('ready');
+  const { 
+    currentModel, 
+    droneStatus, 
+    isLoading, 
+    actions 
+  } = useAppContext();
+  
+  // 性能监控
+  usePerformanceMonitor('DashboardPage');
+
+  // 防抖的数据更新函数
+  const debouncedUpdate = useDebounce(async () => {
+    try {
+      actions.setLoading('model', true);
+      const modelResponse = await apiService.getCurrentModel();
+      actions.setCurrentModel(modelResponse.data);
+
+      actions.setLoading('drone', true);
+      const droneResponse = await apiService.getDroneStatus();
+      actions.setDroneStatus(droneResponse.data);
+    } catch (error) {
+      actions.setError(error.message);
+    }
+  }, 1000);
 
   useEffect(() => {
-    if (!currentModel?.configured) {
-      setSystemStatus('no_model');
-    } else if (!droneStatus?.connected) {
-      setSystemStatus('no_drone');
-    } else {
-      setSystemStatus('ready');
-    }
+    debouncedUpdate();
+  }, [debouncedUpdate]);
+
+  // 计算系统状态
+  const systemStatus = useMemo(() => {
+    if (!currentModel?.configured) return 'no_model';
+    if (!droneStatus?.connected) return 'no_drone';
+    return 'ready';
   }, [currentModel, droneStatus]);
 
-  const getSystemStatus = () => {
+  // 内存化系统状态数据
+  const systemStatusData = useMemo(() => {
     switch (systemStatus) {
       case 'ready': return { status: 'success', value: '系统就绪' };
       case 'no_model': return { status: 'warning', value: 'AI 模型未配置' };
       case 'no_drone': return { status: 'error', value: '无人机未连接' };
       default: return { status: 'error', value: '未知状态' };
     }
-  };
+  }, [systemStatus]);
 
-  const systemStatusData = getSystemStatus();
+  // 内存化导航函数
+  const handleNavigateToSettings = useCallback(() => {
+    navigate('/settings');
+  }, [navigate]);
+
+  const handleNavigateToControl = useCallback(() => {
+    navigate('/control');
+  }, [navigate]);
+
+  // 如果正在加载，显示加载状态
+  if (isLoading) {
+    return (
+      <Layout>
+        <LoadingSpinner message="正在加载系统状态..." />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -47,7 +92,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
           </span>
           <button 
             className="button button--primary"
-            onClick={() => navigate('/settings')}
+            onClick={handleNavigateToSettings}
           >
             立即配置
           </button>
@@ -74,7 +119,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
           action={!currentModel?.configured && (
             <button 
               className="button button--secondary"
-              onClick={() => navigate('/settings')}
+              onClick={handleNavigateToSettings}
             >
               配置
             </button>
@@ -95,7 +140,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
           action={!droneStatus?.connected && (
             <button 
               className="button button--secondary"
-              onClick={() => navigate('/settings')}
+              onClick={handleNavigateToSettings}
             >
               连接
             </button>
@@ -109,7 +154,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
               <button
                 className="button button--primary"
-                onClick={() => navigate('/control')}
+                onClick={handleNavigateToControl}
                 disabled={systemStatus !== 'ready'}
                 style={{ 
                   opacity: systemStatus !== 'ready' ? 0.5 : 1,
@@ -120,7 +165,7 @@ const DashboardPage = ({ currentModel, droneStatus, onModelUpdate, onDroneUpdate
               </button>
               <button
                 className="button button--secondary"
-                onClick={() => navigate('/settings')}
+                onClick={handleNavigateToSettings}
               >
                 设置
               </button>

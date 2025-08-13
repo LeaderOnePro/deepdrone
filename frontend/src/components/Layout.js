@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-const Layout = ({ children }) => {
+const Layout = memo(({ children }) => {
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
+
   return (
     <div style={{ 
       minHeight: '100vh',
@@ -38,27 +43,39 @@ const Layout = ({ children }) => {
             </div>
             
             <nav style={{ display: 'flex', gap: 'var(--space-lg)' }}>
-              <a href="/dashboard" style={{ 
-                fontSize: 'var(--font-size-sm)',
-                color: 'var(--color-secondary)',
-                fontWeight: 500
-              }}>
+              <Link 
+                to="/dashboard" 
+                style={{ 
+                  fontSize: 'var(--font-size-sm)',
+                  color: isActive('/dashboard') ? 'var(--color-primary)' : 'var(--color-secondary)',
+                  fontWeight: isActive('/dashboard') ? 600 : 500,
+                  textDecoration: 'none'
+                }}
+              >
                 仪表盘
-              </a>
-              <a href="/control" style={{ 
-                fontSize: 'var(--font-size-sm)',
-                color: 'var(--color-secondary)',
-                fontWeight: 500
-              }}>
+              </Link>
+              <Link 
+                to="/control" 
+                style={{ 
+                  fontSize: 'var(--font-size-sm)',
+                  color: isActive('/control') ? 'var(--color-primary)' : 'var(--color-secondary)',
+                  fontWeight: isActive('/control') ? 600 : 500,
+                  textDecoration: 'none'
+                }}
+              >
                 控制台
-              </a>
-              <a href="/settings" style={{ 
-                fontSize: 'var(--font-size-sm)',
-                color: 'var(--color-secondary)',
-                fontWeight: 500
-              }}>
+              </Link>
+              <Link 
+                to="/settings" 
+                style={{ 
+                  fontSize: 'var(--font-size-sm)',
+                  color: isActive('/settings') ? 'var(--color-primary)' : 'var(--color-secondary)',
+                  fontWeight: isActive('/settings') ? 600 : 500,
+                  textDecoration: 'none'
+                }}
+              >
                 设置
-              </a>
+              </Link>
             </nav>
           </div>
         </div>
@@ -75,6 +92,8 @@ const Layout = ({ children }) => {
       </main>
     </div>
   );
-};
+});
+
+Layout.displayName = 'Layout';
 
 export default Layout;

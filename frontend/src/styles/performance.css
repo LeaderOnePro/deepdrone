@@ -1,0 +1,204 @@
+/* 性能优化相关的CSS */
+
+/* 启用硬件加速 */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 优化滚动性能 */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 减少重绘和回流 */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 优化动画性能 */
+.optimized-animation {
+  animation-fill-mode: both;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* 懒加载图片占位符 */
+.image-placeholder {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 虚拟滚动容器优化 */
+.virtual-scroll-container {
+  contain: layout style paint;
+  overflow: auto;
+  height: 100%;
+}
+
+.virtual-scroll-item {
+  contain: layout style paint;
+}
+
+/* 减少布局抖动 */
+.stable-layout {
+  contain: layout;
+}
+
+/* 优化表单性能 */
+.optimized-input {
+  will-change: auto;
+}
+
+.optimized-input:focus {
+  will-change: transform;
+}
+
+.optimized-input:not(:focus) {
+  will-change: auto;
+}
+
+/* 优化按钮点击反馈 */
+.button-optimized {
+  transition: transform 0.1s ease;
+  will-change: transform;
+}
+
+.button-optimized:active {
+  transform: scale(0.98);
+}
+
+/* 内容可见性优化 */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}
+
+/* 减少重排的网格布局 */
+.optimized-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  contain: layout;
+}
+
+/* 优化的卡片组件 */
+.optimized-card {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* 减少绘制区域 */
+.paint-containment {
+  contain: paint;
+}
+
+/* 优化的状态指示器 */
+.status-indicator {
+  contain: layout style paint;
+  will-change: background-color;
+  transition: background-color 0.2s ease;
+}
+
+/* 优化的加载动画 */
+.spinner {
+  contain: layout style paint;
+  animation: spin 1s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 优化的模态框 */
+.modal-backdrop {
+  contain: layout style paint;
+  backdrop-filter: blur(4px);
+  will-change: opacity;
+}
+
+/* 优化的导航 */
+.navigation {
+  contain: layout style;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 优化的聊天消息列表 */
+.chat-messages {
+  contain: layout;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.chat-message {
+  contain: layout style paint;
+}
+
+/* 响应式图片优化 */
+.responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  loading: lazy;
+}
+
+/* 优化的工具提示 */
+.tooltip {
+  contain: layout style paint;
+  will-change: opacity, transform;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* 减少内存使用的长列表 */
+.long-list {
+  contain: layout;
+  overflow: auto;
+}
+
+.long-list-item {
+  contain: layout style paint;
+}
+
+/* 优化的下拉菜单 */
+.dropdown {
+  contain: layout style paint;
+  will-change: opacity, transform;
+}
+
+/* 优化的标签页 */
+.tab-content {
+  contain: layout style paint;
+}
+
+.tab-content:not(.active) {
+  content-visibility: hidden;
+}
+
+/* 优化的进度条 */
+.progress-bar {
+  contain: layout style paint;
+  will-change: width;
+  transition: width 0.3s ease;
+}
