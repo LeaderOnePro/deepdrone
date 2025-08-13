@@ -152,7 +152,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           <div className="card" style={{ height: 'calc(100vh - 200px)', display: 'flex', flexDirection: 'column' }}>
             <div style={{ 
               borderBottom: '1px solid var(--color-border)',
-              padding: 'var(--space-md)',
+              padding: 'var(--space-sm) var(--space-md)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
@@ -169,44 +169,6 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               </button>
             </div>
 
-            {/* 快捷指令区域 */}
-            <div style={{ 
-              padding: 'var(--space-md)',
-              borderBottom: '1px solid var(--color-border)',
-              backgroundColor: 'var(--color-surface)'
-            }}>
-              <h4 style={{ 
-                fontSize: 'var(--font-size-sm)', 
-                fontWeight: 600,
-                marginBottom: 'var(--space-sm)',
-                color: 'var(--color-secondary)'
-              }}>
-                快捷指令
-              </h4>
-              <div style={{ 
-                display: 'flex', 
-                flexWrap: 'wrap', 
-                gap: 'var(--space-xs)' 
-              }}>
-                {quickCommands.map((command, index) => (
-                  <button
-                    key={index}
-                    className="button button--secondary"
-                    onClick={() => setInputMessage(command)}
-                    disabled={!isSystemReady}
-                    style={{ 
-                      fontSize: 'var(--font-size-xs)',
-                      padding: 'var(--space-xs) var(--space-sm)',
-                      opacity: !isSystemReady ? 0.5 : 1,
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    {command}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* 消息区域 */}
             <div style={{ 
               flex: 1,
@@ -215,6 +177,45 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               backgroundColor: 'var(--color-surface)',
               minHeight: 0
             }}>
+              {/* 快捷指令区域 - 在消息区域内部 */}
+              <div style={{ 
+                marginBottom: 'var(--space-lg)',
+                padding: 'var(--space-md)',
+                backgroundColor: 'var(--color-background)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-md)'
+              }}>
+                <h4 style={{ 
+                  fontSize: 'var(--font-size-sm)', 
+                  fontWeight: 600,
+                  marginBottom: 'var(--space-sm)',
+                  color: 'var(--color-secondary)'
+                }}>
+                  快捷指令
+                </h4>
+                <div style={{ 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: '16px' 
+                }}>
+                  {quickCommands.map((command, index) => (
+                    <button
+                      key={index}
+                      className="button button--secondary"
+                      onClick={() => setInputMessage(command)}
+                      disabled={!isSystemReady}
+                      style={{ 
+                        fontSize: '11px',
+                        padding: '4px 8px',
+                        opacity: !isSystemReady ? 0.5 : 1,
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {command}
+                    </button>
+                  ))}
+                </div>
+              </div>
               {messages.map((message) => (
                 <div key={message.id} style={{ marginBottom: 'var(--space-md)' }}>
                   <div style={{ 
@@ -328,8 +329,8 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                 disabled={!isSystemReady || isLoading}
                 style={{
                   flex: 1,
-                  minHeight: '60px',
-                  resize: 'vertical',
+                  height: '40px',
+                  resize: 'none',
                   padding: 'var(--space-sm)',
                   border: '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-sm)',
@@ -342,7 +343,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || !isSystemReady || isLoading}
                 style={{ 
-                  alignSelf: 'flex-end',
+                  height: '40px',
                   opacity: (!inputMessage.trim() || !isSystemReady || isLoading) ? 0.5 : 1
                 }}
               >
