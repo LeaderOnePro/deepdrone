@@ -568,29 +568,35 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               </p>
             </div>
 
-            <div style={{ display: 'flex', gap: 'var(--space-md)', alignItems: 'flex-end' }}>
-              <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
-                <label className="form-label">连接字符串</label>
-                <input
-                  className="form-input"
-                  type="text"
-                  value={droneConfig.connection_string}
-                  onChange={(e) => setDroneConfig(prev => ({ ...prev, connection_string: e.target.value }))}
-                  placeholder="tcp:127.0.0.1:5762"
-                />
-                <div className="form-helper">
-                  示例: udp:127.0.0.1:14550 (模拟器), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)
+            <div className="form-group">
+              <label className="form-label">连接字符串</label>
+              <div style={{ display: 'flex', gap: 'var(--space-md)', alignItems: 'flex-start' }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    className="form-input"
+                    type="text"
+                    value={droneConfig.connection_string}
+                    onChange={(e) => setDroneConfig(prev => ({ ...prev, connection_string: e.target.value }))}
+                    placeholder="tcp:127.0.0.1:5762"
+                  />
+                  <div className="form-helper">
+                    示例: udp:127.0.0.1:14550 (模拟器), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)
+                  </div>
                 </div>
-              </div>
 
-              <button
-                className="button button--primary"
-                onClick={handleConnectDrone}
-                disabled={loading}
-                style={{ height: '40px' }}
-              >
-                🔗 连接无人机
-              </button>
+                <button
+                  className="button button--primary"
+                  onClick={handleConnectDrone}
+                  disabled={loading}
+                  style={{ 
+                    height: '40px',
+                    minWidth: '120px',
+                    flexShrink: 0
+                  }}
+                >
+                  🔗 连接无人机
+                </button>
+              </div>
             </div>
 
             {/* Connection Examples */}
