@@ -65,6 +65,7 @@ function App() {
           <SettingsPage 
             currentModel={currentModel}
             onModelUpdate={loadCurrentModel}
+            onDroneUpdate={loadDroneStatus}
           />
         } 
       />

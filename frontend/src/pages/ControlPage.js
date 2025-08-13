@@ -106,7 +106,6 @@ const ControlPage = ({ currentModel, droneStatus }) => {
   const quickCommands = [
     '连接无人机并起飞到30米高度',
     '显示当前电池状态和位置信息',
-    '执行边长50米的正方形飞行路线',
     '返回起飞点并安全降落',
     '紧急停止并悬停在当前位置'
   ];
@@ -148,12 +147,12 @@ const ControlPage = ({ currentModel, droneStatus }) => {
       )}
 
       <div className="grid grid--3" style={{ gap: 'var(--space-xl)' }}>
-        {/* 聊天界面 */}
+        {/* AI控制界面 */}
         <div style={{ gridColumn: 'span 2' }}>
-          <div className="card" style={{ height: '70vh', display: 'flex', flexDirection: 'column' }}>
+          <div className="card" style={{ height: 'calc(100vh - 200px)', display: 'flex', flexDirection: 'column' }}>
             <div style={{ 
               borderBottom: '1px solid var(--color-border)',
-              padding: 'var(--space-md)',
+              padding: 'var(--space-sm) var(--space-md)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
@@ -175,8 +174,48 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               flex: 1,
               padding: 'var(--space-md)',
               overflowY: 'auto',
-              backgroundColor: 'var(--color-surface)'
+              backgroundColor: 'var(--color-surface)',
+              minHeight: 0
             }}>
+              {/* 快捷指令区域 - 在消息区域内部 */}
+              <div style={{ 
+                marginBottom: 'var(--space-lg)',
+                padding: 'var(--space-md)',
+                backgroundColor: 'var(--color-background)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-md)'
+              }}>
+                <h4 style={{ 
+                  fontSize: 'var(--font-size-sm)', 
+                  fontWeight: 600,
+                  marginBottom: 'var(--space-sm)',
+                  color: 'var(--color-secondary)'
+                }}>
+                  快捷指令
+                </h4>
+                <div style={{ 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: '16px' 
+                }}>
+                  {quickCommands.map((command, index) => (
+                    <button
+                      key={index}
+                      className="button button--secondary"
+                      onClick={() => setInputMessage(command)}
+                      disabled={!isSystemReady}
+                      style={{ 
+                        fontSize: '11px',
+                        padding: '4px 8px',
+                        opacity: !isSystemReady ? 0.5 : 1,
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {command}
+                    </button>
+                  ))}
+                </div>
+              </div>
               {messages.map((message) => (
                 <div key={message.id} style={{ marginBottom: 'var(--space-md)' }}>
                   <div style={{ 
@@ -290,8 +329,8 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                 disabled={!isSystemReady || isLoading}
                 style={{
                   flex: 1,
-                  minHeight: '60px',
-                  resize: 'vertical',
+                  height: '40px',
+                  resize: 'none',
                   padding: 'var(--space-sm)',
                   border: '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-sm)',
@@ -304,7 +343,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || !isSystemReady || isLoading}
                 style={{ 
-                  alignSelf: 'flex-end',
+                  height: '40px',
                   opacity: (!inputMessage.trim() || !isSystemReady || isLoading) ? 0.5 : 1
                 }}
               >
@@ -328,38 +367,10 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           </div>
         </div>
 
-        {/* 侧边栏 */}
+        {/* 状态侧边栏 */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
-          {/* 快速命令 */}
-          <div className="card">
-            <h3 style={{ 
-              fontSize: 'var(--font-size-lg)', 
-              fontWeight: 600,
-              marginBottom: 'var(--space-md)'
-            }}>
-              快捷指令
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-              {quickCommands.map((command, index) => (
-                <button
-                  key={index}
-                  className="button button--secondary"
-                  onClick={() => setInputMessage(command)}
-                  disabled={!isSystemReady}
-                  style={{ 
-                    textAlign: 'left',
-                    fontSize: 'var(--font-size-xs)',
-                    opacity: !isSystemReady ? 0.5 : 1
-                  }}
-                >
-                  {command}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* 无人机状态 */}
-          <div className="card">
+          <div className="card" style={{ flex: '1' }}>
             <h3 style={{ 
               fontSize: 'var(--font-size-lg)', 
               fontWeight: 600,
@@ -404,7 +415,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
           </div>
 
           {/* AI 模型状态 */}
-          <div className="card">
+          <div className="card" style={{ flex: '1' }}>
             <h3 style={{ 
               fontSize: 'var(--font-size-lg)', 
               fontWeight: 600,

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { apiService } from '../services/apiService';
 
-const SettingsPage = ({ currentModel, onModelUpdate }) => {
+const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(0);
@@ -183,6 +183,10 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       
       if (response.data.success) {
         setMessage({ type: 'success', text: '无人机连接成功！' });
+        // Update drone status in parent component
+        if (onDroneUpdate) {
+          onDroneUpdate();
+        }
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
@@ -191,6 +195,33 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
       setMessage({ 
         type: 'error', 
         text: error.response?.data?.detail || '连接无人机失败' 
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDisconnectDrone = async () => {
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      const response = await apiService.disconnectDrone();
+      
+      if (response.data.success) {
+        setMessage({ type: 'success', text: response.data.message });
+        // Update drone status in parent component
+        if (onDroneUpdate) {
+          onDroneUpdate();
+        }
+      } else {
+        setMessage({ type: 'error', text: response.data.message });
+      }
+    } catch (error) {
+      console.error('Drone disconnection error:', error);
+      setMessage({ 
+        type: 'error', 
+        text: error.response?.data?.detail || '断开连接失败' 
       });
     } finally {
       setLoading(false);
@@ -568,29 +599,47 @@ const SettingsPage = ({ currentModel, onModelUpdate }) => {
               </p>
             </div>
 
-            <div style={{ display: 'flex', gap: 'var(--space-md)', alignItems: 'flex-end' }}>
-              <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
-                <label className="form-label">连接字符串</label>
-                <input
-                  className="form-input"
-                  type="text"
-                  value={droneConfig.connection_string}
-                  onChange={(e) => setDroneConfig(prev => ({ ...prev, connection_string: e.target.value }))}
-                  placeholder="tcp:127.0.0.1:5762"
-                />
-                <div className="form-helper">
-                  示例: udp:127.0.0.1:14550 (模拟器), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)
+            <div className="form-group">
+              <label className="form-label">连接字符串</label>
+              <div style={{ display: 'flex', gap: 'var(--space-md)', alignItems: 'flex-start' }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    className="form-input"
+                    type="text"
+                    value={droneConfig.connection_string}
+                    onChange={(e) => setDroneConfig(prev => ({ ...prev, connection_string: e.target.value }))}
+                    placeholder="tcp:127.0.0.1:5762"
+                  />
+                  <div className="form-helper">
+                    示例: udp:127.0.0.1:14550 (模拟器), /dev/ttyACM0 (USB), tcp:192.168.1.100:5760 (TCP)
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: 'var(--space-sm)', flexShrink: 0 }}>
+                  <button
+                    className="button button--primary"
+                    onClick={handleConnectDrone}
+                    disabled={loading}
+                    style={{ 
+                      height: '40px',
+                      minWidth: '120px'
+                    }}
+                  >
+                    🔗 连接无人机
+                  </button>
+                  <button
+                    className="button button--secondary"
+                    onClick={handleDisconnectDrone}
+                    disabled={loading}
+                    style={{ 
+                      height: '40px',
+                      minWidth: '100px'
+                    }}
+                  >
+                    🔌 断开连接
+                  </button>
                 </div>
               </div>
-
-              <button
-                className="button button--primary"
-                onClick={handleConnectDrone}
-                disabled={loading}
-                style={{ height: '40px' }}
-              >
-                🔗 连接无人机
-              </button>
             </div>
 
             {/* Connection Examples */}

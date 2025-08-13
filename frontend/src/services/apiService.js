@@ -54,6 +54,9 @@ export const apiService = {
   connectDrone: (connectionString) => 
     api.post('/drone/connect', { connection_string: connectionString }),
   
+  disconnectDrone: () => 
+    api.post('/drone/disconnect'),
+  
   getDroneStatus: () => api.get('/drone/status'),
   
   sendDroneCommand: (command) => 

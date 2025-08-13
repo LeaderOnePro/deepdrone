@@ -122,12 +122,14 @@ def execute_drone_code_safely(code: str) -> str:
             'dict': dict,
             'list': list,
             'range': range,
+            '__import__': __import__,
         },
         'connect_drone': drone_tools.connect_drone,
         'disconnect_drone': drone_tools.disconnect_drone,
         'takeoff': drone_tools.takeoff,
         'land': drone_tools.land,
         'return_home': drone_tools.return_home,
+        'return_and_land': drone_tools.return_and_land,
         'fly_to': drone_tools.fly_to,
         'get_location': drone_tools.get_location,
         'get_battery': drone_tools.get_battery,
@@ -338,26 +340,31 @@ async def test_model_connection(config: ModelConfigRequest):
         if test_result["success"]:
             # Check if response indicates an error (since test_connection might return success even with errors)
             response = test_result.get("response", "")
-            response_lower = response.lower()
+            response_lower = response.lower() if response else ""
             error_indicators = [
                 "❌", "error", "api key", "authentication", "unauthorized", 
-                "invalid", "quota", "billing", "timeout", "connection",
-                "not found", "failed", "denied"
+                "invalid", "quota", "billing", "timeout", "failed", "denied",
+                "connection refused", "connection failed", "network error",
+                "internal server error", "internal error", "service unavailable"
             ]
             
             # If response contains error indicators, treat as failure
+            # Use more specific connection error patterns to avoid false positives
             if any(indicator in response_lower for indicator in error_indicators):
                 # Translate error messages to Chinese
                 error_msg = response
-                if "api key" in error_msg.lower():
+                error_msg_lower = error_msg.lower()
+                if "api key" in error_msg_lower:
                     error_msg = "API密钥错误，请检查您的API密钥"
-                elif "quota" in error_msg.lower() or "billing" in error_msg.lower():
+                elif "internal server error" in error_msg_lower or "internal error" in error_msg_lower:
+                    error_msg = "AI服务提供商内部错误，请稍后重试"
+                elif "quota" in error_msg_lower or "billing" in error_msg_lower:
                     error_msg = "配额不足或账单问题，请检查您的账户"
-                elif "model" in error_msg.lower() and "not found" in error_msg.lower():
+                elif "model" in error_msg_lower and "not found" in error_msg_lower:
                     error_msg = f"模型 '{test_result['model']}' 未找到"
-                elif "connection" in error_msg.lower() or "network" in error_msg.lower():
+                elif "connection" in error_msg_lower or "network" in error_msg_lower:
                     error_msg = "网络连接失败，请检查网络连接"
-                elif "timeout" in error_msg.lower():
+                elif "timeout" in error_msg_lower:
                     error_msg = "连接超时，请重试"
                 
                 return {
@@ -384,38 +391,52 @@ async def test_model_connection(config: ModelConfigRequest):
             }
         else:
             # Translate error messages to Chinese
-            error_msg = test_result["error"]
-            if "api key" in error_msg.lower():
-                error_msg = "API密钥错误，请检查您的API密钥"
-            elif "quota" in error_msg.lower() or "billing" in error_msg.lower():
-                error_msg = "配额不足或账单问题，请检查您的账户"
-            elif "model" in error_msg.lower() and "not found" in error_msg.lower():
-                error_msg = f"模型 '{test_result['model']}' 未找到"
-            elif "connection" in error_msg.lower() or "network" in error_msg.lower():
-                error_msg = "网络连接失败，请检查网络连接"
-            elif "timeout" in error_msg.lower():
-                error_msg = "连接超时，请重试"
+            error_msg = test_result.get("error", "未知错误")
+            if error_msg and isinstance(error_msg, str):
+                error_msg_lower = error_msg.lower()
+                if "api key" in error_msg_lower:
+                    error_msg = "API密钥错误，请检查您的API密钥"
+                elif "internal server error" in error_msg_lower or "internal error" in error_msg_lower:
+                    error_msg = "AI服务提供商内部错误，请稍后重试"
+                elif "quota" in error_msg_lower or "billing" in error_msg_lower:
+                    error_msg = "配额不足或账单问题，请检查您的账户"
+                elif "model" in error_msg_lower and "not found" in error_msg_lower:
+                    error_msg = f"模型 '{test_result.get('model', '未知')}' 未找到"
+                elif "connection" in error_msg_lower or "network" in error_msg_lower:
+                    error_msg = "网络连接失败，请检查网络连接"
+                elif "timeout" in error_msg_lower:
+                    error_msg = "连接超时，请重试"
+            else:
+                error_msg = "连接测试失败，请重试"
             
             return {
                 "success": False,
                 "message": error_msg,
-                "provider": test_result["provider"],
-                "model": test_result["model"]
+                "provider": test_result.get("provider", "未知"),
+                "model": test_result.get("model", "未知")
             }
             
     except Exception as e:
         logger.error(f"Error testing model connection: {e}")
-        error_msg = str(e)
+        error_msg = str(e) if e else "未知错误"
         
         # Translate common error messages to Chinese
-        if "api key" in error_msg.lower():
-            error_msg = "API密钥错误，请检查您的API密钥"
-        elif "connection" in error_msg.lower():
-            error_msg = "连接失败，请检查网络连接"
-        elif "timeout" in error_msg.lower():
-            error_msg = "连接超时，请重试"
+        if error_msg:
+            error_msg_lower = error_msg.lower()
+            if "api key" in error_msg_lower:
+                error_msg = "API密钥错误，请检查您的API密钥"
+            elif "internal server error" in error_msg_lower or "internal error" in error_msg_lower:
+                error_msg = "AI服务提供商内部错误，请稍后重试"
+            elif "connection" in error_msg_lower:
+                error_msg = "连接失败，请检查网络连接"
+            elif "timeout" in error_msg_lower:
+                error_msg = "连接超时，请重试"
+            elif "quota" in error_msg_lower or "billing" in error_msg_lower:
+                error_msg = "配额不足或账单问题，请检查您的账户"
+            else:
+                error_msg = f"连接测试失败：{error_msg}"
         else:
-            error_msg = f"连接测试失败：{error_msg}"
+            error_msg = "连接测试失败，请重试"
         
         return {
             "success": False,
@@ -464,11 +485,25 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=400, detail="No AI model configured")
     
     try:
-        # Create system prompt for drone operations
+        # Get current drone status
+        drone_status = await get_drone_status()
+        is_connected = drone_status.get("connected", False)
+        
+        # Create system prompt for drone operations with current status
+        connection_status = "CONNECTED" if is_connected else "DISCONNECTED"
         system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
+CURRENT DRONE STATUS: """ + connection_status + """
+
+CRITICAL CONNECTION RULES:
+- If status shows CONNECTED: NEVER call connect_drone() - the drone is already connected!
+- If status shows DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first
+- ALWAYS check the status above before deciding whether to connect
+
+IMPORTANT: When drone status is CONNECTED, skip connection and go directly to the requested operation!
+
 Available drone functions (use these in Python code blocks):
-- connect_drone(connection_string): Connect to drone / 连接到无人机
+- connect_drone(connection_string): Connect to drone / 连接到无人机 (ONLY if currently DISCONNECTED)
 - takeoff(altitude): Take off to specified altitude in meters / 起飞到指定高度（米）
 - land(): Land the drone / 降落无人机
 - return_home(): Return to launch point / 返回起飞点
@@ -485,21 +520,20 @@ Language adaptation rules:
 - Always prioritize safety and provide clear explanations
 
 When user asks for drone operations:
-1. Explain what you'll do in the same language as the user
-2. Provide Python code in ```python code blocks
-3. The code will be executed automatically
-4. Provide status updates
+1. Check current drone status (CONNECTED/DISCONNECTED)
+2. Explain what you'll do in the same language as the user
+3. Provide Python code in ```python code blocks
+4. The code will be executed automatically
+5. Provide status updates
 
 Example response styles:
 
+When CONNECTED:
 English user: "Take off to 30 meters"
-Response: "I'll connect to the drone and take off to 30 meters altitude.
+Response: "I'll take off to 30 meters altitude since the drone is already connected.
 
 ```python
-# Connect to the drone
-connect_drone('tcp:127.0.0.1:5762')
-
-# Take off to 30 meters
+# Take off to 30 meters (drone already connected)
 takeoff(30)
 
 # Get status
@@ -511,8 +545,9 @@ print(f"Battery: {battery}")
 
 The drone should now be airborne at 30 meters altitude."
 
+When DISCONNECTED:
 Chinese user: "起飞到30米"
-Response: "我将连接到无人机并起飞到30米高度。
+Response: "我将先连接到无人机，然后起飞到30米高度。
 
 ```python
 # 连接到无人机
@@ -569,20 +604,76 @@ Always prioritize safety and explain each operation clearly in the user's langua
 @app.post("/api/drone/connect")
 async def connect_drone(request: DroneConnectionRequest):
     """Connect to drone"""
-    global current_drone_interface
+    global drone_tools
     
     try:
-        # This would integrate with the actual drone connection logic
-        # For now, return a mock response
-        return {
-            "success": True,
-            "message": f"Connected to drone at {request.connection_string}",
-            "connection_string": request.connection_string
-        }
+        # Initialize drone tools if not already done
+        if drone_tools is None:
+            initialize_drone_tools()
+        
+        # Disconnect any existing connection first
+        if (hasattr(drone_tools, 'connected') and drone_tools.connected):
+            logger.info("Disconnecting existing drone connection before reconnecting")
+            drone_tools.disconnect_drone()
+        
+        # Attempt to connect to the drone
+        logger.info(f"Attempting to connect to drone at: {request.connection_string}")
+        
+        # Use the drone tools to connect
+        success = drone_tools.connect_drone(request.connection_string)
+        
+        # Check if connection was successful
+        if success:
+            return {
+                "success": True,
+                "message": "无人机连接成功！",
+                "connection_string": request.connection_string
+            }
+        else:
+            return {
+                "success": False,
+                "message": "无人机连接失败，请检查连接字符串和网络设置",
+                "connection_string": request.connection_string
+            }
         
     except Exception as e:
         logger.error(f"Drone connection error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        return {
+            "success": False,
+            "message": f"连接失败：{str(e)}",
+            "connection_string": request.connection_string
+        }
+
+@app.post("/api/drone/disconnect")
+async def disconnect_drone():
+    """Disconnect from drone"""
+    global drone_tools
+    
+    try:
+        # Initialize drone tools if not already done
+        if drone_tools is None:
+            initialize_drone_tools()
+        
+        # Check if there's an active connection
+        if hasattr(drone_tools, 'connected') and drone_tools.connected:
+            logger.info("Disconnecting from drone")
+            drone_tools.disconnect_drone()
+            return {
+                "success": True,
+                "message": "无人机已断开连接"
+            }
+        else:
+            return {
+                "success": True,
+                "message": "无人机未连接，无需断开"
+            }
+        
+    except Exception as e:
+        logger.error(f"Drone disconnection error: {e}")
+        return {
+            "success": False,
+            "message": f"断开连接失败：{str(e)}"
+        }
 
 @app.get("/api/drone/status")
 async def get_drone_status():
@@ -594,8 +685,8 @@ async def get_drone_status():
         initialize_drone_tools()
     
     try:
-        # Check if drone is actually connected
-        if hasattr(drone_tools, 'vehicle') and drone_tools.vehicle is not None:
+        # Check if drone is actually connected - simplified and more reliable check
+        if (hasattr(drone_tools, 'connected') and drone_tools.connected):
             # Get real drone status
             location = drone_tools.get_location()
             battery = drone_tools.get_battery()
@@ -655,11 +746,25 @@ async def websocket_endpoint(websocket: WebSocket):
             # Process message based on type
             if message_data.get("type") == "chat":
                 if current_llm:
-                    # Create system prompt for drone operations
+                    # Get current drone status for WebSocket
+                    drone_status = await get_drone_status()
+                    is_connected = drone_status.get("connected", False)
+                    connection_status = "CONNECTED" if is_connected else "DISCONNECTED"
+                    
+                    # Create system prompt for drone operations with current status
                     system_prompt = """You are DeepDrone AI, an advanced drone control assistant developed by Zhendian Technology (臻巅科技). You can control real drones through Python code. You understand both Chinese and English commands and should respond in the same language the user uses.
 
+CURRENT DRONE STATUS: """ + connection_status + """
+
+CRITICAL CONNECTION RULES:
+- If status shows CONNECTED: NEVER call connect_drone() - the drone is already connected!
+- If status shows DISCONNECTED: Call connect_drone('tcp:127.0.0.1:5762') first
+- ALWAYS check the status above before deciding whether to connect
+
+IMPORTANT: When drone status is CONNECTED, skip connection and go directly to the requested operation!
+
 Available drone functions (use these in Python code blocks):
-- connect_drone(connection_string): Connect to drone / 连接到无人机
+- connect_drone(connection_string): Connect to drone / 连接到无人机 (ONLY if currently DISCONNECTED)
 - takeoff(altitude): Take off to specified altitude in meters / 起飞到指定高度（米）
 - land(): Land the drone / 降落无人机
 - return_home(): Return to launch point / 返回起飞点
@@ -676,10 +781,11 @@ Language adaptation rules:
 - Always prioritize safety and provide clear explanations
 
 When user asks for drone operations:
-1. Explain what you'll do in the same language as the user
-2. Provide Python code in ```python code blocks
-3. The code will be executed automatically
-4. Provide status updates
+1. Check current drone status (CONNECTED/DISCONNECTED)
+2. Explain what you'll do in the same language as the user
+3. Provide Python code in ```python code blocks
+4. The code will be executed automatically
+5. Provide status updates
 
 Example response styles:
 
@@ -702,8 +808,9 @@ print(f"Battery: {battery}")
 
 The drone should now be airborne at 30 meters altitude."
 
+When DISCONNECTED:
 Chinese user: "起飞到30米"
-Response: "我将连接到无人机并起飞到30米高度。
+Response: "我将先连接到无人机，然后起飞到30米高度。
 
 ```python
 # 连接到无人机
