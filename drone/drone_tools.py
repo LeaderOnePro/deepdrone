@@ -129,6 +129,42 @@ class DroneToolsManager:
             logger.error(f"Return error: {e}")
             return False
     
+    def return_and_land(self) -> bool:
+        """Return to launch point and automatically land."""
+        if not self._ensure_connected():
+            return False
+        
+        try:
+            # First return to launch point
+            self._update_status("RETURNING", "Returning to launch point")
+            
+            rtl_success = self.controller.return_to_launch()
+            if not rtl_success:
+                self._update_status("ERROR", "Return to home failed")
+                return False
+            
+            self._update_status("RETURNING", "Drone is returning to launch point")
+            
+            # Wait a moment for the drone to reach home
+            time.sleep(3)
+            
+            # Then land
+            self._update_status("LANDING", "Landing drone")
+            
+            land_success = self.controller.land()
+            if land_success:
+                self._update_status("LANDED", "Drone has landed")
+                self.mission_in_progress = False
+                return True
+            else:
+                self._update_status("ERROR", "Landing failed")
+                return False
+                
+        except Exception as e:
+            self._update_status("ERROR", f"Return and land error: {str(e)}")
+            logger.error(f"Return and land error: {e}")
+            return False
+    
     def fly_to(self, latitude: float, longitude: float, altitude: float) -> bool:
         """Fly to specific GPS coordinates."""
         if not self._ensure_connected():
