@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-const StatusCard = ({ title, status, value, description, action }) => {
+const StatusCard = memo(({ title, status, value, description, action }) => {
   const getStatusClass = (status) => {
     switch (status) {
       case 'success': return 'status--success';
@@ -43,6 +43,8 @@ const StatusCard = ({ title, status, value, description, action }) => {
       {action && action}
     </div>
   );
-};
+});
+
+StatusCard.displayName = 'StatusCard';
 
 export default StatusCard;
