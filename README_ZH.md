@@ -10,6 +10,15 @@
 
 [![English](https://img.shields.io/badge/English-README-blue?style=for-the-badge)](README.md) [![中文](https://img.shields.io/badge/中文-README-red?style=for-the-badge)](README_ZH.md)
 
+**🤖 AI 助手 | AI Assistant**
+
+<a href="https://deepwiki.com/LeaderOnePro/deepdrone">
+  <img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" style="height: 20px;">
+</a>
+<a href="https://zread.ai/LeaderOnePro/deepdrone">
+  <img src="https://img.shields.io/badge/-Ask%20Zread-ff6b35?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8IS0tIExlZnQgdG9wIHNxdWFyZSAtLT4KICA8cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSJ3aGl0ZSIvPgogIDwhLS0gUmlnaHQgdG9wIHNxdWFyZSAtLT4KICA8cmVjdCB4PSIxNiIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0id2hpdGUiLz4KICA8IS0tIExlZnQgYm90dG9tIHNxdWFyZSAtLT4KICA8cmVjdCB4PSIyIiB5PSIxNiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0id2hpdGUiLz4KICA8IS0tIENvbm5lY3Rpb24gbGluZXMgZnJvbSBsZWZ0LWJvdHRvbSB0byByaWdodC10b3AgLS0+CiAgPGxpbmUgeDE9IjgiIHkxPSIxOSIgeDI9IjEyIiB5Mj0iMTIiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxsaW5lIHgxPSIxMiIgeTE9IjEyIiB4Mj0iMTYiIHkyPSI1IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+Cg==&logoColor=white&labelColor=000000" alt="Ask Zread" style="height: 20px;">
+</a>
+
 ---
 
 ## 🚀 快速开始
