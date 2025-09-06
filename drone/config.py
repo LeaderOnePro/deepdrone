@@ -205,6 +205,14 @@ class ConfigManager:
                 temperature=0.7
             ),
             # Qwen via LiteLLM (OpenAI-compatible)
+            "qwen3-max-preview": ModelConfig(
+                name="qwen3-max-preview",
+                provider="qwen",
+                model_id="qwen3-max-preview",
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "qwen3-235b-a22b-thinking-2507": ModelConfig(
                 name="qwen3-235b-a22b-thinking-2507",
                 provider="qwen",
@@ -247,10 +255,10 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "kimi-k2-0711-preview": ModelConfig(
-                name="kimi-k2-0711-preview",
+            "kimi-k2-0905-preview": ModelConfig(
+                name="kimi-k2-0905-preview",
                 provider="moonshot",
-                model_id="kimi-k2-0711-preview",
+                model_id="kimi-k2-0905-preview",
                 base_url="https://api.moonshot.cn/v1",
                 max_tokens=2048,
                 temperature=0.7

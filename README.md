@@ -85,9 +85,9 @@ python simulate_drone.py
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo, etc | Cloud | Latest Llama models via providers |
 | **xAI** | Grok 4, Grok 3, Grok 3 mini, etc | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-4.5, GLM-4.5-Air, etc | Cloud | Chinese AI models with JWT auth |
-| **Tongyi Lab** | Qwen 3 235B, Qwen 3 Coder, etc | Cloud | Alibaba's latest Qwen 3 models |
+| **Tongyi Lab** | Qwen 3 Max Preview, Qwen 3 235B, Qwen 3 Coder, etc | Cloud | Alibaba's latest Qwen 3 models |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
-| **Moonshot** | Kimi K2 Turbo, Kimi K2 Preview, etc | Cloud | Moonshot AI models |
+| **Moonshot** | Kimi K2 Turbo, Kimi K2 0905 Preview, etc | Cloud | Moonshot AI models |
 | **Ollama** | Qwen3:4B, GPT-OSS, Qwen3:30B, etc | Local/Network | Local & remote server support |
 
 ## 🔧 Requirements

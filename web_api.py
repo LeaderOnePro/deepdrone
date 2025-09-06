@@ -228,7 +228,7 @@ async def get_providers():
         },
         "Qwen": {
             "name": "qwen",
-            "models": ["qwen3-235b-a22b-thinking-2507", "qwen3-coder-480b-a35b-instruct"],
+            "models": ["qwen3-max-preview", "qwen3-235b-a22b-thinking-2507", "qwen3-coder-480b-a35b-instruct"],
             "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
             "description": "Qwen3 models via DashScope"
         },
@@ -240,7 +240,7 @@ async def get_providers():
         },
         "Kimi": {
             "name": "moonshot",
-            "models": ["kimi-k2-turbo-preview", "kimi-k2-0711-preview"],
+            "models": ["kimi-k2-turbo-preview", "kimi-k2-0905-preview"],
             "api_key_url": "https://platform.moonshot.cn/console/api-keys",
             "description": "Kimi models from Moonshot AI"
         },
