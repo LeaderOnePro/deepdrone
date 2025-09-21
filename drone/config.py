@@ -272,18 +272,18 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "grok-3": ModelConfig(
-                name="grok-3",
+            "grok-4-fast-reasoning": ModelConfig(
+                name="grok-4-fast-reasoning",
                 provider="xai",
-                model_id="grok-3",
+                model_id="grok-4-fast-reasoning",
                 base_url="https://api.x.ai/v1",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "grok-3-mini": ModelConfig(
-                name="grok-3-mini",
+            "grok-4-fast-non-reasoning": ModelConfig(
+                name="grok-4-fast-non-reasoning",
                 provider="xai",
-                model_id="grok-3-mini",
+                model_id="grok-4-fast-non-reasoning",
                 base_url="https://api.x.ai/v1",
                 max_tokens=2048,
                 temperature=0.7

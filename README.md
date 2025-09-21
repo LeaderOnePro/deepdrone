@@ -83,7 +83,7 @@ python simulate_drone.py
 | **Anthropic** | Claude 4 Opus, Claude 4 Sonnet, etc | Cloud | Advanced Claude 4 models |
 | **Google** | Gemini 2.5 Pro, Gemini 2.5 Flash, etc | Cloud | Google AI Studio integration |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo, etc | Cloud | Latest Llama models via providers |
-| **xAI** | Grok 4, Grok 3, Grok 3 mini, etc | Cloud | Elon Musk's xAI models |
+| **xAI** | Grok 4, Grok 4 Fast Reasoning, Grok 4 Fast Non-Reasoning, etc | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-4.5, GLM-4.5-Air, etc | Cloud | Chinese AI models with JWT auth |
 | **Tongyi Lab** | Qwen 3 Max Preview, Qwen 3 235B, Qwen 3 Coder, etc | Cloud | Alibaba's latest Qwen 3 models |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
