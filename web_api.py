@@ -216,7 +216,7 @@ async def get_providers():
         },
         "xAI": {
             "name": "xai",
-            "models": ["grok-4-0709", "grok-3", "grok-3-mini"],
+            "models": ["grok-4-0709", "grok-4-fast-reasoning", "grok-4-fast-non-reasoning"],
             "api_key_url": "https://console.x.ai/",
             "description": "Grok models from xAI"
         },

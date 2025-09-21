@@ -115,7 +115,7 @@ python simulate_drone.py
 | **Anthropic** | Claude 4 Opus, Claude 4 Sonnet 等 | 云端 | 先进的 Claude 4 模型 |
 | **Google** | Gemini 2.5 Pro, Gemini 2.5 Flash 等 | 云端 | Google AI Studio 集成 |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo 等 | 云端 | 通过提供商的最新 Llama 模型 |
-| **xAI** | Grok 4, Grok 3, Grok 3 mini 等 | 云端 | 马斯克的 xAI 模型 |
+| **xAI** | Grok 4, Grok 4 Fast Reasoning, Grok 4 Fast Non-Reasoning 等 | 云端 | 马斯克的 xAI 模型 |
 | **智谱AI** | GLM-4.5, GLM-4.5-Air 等 | 云端 | 中文 AI 模型，JWT 认证 |
 | **通义千问** | Qwen 3 Max Preview, Qwen 3 235B, Qwen 3 Coder 等 | 云端 | 阿里巴巴最新 Qwen 3 模型 |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner 等 | 云端 | 高级推理模型 |
