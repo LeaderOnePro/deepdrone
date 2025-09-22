@@ -198,5 +198,3 @@ logs/
 
 # FastAPI / Uvicorn
 .pytest_cache/
-
-.kiro
