@@ -44,7 +44,7 @@ wheels/
 .DS_Store
 
 # Streamlit
-.streamlit/ 
+.streamlit/
 
 .tlog
 .tlog.*
@@ -68,6 +68,7 @@ ENV/
 
 # IDE files
 .vscode/
+.kiro
 .idea/
 *.swp
 *.swo
@@ -198,3 +199,4 @@ logs/
 # FastAPI / Uvicorn
 .pytest_cache/
 
+.kiro
