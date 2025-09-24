@@ -207,12 +207,11 @@ async def get_providers():
             "api_key_url": "https://aistudio.google.com/app/apikey",
             "description": "Gemini 2.5 models from Google AI Studio"
         },
-        "Meta": {
-            "name": "meta",
-            "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
-            "api_key_url": "https://together.ai/",
-            "api_key_alternatives": ["https://replicate.com/", "https://openrouter.ai/"],
-            "description": "Latest Llama models via providers"
+        "Qwen": {
+            "name": "qwen",
+            "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-235b-a22b-instruct-2507", "qwen3-coder-plus", "qwen3-next-80b-a3b-thinking", "qwen3-next-80b-a3b-instruct"],
+            "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
+            "description": "Qwen3 models via DashScope"
         },
         "xAI": {
             "name": "xai",
@@ -226,12 +225,6 @@ async def get_providers():
             "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
             "description": "GLM models from ZhipuAI"
         },
-        "Qwen": {
-            "name": "qwen",
-            "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-235b-a22b-instruct-2507", "qwen3-coder-plus", "qwen3-next-80b-a3b-thinking", "qwen3-next-80b-a3b-instruct"],
-            "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
-            "description": "Qwen3 models via DashScope"
-        },
         "DeepSeek": {
             "name": "deepseek",
             "models": ["deepseek-chat", "deepseek-reasoner"],
@@ -243,6 +236,13 @@ async def get_providers():
             "models": ["kimi-k2-turbo-preview", "kimi-k2-0905-preview"],
             "api_key_url": "https://platform.moonshot.cn/console/api-keys",
             "description": "Kimi models from Moonshot AI"
+        },
+        "Meta": {
+            "name": "meta",
+            "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
+            "api_key_url": "https://together.ai/",
+            "api_key_alternatives": ["https://replicate.com/", "https://openrouter.ai/"],
+            "description": "Latest Llama models via providers"
         },
         "Ollama": {
             "name": "ollama",

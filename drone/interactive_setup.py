@@ -48,11 +48,11 @@ PROVIDERS = {
         "api_key_url": "https://aistudio.google.com/app/apikey",
         "description": "Gemini models from Google AI Studio"
     },
-    "Meta": {
-        "name": "openai",  # Using OpenAI format for Llama models via providers
-        "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
-        "api_key_url": "https://together.ai/ or https://replicate.com/",
-        "description": "Llama models from Meta (via Together.ai/Replicate)"
+    "Qwen": {
+        "name": "qwen",
+        "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-235b-a22b-instruct-2507", "qwen3-coder-plus", "qwen3-next-80b-a3b-thinking", "qwen3-next-80b-a3b-instruct"],
+        "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
+        "description": "Qwen3 models via DashScope (OpenAI-compatible)"
     },
     "xAI": {
         "name": "xai",
@@ -66,12 +66,6 @@ PROVIDERS = {
         "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
         "description": "GLM models from ZhipuAI"
     },
-    "Qwen": {
-        "name": "qwen",
-        "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-235b-a22b-instruct-2507", "qwen3-coder-plus", "qwen3-next-80b-a3b-thinking", "qwen3-next-80b-a3b-instruct"],
-        "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
-        "description": "Qwen3 models via DashScope (OpenAI-compatible)"
-    },
     "DeepSeek": {
         "name": "deepseek",
         "models": ["deepseek-chat", "deepseek-reasoner"],
@@ -83,6 +77,12 @@ PROVIDERS = {
         "models": ["kimi-k2-turbo-preview", "kimi-k2-0905-preview"],
         "api_key_url": "https://platform.moonshot.cn/console/api-keys",
         "description": "Kimi models (OpenAI-compatible)"
+    },
+    "Meta": {
+        "name": "openai",  # Using OpenAI format for Llama models via providers
+        "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
+        "api_key_url": "https://together.ai/ or https://replicate.com/",
+        "description": "Llama models from Meta (via Together.ai/Replicate)"
     },
     "Ollama": {
         "name": "ollama",
