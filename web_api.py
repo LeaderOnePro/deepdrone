@@ -228,7 +228,7 @@ async def get_providers():
         },
         "Qwen": {
             "name": "qwen",
-            "models": ["qwen3-max-preview", "qwen3-235b-a22b-thinking-2507", "qwen3-coder-480b-a35b-instruct"],
+            "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-coder-plus"],
             "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
             "description": "Qwen3 models via DashScope"
         },

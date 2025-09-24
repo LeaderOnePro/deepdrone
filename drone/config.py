@@ -205,10 +205,10 @@ class ConfigManager:
                 temperature=0.7
             ),
             # Qwen via LiteLLM (OpenAI-compatible)
-            "qwen3-max-preview": ModelConfig(
-                name="qwen3-max-preview",
+            "qwen3-max": ModelConfig(
+                name="qwen3-max",
                 provider="qwen",
-                model_id="qwen3-max-preview",
+                model_id="qwen3-max",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7
@@ -221,10 +221,10 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3-coder-480b-a35b-instruct": ModelConfig(
-                name="qwen3-coder-480b-a35b-instruct",
+            "qwen3-coder-plus": ModelConfig(
+                name="qwen3-coder-plus",
                 provider="qwen",
-                model_id="qwen3-coder-480b-a35b-instruct",
+                model_id="qwen3-coder-plus",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7
