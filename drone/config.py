@@ -221,10 +221,34 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            "qwen3-235b-a22b-instruct-2507": ModelConfig(
+                name="qwen3-235b-a22b-instruct-2507",
+                provider="qwen",
+                model_id="qwen3-235b-a22b-instruct-2507",
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "qwen3-coder-plus": ModelConfig(
                 name="qwen3-coder-plus",
                 provider="qwen",
                 model_id="qwen3-coder-plus",
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "qwen3-next-80b-a3b-thinking": ModelConfig(
+                name="qwen3-next-80b-a3b-thinking",
+                provider="qwen",
+                model_id="qwen3-next-80b-a3b-thinking",
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "qwen3-next-80b-a3b-instruct": ModelConfig(
+                name="qwen3-next-80b-a3b-instruct",
+                provider="qwen",
+                model_id="qwen3-next-80b-a3b-instruct",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7

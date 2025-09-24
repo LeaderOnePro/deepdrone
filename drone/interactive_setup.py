@@ -68,7 +68,7 @@ PROVIDERS = {
     },
     "Qwen": {
         "name": "qwen",
-        "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-coder-plus"],
+        "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-235b-a22b-instruct-2507", "qwen3-coder-plus", "qwen3-next-80b-a3b-thinking", "qwen3-next-80b-a3b-instruct"],
         "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
         "description": "Qwen3 models via DashScope (OpenAI-compatible)"
     },
