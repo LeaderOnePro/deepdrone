@@ -78,6 +78,12 @@ PROVIDERS = {
         "api_key_url": "https://platform.moonshot.cn/console/api-keys",
         "description": "Kimi models (OpenAI-compatible)"
     },
+    "LongCat": {
+        "name": "longcat",
+        "models": ["LongCat-Flash-Chat", "LongCat-Flash-Thinking"],
+        "api_key_url": "https://longcat.chat/platform/",
+        "description": "LongCat Flash models (OpenAI-compatible)"
+    },
     "Meta": {
         "name": "openai",  # Using OpenAI format for Llama models via providers
         "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
@@ -469,6 +475,8 @@ def start_interactive_session():
         # Set base URLs for other providers
         if provider_name.lower() == "qwen":
             base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+        elif provider_name.lower() == "longcat":
+            base_url = "https://api.longcat.chat/openai/v1"
         
         model_config = ModelConfig(
             name=f"{provider_name.lower()}-session",

@@ -145,6 +145,22 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            "longcat-flash-chat": ModelConfig(
+                name="longcat-flash-chat",
+                provider="longcat",
+                model_id="LongCat-Flash-Chat",
+                base_url="https://api.longcat.chat/openai/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "longcat-flash-thinking": ModelConfig(
+                name="longcat-flash-thinking",
+                provider="longcat",
+                model_id="LongCat-Flash-Thinking",
+                base_url="https://api.longcat.chat/openai/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "llama-4-maverick-17b-128e-instruct-fp8": ModelConfig(
                 name="llama-4-maverick-17b-128e-instruct-fp8",
                 provider="openai",
@@ -368,7 +384,7 @@ class ConfigManager:
         """Get list of models that require API keys."""
         api_models = []
         for name, config in self.models.items():
-            if config.provider in ["openai", "anthropic", "zhipuai", "qwen", "deepseek", "moonshot"]:
+            if config.provider in ["openai", "anthropic", "zhipuai", "qwen", "deepseek", "moonshot", "longcat", "xai"]:
                 api_models.append(name)
         return api_models
 
