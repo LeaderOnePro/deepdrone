@@ -237,6 +237,12 @@ async def get_providers():
             "api_key_url": "https://platform.moonshot.cn/console/api-keys",
             "description": "Kimi models from Moonshot AI"
         },
+        "LongCat": {
+            "name": "longcat",
+            "models": ["LongCat-Flash-Chat", "LongCat-Flash-Thinking"],
+            "api_key_url": "https://longcat.chat/platform/",
+            "description": "LongCat Flash models with thinking support"
+        },
         "Meta": {
             "name": "meta",
             "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],

@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png)
 
-**Control drones with natural language using the latest AI models from 10 major providers: OpenAI GPT-5, Anthropic Claude 4, Google Gemini 2.5, Alibaba Qwen3 Max, xAI Grok 4, ZhipuAI GLM-4.5, DeepSeek, Moonshot Kimi K2, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5, Anthropic Claude 4, Google Gemini 2.5, Alibaba Qwen3 Max, xAI Grok 4, ZhipuAI GLM-4.5, DeepSeek, Moonshot Kimi K2, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -40,14 +40,14 @@ python start_web.py
 ```
 
 The app will guide you through:
-- **AI Provider Selection**: Choose from 10 providers with latest models
+- **AI Provider Selection**: Choose from 11 providers with latest models
 - **Model Selection**: Pick from cutting-edge AI models (network Ollama supported)
 - **Drone Connection**: Connect to simulator or real drone
 - **Natural Language Control**: "Take off to 30 meters", "Fly in a square pattern"
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 10 major providers with latest models (GPT-5, Claude 4, Gemini 2.5, Llama 4, Grok 4, etc.)
+- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5, Claude 4, Gemini 2.5, Moonshot Kimi K2, LongCat Flash, Llama 4, Grok 4, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
@@ -87,6 +87,7 @@ python simulate_drone.py
 | **ZhipuAI** | GLM-4.5, GLM-4.5-Air, etc | Cloud | Chinese AI models with JWT auth |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
 | **Moonshot (Kimi)** | Kimi K2 Turbo, Kimi K2 0905 Preview, etc | Cloud | Moonshot AI models |
+| **LongCat** | LongCat Flash Chat, LongCat Flash Thinking | Cloud | OpenAI-compatible LongCat Flash models |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo, etc | Cloud | Latest Llama models via providers |
 | **Ollama** | Qwen3:4B, GPT-OSS, Qwen3:30B, etc | Local/Network | Local & remote server support |
 

@@ -26,7 +26,7 @@ class LLMInterface:
             self._setup_ollama()
         elif self.model_config.provider == "zhipuai":
             self._setup_zhipuai()
-        elif self.model_config.provider in ["qwen", "deepseek", "moonshot", "xai"]:
+        elif self.model_config.provider in ["qwen", "deepseek", "moonshot", "xai", "longcat"]:
             # Use OpenAI-compatible HTTP for providers with OpenAI-style endpoints
             self._setup_openai_compatible()
         else:
@@ -146,6 +146,8 @@ class LLMInterface:
                     base_url = "https://api.moonshot.cn/v1"
                 elif self.model_config.provider == "xai":
                     base_url = "https://api.x.ai/v1"
+                elif self.model_config.provider == "longcat":
+                    base_url = "https://api.longcat.chat/openai/v1"
                 else:
                     raise ValueError("Base URL required for OpenAI-compatible provider")
 
