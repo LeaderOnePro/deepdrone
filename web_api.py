@@ -240,7 +240,7 @@ async def get_providers():
         "LongCat": {
             "name": "longcat",
             "models": ["LongCat-Flash-Chat", "LongCat-Flash-Thinking"],
-            "api_key_url": "https://longcat.chat/platform/",
+            "api_key_url": "https://longcat.chat/platform/api_keys",
             "description": "LongCat Flash models with thinking support"
         },
         "Meta": {
