@@ -10,6 +10,7 @@ const ControlPage = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [activeSidebarTab, setActiveSidebarTab] = useState('status');
   const messagesEndRef = useRef(null);
   const {
     currentModel,
@@ -205,45 +206,6 @@ const ControlPage = () => {
               backgroundColor: 'var(--color-surface)',
               minHeight: 0
             }}>
-              {/* 快捷指令区域 - 在消息区域内部 */}
-              <div style={{ 
-                marginBottom: 'var(--space-lg)',
-                padding: 'var(--space-md)',
-                backgroundColor: 'var(--color-background)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-md)'
-              }}>
-                <h4 style={{ 
-                  fontSize: 'var(--font-size-sm)', 
-                  fontWeight: 600,
-                  marginBottom: 'var(--space-sm)',
-                  color: 'var(--color-secondary)'
-                }}>
-                  快捷指令
-                </h4>
-                <div style={{ 
-                  display: 'flex', 
-                  flexWrap: 'wrap', 
-                  gap: '16px' 
-                }}>
-                  {quickCommands.map((command, index) => (
-                    <button
-                      key={index}
-                      className="button button--secondary"
-                      onClick={() => setInputMessage(command)}
-                      disabled={!systemReady}
-                      style={{ 
-                        fontSize: '11px',
-                        padding: '4px 8px',
-                        opacity: !systemReady ? 0.5 : 1,
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      {command}
-                    </button>
-                  ))}
-                </div>
-              </div>
               {messages.map((message) => (
                 <div key={message.id} style={{ marginBottom: 'var(--space-md)' }}>
                   <div style={{ 
@@ -395,79 +357,141 @@ const ControlPage = () => {
           </div>
         </div>
 
-        {/* 状态侧边栏 */}
+        {/* 状态与快捷指令 */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
-          {/* 无人机状态 */}
-          <div className="card" style={{ flex: '1' }}>
-            <h3 style={{ 
-              fontSize: 'var(--font-size-lg)', 
-              fontWeight: 600,
-              marginBottom: 'var(--space-md)'
+          <div className="card" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ 
+              display: 'flex',
+              justifyContent: 'center',
+              gap: 'var(--space-sm)',
+              borderBottom: '1px solid var(--color-border)',
+              padding: 'var(--space-sm) var(--space-md)'
             }}>
-              无人机状态
-            </h3>
-            {droneStatus?.connected ? (
-              <div style={{ fontSize: 'var(--font-size-sm)' }}>
-                <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
-                  <div className="status-dot"></div>
-                  电量: {droneStatus.battery}%
-                </div>
-                <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
-                  模式: {droneStatus.mode}<br/>
-                  高度: {droneStatus.altitude}m<br/>
-                  解锁: {droneStatus.armed ? '是' : '否'}
-                </p>
-              </div>
-            ) : (
-              <div>
-                <div className="status status--error" style={{ marginBottom: 'var(--space-md)' }}>
-                  <div className="status-dot"></div>
-                  未连接
-                </div>
-                <p style={{ 
-                  color: 'var(--color-secondary)', 
-                  fontSize: 'var(--font-size-sm)',
-                  marginBottom: 'var(--space-md)'
-                }}>
-                  需要连接无人机才能进行控制
-                </p>
-                <button 
-                  className="button button--secondary"
-                  onClick={() => navigate('/settings?tab=drone')}
-                  style={{ width: '100%' }}
-                >
-                  连接
-                </button>
-              </div>
-            )}
-          </div>
+              <button
+                type="button"
+                className={`tab ${activeSidebarTab === 'status' ? 'tab--active' : ''}`}
+                onClick={() => setActiveSidebarTab('status')}
+              >
+                状态概览
+              </button>
+              <button
+                type="button"
+                className={`tab ${activeSidebarTab === 'quick' ? 'tab--active' : ''}`}
+                onClick={() => setActiveSidebarTab('quick')}
+              >
+                快捷指令
+              </button>
+            </div>
 
-          {/* AI 模型状态 */}
-          <div className="card" style={{ flex: '1' }}>
-            <h3 style={{ 
-              fontSize: 'var(--font-size-lg)', 
-              fontWeight: 600,
-              marginBottom: 'var(--space-md)'
+            <div style={{
+              flex: 1,
+              padding: 'var(--space-md)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-lg)'
             }}>
-              AI 模型
-            </h3>
-            {currentModel?.configured ? (
-              <div style={{ fontSize: 'var(--font-size-sm)' }}>
-                <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
-                  <div className="status-dot"></div>
-                  就绪
+              {activeSidebarTab === 'status' ? (
+                <>
+                  <div>
+                    <h3 style={{
+                      fontSize: 'var(--font-size-lg)',
+                      fontWeight: 600,
+                      marginBottom: 'var(--space-sm)'
+                    }}>
+                      无人机状态
+                    </h3>
+                    {droneStatus?.connected ? (
+                      <div style={{ fontSize: 'var(--font-size-sm)' }}>
+                        <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
+                          <div className="status-dot"></div>
+                          电量: {droneStatus.battery}%
+                        </div>
+                        <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
+                          模式: {droneStatus.mode}<br/>
+                          高度: {droneStatus.altitude}m<br/>
+                          解锁: {droneStatus.armed ? '是' : '否'}
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className="status status--error" style={{ marginBottom: 'var(--space-sm)' }}>
+                          <div className="status-dot"></div>
+                          未连接
+                        </div>
+                        <p style={{
+                          color: 'var(--color-secondary)',
+                          fontSize: 'var(--font-size-sm)',
+                          marginBottom: 'var(--space-sm)'
+                        }}>
+                          需要连接无人机才能进行控制
+                        </p>
+                        <button
+                          className="button button--secondary"
+                          onClick={() => navigate('/settings?tab=drone')}
+                          style={{ width: '100%' }}
+                        >
+                          连接
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <h3 style={{
+                      fontSize: 'var(--font-size-lg)',
+                      fontWeight: 600,
+                      marginBottom: 'var(--space-sm)'
+                    }}>
+                      AI 模型
+                    </h3>
+                    {currentModel?.configured ? (
+                      <div style={{ fontSize: 'var(--font-size-sm)' }}>
+                        <div className="status status--success" style={{ marginBottom: 'var(--space-xs)' }}>
+                          <div className="status-dot"></div>
+                          就绪
+                        </div>
+                        <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
+                          提供商: {currentModel.model_info?.provider}<br/>
+                          模型: {currentModel.model_info?.model_id}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="status status--error">
+                        <div className="status-dot"></div>
+                        未配置 AI 模型
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
+                  <p style={{
+                    fontSize: 'var(--font-size-sm)',
+                    color: 'var(--color-secondary)',
+                    marginBottom: 'var(--space-sm)'
+                  }}>
+                    选择常用指令快速填充输入框，可在发送前进一步编辑。
+                  </p>
+                  {quickCommands.map((command, index) => (
+                    <button
+                      key={index}
+                      className="button button--secondary"
+                      onClick={() => setInputMessage(command)}
+                      disabled={!systemReady}
+                      style={{
+                        fontSize: 'var(--font-size-xs)',
+                        justifyContent: 'flex-start',
+                        padding: 'var(--space-sm) var(--space-md)',
+                        opacity: !systemReady ? 0.5 : 1,
+                        whiteSpace: 'normal'
+                      }}
+                    >
+                      {command}
+                    </button>
+                  ))}
                 </div>
-                <p style={{ color: 'var(--color-secondary)', margin: 0 }}>
-                  提供商: {currentModel.model_info?.provider}<br/>
-                  模型: {currentModel.model_info?.model_id}
-                </p>
-              </div>
-            ) : (
-              <div className="status status--error">
-                <div className="status-dot"></div>
-                未配置 AI 模型
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
