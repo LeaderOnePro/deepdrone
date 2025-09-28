@@ -2,14 +2,40 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { apiService } from '../services/apiService';
+import { useAppContext } from '../context/AppContext';
 
-const ControlPage = ({ currentModel, droneStatus }) => {
+const ControlPage = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
+  const {
+    currentModel,
+    droneStatus,
+    actions,
+    loading,
+    isSystemReady
+  } = useAppContext();
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        actions.setLoading('model', true);
+        const modelResponse = await apiService.getCurrentModel();
+        actions.setCurrentModel(modelResponse.data);
+
+        actions.setLoading('drone', true);
+        const droneResponse = await apiService.getDroneStatus();
+        actions.setDroneStatus(droneResponse.data);
+      } catch (statusError) {
+        actions.setError(statusError.message);
+      }
+    };
+
+    fetchStatus();
+  }, [actions]);
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -110,12 +136,14 @@ const ControlPage = ({ currentModel, droneStatus }) => {
     '紧急停止并悬停在当前位置'
   ];
 
-  const isSystemReady = currentModel?.configured && droneStatus?.connected;
+  const statusLoading = loading?.model || loading?.drone;
+  const hasStatusInfo = Boolean(currentModel) || Boolean(droneStatus);
+  const systemReady = Boolean(isSystemReady);
 
   return (
     <Layout>
       {/* 系统状态检查 */}
-      {!isSystemReady && (
+      {hasStatusInfo && !systemReady && !statusLoading && (
         <div style={{
           padding: 'var(--space-md)',
           backgroundColor: '#f8d7da',
@@ -203,11 +231,11 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                       key={index}
                       className="button button--secondary"
                       onClick={() => setInputMessage(command)}
-                      disabled={!isSystemReady}
+                      disabled={!systemReady}
                       style={{ 
                         fontSize: '11px',
                         padding: '4px 8px',
-                        opacity: !isSystemReady ? 0.5 : 1,
+                        opacity: !systemReady ? 0.5 : 1,
                         whiteSpace: 'nowrap'
                       }}
                     >
@@ -326,7 +354,7 @@ const ControlPage = ({ currentModel, droneStatus }) => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="在此输入无人机指令... (例如：'起飞到30米高度')"
-                disabled={!isSystemReady || isLoading}
+                disabled={!systemReady || isLoading}
                 style={{
                   flex: 1,
                   height: '40px',
@@ -341,10 +369,10 @@ const ControlPage = ({ currentModel, droneStatus }) => {
               <button
                 className="button button--primary"
                 onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || !isSystemReady || isLoading}
+                disabled={!inputMessage.trim() || !systemReady || isLoading}
                 style={{ 
                   height: '40px',
-                  opacity: (!inputMessage.trim() || !isSystemReady || isLoading) ? 0.5 : 1
+                  opacity: (!inputMessage.trim() || !systemReady || isLoading) ? 0.5 : 1
                 }}
               >
                 发送

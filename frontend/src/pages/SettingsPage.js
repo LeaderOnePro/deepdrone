@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { apiService } from '../services/apiService';
+import { useAppContext } from '../context/AppContext';
 
-const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
+const SettingsPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(0);
   const [providers, setProviders] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  
+  const {
+    currentModel,
+    actions
+  } = useAppContext();
+
   // AI Model Configuration
   const [modelConfig, setModelConfig] = useState({
     name: '',
@@ -41,8 +46,61 @@ const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
     }
   }, [searchParams]);
 
+  const refreshStatus = useCallback(async () => {
+    try {
+      actions.setLoading('model', true);
+      const modelResponse = await apiService.getCurrentModel();
+      actions.setCurrentModel(modelResponse.data);
+    } catch (error) {
+      actions.setError(error.message);
+    }
+
+    try {
+      actions.setLoading('drone', true);
+      const droneResponse = await apiService.getDroneStatus();
+      actions.setDroneStatus(droneResponse.data);
+    } catch (error) {
+      actions.setError(error.message);
+    }
+  }, [actions]);
+
+  useEffect(() => {
+    refreshStatus();
+  }, [refreshStatus]);
+
+  const loadProviders = useCallback(async () => {
+    try {
+      const response = await apiService.getProviders();
+      setProviders(response.data);
+    } catch (error) {
+      console.error('Failed to load providers:', error);
+      setMessage({ type: 'error', text: '加载AI提供商失败' });
+    }
+  }, []);
+
   useEffect(() => {
     loadProviders();
+  }, [loadProviders]);
+
+  const loadOllamaModels = useCallback(async (baseUrl) => {
+    setOllamaLoading(true);
+    try {
+      const response = await apiService.getOllamaModels(baseUrl);
+      if (response.data.success) {
+        setOllamaModels(response.data.models);
+      } else {
+        setOllamaModels([]);
+        console.warn('Failed to load Ollama models:', response.data.error);
+      }
+    } catch (error) {
+      console.error('Error loading Ollama models:', error);
+      setOllamaModels([]);
+    } finally {
+      setOllamaLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
     if (currentModel?.configured) {
       setModelConfig({
         name: currentModel.model_info.name || '',
@@ -53,18 +111,12 @@ const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
         max_tokens: currentModel.model_info.max_tokens || 2048,
         temperature: currentModel.model_info.temperature || 0.7,
       });
-    }
-  }, [currentModel]);
 
-  const loadProviders = async () => {
-    try {
-      const response = await apiService.getProviders();
-      setProviders(response.data);
-    } catch (error) {
-      console.error('Failed to load providers:', error);
-      setMessage({ type: 'error', text: '加载AI提供商失败' });
+      if (currentModel.model_info.provider === 'ollama') {
+        loadOllamaModels(currentModel.model_info.base_url || 'http://localhost:11434');
+      }
     }
-  };
+  }, [currentModel, loadOllamaModels]);
 
   const handleModelConfigChange = (field, value) => {
     setModelConfig(prev => ({
@@ -104,24 +156,6 @@ const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
     }
   };
 
-  const loadOllamaModels = async (baseUrl) => {
-    setOllamaLoading(true);
-    try {
-      const response = await apiService.getOllamaModels(baseUrl);
-      if (response.data.success) {
-        setOllamaModels(response.data.models);
-      } else {
-        setOllamaModels([]);
-        console.warn('Failed to load Ollama models:', response.data.error);
-      }
-    } catch (error) {
-      console.error('Error loading Ollama models:', error);
-      setOllamaModels([]);
-    } finally {
-      setOllamaLoading(false);
-    }
-  };
-
   const handleSaveModel = async () => {
     setLoading(true);
     setMessage(null);
@@ -131,7 +165,7 @@ const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
       
       if (response.data.success) {
         setMessage({ type: 'success', text: 'AI模型配置成功！' });
-        onModelUpdate();
+        await refreshStatus();
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
@@ -183,10 +217,7 @@ const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
       
       if (response.data.success) {
         setMessage({ type: 'success', text: '无人机连接成功！' });
-        // Update drone status in parent component
-        if (onDroneUpdate) {
-          onDroneUpdate();
-        }
+        await refreshStatus();
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
@@ -210,10 +241,7 @@ const SettingsPage = ({ currentModel, onModelUpdate, onDroneUpdate }) => {
       
       if (response.data.success) {
         setMessage({ type: 'success', text: response.data.message });
-        // Update drone status in parent component
-        if (onDroneUpdate) {
-          onDroneUpdate();
-        }
+        await refreshStatus();
       } else {
         setMessage({ type: 'error', text: response.data.message });
       }
