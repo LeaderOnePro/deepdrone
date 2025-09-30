@@ -38,7 +38,7 @@ PROVIDERS = {
     },
     "Anthropic": {
         "name": "anthropic",
-        "models": ["claude-opus-4-1-20250805", "claude-sonnet-4-20250514", "claude-3-haiku-20240307"],
+        "models": ["claude-opus-4-1-20250805", "claude-sonnet-4-5-20250929", "claude-3-haiku-20240307"],
         "api_key_url": "https://console.anthropic.com/",
         "description": "Claude models from Anthropic"
     },
@@ -62,7 +62,7 @@ PROVIDERS = {
     },
     "ZhipuAI": {
         "name": "zhipuai",
-        "models": ["glm-4.5", "glm-4.5-air", "glm-4.5-flash"],
+        "models": ["glm-4.6", "glm-4.5-air", "glm-4.5-flash"],
         "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
         "description": "GLM models from ZhipuAI"
     },

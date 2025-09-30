@@ -110,10 +110,10 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "claude-sonnet-4-20250514": ModelConfig(
-                name="claude-sonnet-4-20250514",
+            "claude-sonnet-4-5-20250929": ModelConfig(
+                name="claude-sonnet-4-5-20250929",
                 provider="anthropic",
-                model_id="claude-sonnet-4-20250514",
+                model_id="claude-sonnet-4-5-20250929",
                 max_tokens=2048,
                 temperature=0.7
             ),
@@ -199,10 +199,10 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "glm-4.5": ModelConfig(
-                name="glm-4.5",
+            "glm-4.6": ModelConfig(
+                name="glm-4.6",
                 provider="zhipuai",
-                model_id="glm-4.5",
+                model_id="glm-4.6",
                 max_tokens=2048,
                 temperature=0.7
             ),
