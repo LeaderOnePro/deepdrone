@@ -199,7 +199,7 @@ async def get_providers():
             "name": "anthropic",
             "models": ["claude-opus-4-1-20250805", "claude-sonnet-4-5-20250929", "claude-3-haiku-20240307"],
             "api_key_url": "https://console.anthropic.com/",
-            "description": "Advanced Claude-4 models"
+            "description": "Advanced Claude 4.5 models"
         },
         "Google": {
             "name": "google",
