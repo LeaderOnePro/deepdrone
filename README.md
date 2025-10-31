@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png)
 
-**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5, Anthropic Claude 4, Google Gemini 2.5, Alibaba Qwen3 Max, xAI Grok 4, ZhipuAI GLM-4.5, DeepSeek, Moonshot Kimi K2, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5, Anthropic Claude 4.5, Google Gemini 2.5, Alibaba Qwen3 Max, xAI Grok 4, ZhipuAI GLM-4.6, DeepSeek, Moonshot Kimi K2, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -45,7 +45,7 @@ The app will guide you through:
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5, Claude 4, Gemini 2.5, Moonshot Kimi K2, LongCat Flash, Llama 4, Grok 4, etc.)
+- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5, Claude 4.5, Gemini 2.5, Moonshot Kimi K2, LongCat Flash, Llama 4, Grok 4, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
@@ -78,11 +78,11 @@ python simulate_drone.py
 | Provider | Models | API Type | Description |
 |----------|--------|----------|-------------|
 | **OpenAI** | GPT-5, GPT-5-mini, GPT-5-nano, etc | Cloud | Latest GPT-5 series models |
-| **Anthropic** | Claude 4 Opus, Claude 4 Sonnet, etc | Cloud | Advanced Claude 4 models |
+| **Anthropic** | Claude 4 Opus, Claude 4.5 Sonnet, etc | Cloud | Advanced Claude 4.5 models |
 | **Google** | Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash Lite | Cloud | Google AI Studio integration |
 | **Qwen** | Qwen3 Max, Qwen3 235B Instruct 2507, Qwen3 Coder Plus, Qwen3 Next 80B | Cloud | DashScope OpenAI-compatible endpoints |
 | **xAI** | Grok 4, Grok 4 Fast Reasoning, Grok 4 Fast Non-Reasoning, etc | Cloud | Elon Musk's xAI models |
-| **ZhipuAI** | GLM-4.5, GLM-4.5-Air, etc | Cloud | Chinese AI models with JWT auth |
+| **ZhipuAI** | GLM-4.6, GLM-4.5-Air, etc | Cloud | Chinese AI models with JWT auth |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
 | **Moonshot (Kimi)** | Kimi K2 Turbo, Kimi K2 0905 Preview, etc | Cloud | Moonshot AI models |
 | **LongCat** | LongCat Flash Chat, LongCat Flash Thinking | Cloud | OpenAI-compatible LongCat Flash models |

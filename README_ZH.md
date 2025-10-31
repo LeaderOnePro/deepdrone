@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png)
 
-**使用自然语言控制无人机，支持来自 11 大主流提供商的最新 AI 模型：OpenAI GPT-5、Anthropic Claude 4、Google Gemini 2.5、阿里巴巴 Qwen3 Max、xAI Grok 4、智谱AI GLM-4.5、DeepSeek、月之暗面 Kimi K2、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
+**使用自然语言控制无人机，支持来自 11 大主流提供商的最新 AI 模型：OpenAI GPT-5、Anthropic Claude 4.5、Google Gemini 2.5、阿里巴巴 Qwen3 Max、xAI Grok 4、智谱AI GLM-4.6、DeepSeek、月之暗面 Kimi K2、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
 
 ---
 
@@ -45,7 +45,7 @@ python start_web.py
 
 ## ✨ 功能特性
 
-- 🤖 **全面的 AI 支持**：11 大主流提供商的最新模型（GPT-5、Claude 4、Gemini 2.5、月之暗面 Kimi K2、美团 LongCat Flash、Llama 4、Grok 4 等）
+- 🤖 **全面的 AI 支持**：11 大主流提供商的最新模型（GPT-5、Claude 4.5、Gemini 2.5、月之暗面 Kimi K2、美团 LongCat Flash、Llama 4、Grok 4 等）
 - 🌐 **双重界面**：终端 CLI 和现代化 Web 界面
 - 🌐 **网络灵活性**：支持本地、局域网和互联网 Ollama 服务器
 - 🚁 **真实无人机控制**：DroneKit 集成，支持实际飞行控制
@@ -110,11 +110,11 @@ python simulate_drone.py
 | 提供商 | 模型 | API 类型 | 描述 |
 |--------|------|----------|------|
 | **OpenAI** | GPT-5, GPT-5-mini, GPT-5-nano 等 | 云端 | 最新 GPT-5 系列模型 |
-| **Anthropic** | Claude 4 Opus, Claude 4 Sonnet 等 | 云端 | 先进的 Claude 4 模型 |
+| **Anthropic** | Claude 4 Opus, Claude 4.5 Sonnet 等 | 云端 | 先进的 Claude 4.5 模型 |
 | **Google** | Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash Lite | 云端 | Google AI Studio 集成 |
 | **Qwen** | Qwen3 Max, Qwen3 235B Instruct 2507, Qwen3 Coder Plus, Qwen3 Next 80B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
 | **xAI** | Grok 4, Grok 4 Fast Reasoning, Grok 4 Fast Non-Reasoning 等 | 云端 | 马斯克的 xAI 模型 |
-| **智谱AI** | GLM-4.5, GLM-4.5-Air 等 | 云端 | 中文 AI 模型，JWT 认证 |
+| **智谱AI** | GLM-4.6, GLM-4.5-Air 等 | 云端 | 中文 AI 模型，JWT 认证 |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner 等 | 云端 | 高级推理模型 |
 | **月之暗面（Kimi）** | Kimi K2 Turbo, Kimi K2 0905 Preview 等 | 云端 | 月之暗面 AI 模型 |
 | **美团 LongCat** | LongCat Flash Chat, LongCat Flash Thinking | 云端 | OpenAI 兼容的 LongCat Flash 系列模型 |
