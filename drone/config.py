@@ -295,6 +295,14 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            "kimi-k2-thinking": ModelConfig(
+                name="kimi-k2-thinking",
+                provider="moonshot",
+                model_id="kimi-k2-thinking",
+                base_url="https://api.moonshot.cn/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "kimi-k2-0905-preview": ModelConfig(
                 name="kimi-k2-0905-preview",
                 provider="moonshot",
