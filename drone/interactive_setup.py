@@ -74,7 +74,7 @@ PROVIDERS = {
     },
     "Kimi": {
         "name": "moonshot",
-        "models": ["kimi-k2-turbo-preview", "kimi-k2-0905-preview"],
+        "models": ["kimi-k2-turbo-preview", "kimi-k2-thinking", "kimi-k2-0905-preview"],
         "api_key_url": "https://platform.moonshot.cn/console/api-keys",
         "description": "Kimi models (OpenAI-compatible)"
     },
