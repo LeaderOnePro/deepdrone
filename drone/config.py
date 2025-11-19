@@ -82,6 +82,27 @@ class ConfigManager:
     def _create_default_models(self):
         """Create default model configurations."""
         self.models = {
+            "gpt-5.1": ModelConfig(
+                name="gpt-5.1",
+                provider="openai",
+                model_id="gpt-5.1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "gpt-5.1-codex": ModelConfig(
+                name="gpt-5.1-codex",
+                provider="openai",
+                model_id="gpt-5.1-codex",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "gpt-5.1-codex-mini": ModelConfig(
+                name="gpt-5.1-codex-mini",
+                provider="openai",
+                model_id="gpt-5.1-codex-mini",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "gpt-5": ModelConfig(
                 name="gpt-5",
                 provider="openai",
