@@ -145,6 +145,13 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            "gemini-3-pro-preview": ModelConfig(
+                name="gemini-3-pro-preview",
+                provider="google",
+                model_id="gemini/gemini-3-pro-preview",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "gemini-2.5-pro": ModelConfig(
                 name="gemini-2.5-pro",
                 provider="google",
