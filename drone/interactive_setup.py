@@ -56,7 +56,7 @@ PROVIDERS = {
     },
     "xAI": {
         "name": "xai",
-        "models": ["grok-4-0709", "grok-4-fast-reasoning", "grok-4-fast-non-reasoning"],
+        "models": ["grok-4-1-fast-reasoning", "grok-4-1-fast-non-reasoning", "grok-4-0709"],
         "api_key_url": "https://console.x.ai/",
         "description": "Grok models from xAI (OpenAI-compatible)"
     },
