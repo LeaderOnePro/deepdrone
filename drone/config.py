@@ -124,17 +124,17 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            "claude-opus-4-5-20251101": ModelConfig(
+                name="claude-opus-4-5-20251101",
+                provider="anthropic",
+                model_id="claude-opus-4-5-20251101",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "claude-sonnet-4-5-20250929": ModelConfig(
                 name="claude-sonnet-4-5-20250929",
                 provider="anthropic",
                 model_id="claude-sonnet-4-5-20250929",
-                max_tokens=2048,
-                temperature=0.7
-            ),
-            "claude-opus-4-1-20250805": ModelConfig(
-                name="claude-opus-4-1-20250805",
-                provider="anthropic",
-                model_id="claude-opus-4-1-20250805",
                 max_tokens=2048,
                 temperature=0.7
             ),
