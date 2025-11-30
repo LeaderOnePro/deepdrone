@@ -78,10 +78,10 @@ python simulate_drone.py
 | Provider | Models | API Type | Description |
 |----------|--------|----------|-------------|
 | **OpenAI** | GPT-5.1, GPT-5.1-Codex, GPT-5.1-Codex-Mini, GPT-5, GPT-5-mini, GPT-5-nano | Cloud | Latest GPT-5.1 and GPT-5 series models |
-| **Anthropic** | Claude 4 Opus, Claude 4.5 Sonnet, etc | Cloud | Advanced Claude 4.5 models |
+| **Anthropic** | Claude Opus 4.5, Claude Sonnet 4.5, etc | Cloud | Advanced Claude 4.5 models |
 | **Google** | Gemini 3 Pro Preview, Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash Lite | Cloud | Gemini 3 and Gemini 2.5 models from Google AI Studio |
 | **Qwen** | Qwen3 Max, Qwen3 235B Instruct 2507, Qwen3 Coder Plus, Qwen3 Next 80B | Cloud | DashScope OpenAI-compatible endpoints |
-| **xAI** | Grok 4, Grok 4 Fast Reasoning, Grok 4 Fast Non-Reasoning, etc | Cloud | Elon Musk's xAI models |
+| **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-4.6, GLM-4.5-Air, etc | Cloud | Chinese AI models with JWT auth |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
 | **Moonshot (Kimi)** | Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
