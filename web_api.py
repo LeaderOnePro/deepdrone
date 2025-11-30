@@ -193,7 +193,7 @@ async def get_providers():
             "name": "openai",
             "models": ["gpt-5.1", "gpt-5.1-codex", "gpt-5.1-codex-mini", "gpt-5", "gpt-5-mini", "gpt-5-nano"],
             "api_key_url": "https://platform.openai.com/api-keys",
-            "description": "Latest GPT-5 series models"
+            "description": "Latest GPT-5.1 series models"
         },
         "Anthropic": {
             "name": "anthropic",
@@ -205,7 +205,7 @@ async def get_providers():
             "name": "google",
             "models": ["gemini/gemini-3-pro-preview", "gemini/gemini-2.5-pro", "gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"],
             "api_key_url": "https://aistudio.google.com/app/apikey",
-            "description": "Gemini 2.5 models from Google AI Studio"
+            "description": "Gemini 3 models from Google AI Studio"
         },
         "Qwen": {
             "name": "qwen",
