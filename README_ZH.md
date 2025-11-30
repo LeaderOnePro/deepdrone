@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png)
 
-**使用自然语言控制无人机，支持来自 11 大主流提供商的最新 AI 模型：OpenAI GPT-5.1、Anthropic Claude 4.5、Google Gemini 3 Pro Preview、阿里巴巴 Qwen3 Max、xAI Grok 4、智谱AI GLM-4.6、DeepSeek、月之暗面 Kimi K2 Thinking、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
+**使用自然语言控制无人机，支持来自 11 大主流提供商的最新 AI 模型：OpenAI GPT-5.1、Anthropic Claude 4.5、Google Gemini 3 Pro Preview、阿里巴巴 Qwen3 Max、xAI Grok 4.1、智谱AI GLM-4.6、DeepSeek、月之暗面 Kimi K2 Thinking、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
 
 ---
 
@@ -45,7 +45,7 @@ python start_web.py
 
 ## ✨ 功能特性
 
-- 🤖 **全面的 AI 支持**：11 大主流提供商的最新模型（GPT-5.1、Claude 4.5、Gemini 3 Pro Preview、Kimi K2 Thinking、美团 LongCat Flash、Llama 4、Grok 4 等）
+- 🤖 **全面的 AI 支持**：11 大主流提供商的最新模型（GPT-5.1、Claude 4.5、Gemini 3 Pro Preview、Kimi K2 Thinking、美团 LongCat Flash、Llama 4、Grok 4.1 等）
 - 🌐 **双重界面**：终端 CLI 和现代化 Web 界面
 - 🌐 **网络灵活性**：支持本地、局域网和互联网 Ollama 服务器
 - 🚁 **真实无人机控制**：DroneKit 集成，支持实际飞行控制

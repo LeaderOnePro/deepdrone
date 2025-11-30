@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png)
 
-**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.1, Anthropic Claude 4.5, Google Gemini 3 Pro Preview, Alibaba Qwen3 Max, xAI Grok 4, ZhipuAI GLM-4.6, DeepSeek, Moonshot Kimi K2 Thinking, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.1, Anthropic Claude 4.5, Google Gemini 3 Pro Preview, Alibaba Qwen3 Max, xAI Grok 4.1, ZhipuAI GLM-4.6, DeepSeek, Moonshot Kimi K2 Thinking, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -45,7 +45,7 @@ The app will guide you through:
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.1, Claude 4.5, Gemini 3 Pro Preview, Kimi K2 Thinking, LongCat Flash, Llama 4, Grok 4, etc.)
+- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.1, Claude 4.5, Gemini 3 Pro Preview, Kimi K2 Thinking, LongCat Flash, Llama 4, Grok 4.1, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
