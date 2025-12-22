@@ -32,9 +32,9 @@ ollama_base_url = "http://localhost:11434"
 PROVIDERS = {
     "OpenAI": {
         "name": "openai",
-        "models": ["gpt-5.1", "gpt-5.1-codex", "gpt-5.1-codex-mini", "gpt-5", "gpt-5-mini", "gpt-5-nano"],
+        "models": ["gpt-5.2", "gpt-5.1-codex-max", "gpt-5.1-codex-mini", "gpt-5.1-codex", "gpt-5.1", "gpt-5-mini", "gpt-5-nano"],
         "api_key_url": "https://platform.openai.com/api-keys",
-        "description": "Latest GPT-5.1 series models"
+        "description": "Latest GPT-5.2 and GPT-5.1 series models"
     },
     "Anthropic": {
         "name": "anthropic",
