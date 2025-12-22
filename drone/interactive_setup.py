@@ -44,7 +44,7 @@ PROVIDERS = {
     },
     "Google": {
         "name": "google",
-        "models": ["gemini/gemini-3-pro-preview", "gemini/gemini-2.5-pro", "gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"],
+        "models": ["gemini/gemini-3-pro-preview", "gemini/gemini-3-flash-preview", "gemini/gemini-2.5-pro", "gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"],
         "api_key_url": "https://aistudio.google.com/app/apikey",
         "description": "Gemini 3 models from Google AI Studio"
     },
