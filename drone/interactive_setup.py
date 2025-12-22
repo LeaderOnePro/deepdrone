@@ -62,7 +62,7 @@ PROVIDERS = {
     },
     "ZhipuAI": {
         "name": "zhipuai",
-        "models": ["glm-4.6", "glm-4.5-air", "glm-4.5-flash"],
+        "models": ["glm-4.7", "glm-4.5-air", "glm-4.5-flash"],
         "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
         "description": "GLM models from ZhipuAI"
     },
