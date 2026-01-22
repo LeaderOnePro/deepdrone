@@ -255,10 +255,10 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "glm-4.5-flash": ModelConfig(
-                name="glm-4.5-flash",
+            "glm-4.7-flash": ModelConfig(
+                name="glm-4.7-flash",
                 provider="zhipuai",
-                model_id="glm-4.5-flash",
+                model_id="glm-4.7-flash",
                 max_tokens=2048,
                 temperature=0.7
             ),
