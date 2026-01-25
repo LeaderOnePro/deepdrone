@@ -241,10 +241,10 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3-30b": ModelConfig(
-                name="qwen3-30b",
+            "glm-4.7-flash": ModelConfig(
+                name="glm-4.7-flash",
                 provider="ollama",
-                model_id="qwen3:30b",
+                model_id="glm-4.7-flash",
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
