@@ -114,7 +114,7 @@ python simulate_drone.py
 | **智谱AI** | GLM-4.7, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner 等 | 云端 | 高级推理模型 |
 | **月之暗面（Kimi）** | Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview 等 | 云端 | 月之暗面 AI Kimi K2 系列模型，支持思维链 |
-| **美团 LongCat** | LongCat Flash Chat, LongCat Flash Thinking | 云端 | OpenAI 兼容的 LongCat Flash 系列模型 |
+| **美团 LongCat** | LongCat Flash Thinking 2601, LongCat Flash Chat, LongCat Flash Thinking | 云端 | OpenAI 兼容的 LongCat Flash 系列模型 |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo 等 | 云端 | 通过提供商的最新 Llama 模型 |
 | **Ollama** | Qwen3:4B, GPT-OSS, Qwen3:30B 等 | 本地/网络 | 本地和远程服务器支持 |
 
