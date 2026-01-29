@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.2, Anthropic Claude 4.5, Google Gemini 3 Pro Preview, Alibaba Qwen3 Max, xAI Grok 4.1, ZhipuAI GLM-4.7, DeepSeek, Moonshot Kimi K2 Thinking, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.2, Anthropic Claude 4.5, Google Gemini 3 Pro Preview, Alibaba Qwen3 Max, xAI Grok 4.1, ZhipuAI GLM-4.7, DeepSeek, Moonshot Kimi K2.5, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -42,7 +42,7 @@ The app will guide you through:
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.2, Claude 4.5, Gemini 3 Pro Preview, Kimi K2 Thinking, LongCat Flash, Llama 4, Grok 4.1, etc.)
+- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.2, Claude 4.5, Gemini 3 Pro Preview, Kimi K2.5, LongCat Flash, Llama 4, Grok 4.1, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
@@ -81,7 +81,7 @@ python simulate_drone.py
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-4.7, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
-| **Moonshot (Kimi)** | Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
+| **Moonshot (Kimi)** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
 | **LongCat** | LongCat Flash Thinking 2601, LongCat Flash Chat, LongCat Flash Thinking | Cloud | OpenAI-compatible LongCat Flash models |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo, etc | Cloud | Latest Llama models via providers |
 | **Ollama** | Qwen3:4B, GPT-OSS, GLM-4.7-Flash, etc | Local/Network | Local & remote server support |
