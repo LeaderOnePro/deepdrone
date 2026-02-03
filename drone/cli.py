@@ -262,7 +262,7 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
         if model_config.provider == "openai":
             console.print("Get your OpenAI API key from: https://platform.openai.com/api-keys")
         elif model_config.provider == "anthropic":
-            console.print("Get your Anthropic API key from: https://console.anthropic.com/")
+            console.print("Get your Anthropic API key from: https://console.anthropic.com")
         elif model_config.provider == "google":
             console.print("Get your Google AI Studio API key from: https://aistudio.google.com/app/apikey")
         elif model_config.provider == "zhipuai":
@@ -270,11 +270,11 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
         elif model_config.provider == "qwen":
             console.print("Get your DashScope API key from: https://bailian.console.aliyun.com/ai/ak")
         elif model_config.provider == "deepseek":
-            console.print("Get your DeepSeek API key from: https://platform.deepseek.com/ ")
+            console.print("Get your DeepSeek API key from: https://platform.deepseek.com ")
         elif model_config.provider == "moonshot":
             console.print("Get your Kimi (Moonshot) API key from: https://platform.moonshot.cn/console/api-keys")
         elif model_config.provider == "xai":
-            console.print("Get your xAI API key from: https://console.x.ai/")
+            console.print("Get your xAI API key from: https://console.x.ai")
         
         api_key = getpass.getpass("Enter API key (hidden): ")
     

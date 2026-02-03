@@ -39,7 +39,7 @@ PROVIDERS = {
     "Anthropic": {
         "name": "anthropic",
         "models": ["claude-opus-4-5-20251101", "claude-sonnet-4-5-20250929", "claude-3-haiku-20240307"],
-        "api_key_url": "https://console.anthropic.com/",
+        "api_key_url": "https://console.anthropic.com",
         "description": "Claude models from Anthropic"
     },
     "Google": {
@@ -57,7 +57,7 @@ PROVIDERS = {
     "xAI": {
         "name": "xai",
         "models": ["grok-4-1-fast-reasoning", "grok-4-1-fast-non-reasoning", "grok-4-0709"],
-        "api_key_url": "https://console.x.ai/",
+        "api_key_url": "https://console.x.ai",
         "description": "Grok models from xAI (OpenAI-compatible)"
     },
     "ZhipuAI": {
@@ -69,7 +69,7 @@ PROVIDERS = {
     "DeepSeek": {
         "name": "deepseek",
         "models": ["deepseek-chat", "deepseek-reasoner"],
-        "api_key_url": "https://platform.deepseek.com/",
+        "api_key_url": "https://platform.deepseek.com",
         "description": "DeepSeek models (OpenAI-compatible)"
     },
     "Kimi": {
@@ -87,13 +87,13 @@ PROVIDERS = {
     "Meta": {
         "name": "openai",  # Using OpenAI format for Llama models via providers
         "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
-        "api_key_url": "https://together.ai/ or https://replicate.com/",
+        "api_key_url": "https://together.ai or https://replicate.com",
         "description": "Llama models from Meta (via Together.ai/Replicate)"
     },
     "Ollama": {
         "name": "ollama",
         "models": ["qwen3:4b", "gpt-oss:latest", "glm-4.7-flash"],
-        "api_key_url": "https://ollama.ai/ (No API key needed - supports local/network)",
+        "api_key_url": "https://ollama.com (No API key needed - supports local/network)",
         "description": "Local/Network models via Ollama (supports custom server URL)"
     }
 }
