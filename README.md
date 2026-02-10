@@ -82,7 +82,7 @@ python simulate_drone.py
 | **ZhipuAI** | GLM-4.7, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
 | **Moonshot (Kimi)** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
-| **LongCat** | LongCat Flash Thinking 2601, LongCat Flash Chat, LongCat Flash Thinking | Cloud | OpenAI-compatible LongCat Flash models |
+| **LongCat** | LongCat Flash Thinking 2601, LongCat Flash Chat, LongCat Flash Thinking, LongCat Flash Lite | Cloud | OpenAI-compatible LongCat Flash models |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo, etc | Cloud | Latest Llama models via providers |
 | **Ollama** | Qwen3:4B, GPT-OSS, GLM-4.7-Flash, etc | Local/Network | Local & remote server support |
 

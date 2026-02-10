@@ -211,6 +211,14 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            "longcat-flash-lite": ModelConfig(
+                name="longcat-flash-lite",
+                provider="longcat",
+                model_id="LongCat-Flash-Lite",
+                base_url="https://api.longcat.chat/openai/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "llama-4-maverick-17b-128e-instruct-fp8": ModelConfig(
                 name="llama-4-maverick-17b-128e-instruct-fp8",
                 provider="openai",
