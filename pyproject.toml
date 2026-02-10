@@ -1,0 +1,56 @@
+[project]
+name = "deepdrone"
+version = "1.0.0"
+description = "DeepDrone - AI-powered drone control terminal application"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+]
+dependencies = [
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "seaborn",
+    "python-dotenv",
+    "dronekit",
+    "future",
+    "pymavlink",
+    "litellm",
+    "ollama",
+    "rich",
+    "click",
+    "pydantic",
+    "pydantic-settings",
+    "typer",
+    "prompt-toolkit",
+    "requests",
+    "PyJWT",
+    "pyserial",
+    "fastapi",
+    "uvicorn[standard]",
+    "python-multipart",
+    "websockets",
+]
+
+[project.scripts]
+deepdrone = "main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["drone"]
+include = ["main.py"]

@@ -21,16 +21,16 @@
 ### 终端界面
 ```bash
 # 1. 安装依赖
-pip install -r requirements.txt
+uv sync
 
 # 2. 启动交互式设置
-python main.py
+uv run main.py
 ```
 
 ### Web 界面
 ```bash
 # 一键启动 Web 界面
-python start_web.py
+uv run start_web.py
 # 访问：http://localhost:8000
 ```
 
@@ -67,10 +67,10 @@ DeepDrone 包含现代化的 Web 界面，支持基于浏览器的无人机控�
 
 ```bash
 # 方式 1：一键启动（推荐）
-python start_web.py
+uv run start_web.py
 
 # 方式 2：手动启动
-python web_api.py
+uv run web_api.py
 # 然后访问：http://localhost:8000
 ```
 
@@ -87,7 +87,7 @@ python web_api.py
 
 ```bash
 # 快速模拟器（内置）
-python simulate_drone.py
+uv run simulate_drone.py
 
 # 高级 SITL（可选）
 # 请参考 ArduPilot SITL 安装指南
@@ -120,13 +120,15 @@ python simulate_drone.py
 
 ## 🔧 系统要求
 
-- Python 3.8+
+- Python 3.9+
+- [uv](https://docs.astral.sh/uv/)（包管理器）
 - DroneKit-Python
 - LiteLLM（云端模型）
 - Ollama（本地/网络模型，可选）
 
 ## 💻 技术栈
 
+- **uv** - 快速 Python 包管理和项目工具
 - **LiteLLM** - 云端 AI 模型统一接口（OpenAI、Anthropic、Google、xAI 等）
 - **直接 API 集成** - 原生支持智谱AI、Qwen（DashScope）、DeepSeek、月之暗面 Kimi
 - **Ollama** - 本地/网络 AI 模型执行，支持自定义服务器
@@ -179,7 +181,7 @@ python simulate_drone.py
 - 确保模型已安装：`ollama pull 模型名称`
 
 **模拟器无响应：**
-- 重启模拟器：`python simulate_drone.py`
+- 重启模拟器：`uv run simulate_drone.py`
 - 检查连接字符串是否匹配模拟器端口
 - 验证没有其他进程占用端口
 
@@ -188,13 +190,13 @@ python simulate_drone.py
 ### 开发环境
 ```bash
 # 终端界面
-python main.py
+uv run main.py
 
 # Web 界面热重载
 cd frontend
 npm start  # 前端（端口 3000）
 # 在另一个终端中：
-uvicorn web_api:app --reload  # 后端（端口 8000）
+uv run uvicorn web_api:app --reload  # 后端（端口 8000）
 ```
 
 ### 生产环境
@@ -204,7 +206,7 @@ cd frontend
 npm run build
 
 # 启动生产服务器
-python start_web.py
+uv run start_web.py
 ```
 
 

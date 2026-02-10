@@ -21,16 +21,16 @@
 ### Terminal Interface
 ```bash
 # 1. Install dependencies
-pip install -r requirements.txt
+uv sync
 
 # 2. Start interactive setup
-python main.py
+uv run main.py
 ```
 
 ### Web Interface
 ```bash
 # One-click web start
-python start_web.py
+uv run start_web.py
 # Visit: http://localhost:8000
 ```
 
@@ -55,7 +55,7 @@ The app will guide you through:
 
 ```bash
 # Quick simulator (included)
-python simulate_drone.py
+uv run simulate_drone.py
 
 # Advanced SITL (optional)
 # Follow ArduPilot SITL installation guide
@@ -88,13 +88,15 @@ python simulate_drone.py
 
 ## 🔧 Requirements
 
-- Python 3.8+
+- Python 3.9+
+- [uv](https://docs.astral.sh/uv/) (package manager)
 - DroneKit-Python
 - LiteLLM for cloud models
 - Ollama for local/network models (optional)
 
 ## 💻 Tech Stack
 
+- **uv** - Fast Python package manager and project tool
 - **LiteLLM** - Unified interface for cloud AI models (OpenAI, Anthropic, Google, xAI, etc.)
 - **Direct API Integration** - Native support for ZhipuAI, Qwen (DashScope), DeepSeek, Moonshot Kimi
 - **Ollama** - Local/Network AI model execution with custom server support
@@ -119,10 +121,10 @@ DeepDrone includes a modern web interface for browser-based drone control with a
 
 ```bash
 # Option 1: One-click start (recommended)
-python start_web.py
+uv run start_web.py
 
 # Option 2: Manual start
-python web_api.py
+uv run web_api.py
 # Then visit: http://localhost:8000
 ```
 
@@ -178,7 +180,7 @@ python web_api.py
 - Ensure models are installed: `ollama pull model_name`
 
 **Simulator not responding:**
-- Restart simulator: `python simulate_drone.py`
+- Restart simulator: `uv run simulate_drone.py`
 - Check connection string matches simulator port
 - Verify no other processes using the port
 
@@ -187,13 +189,13 @@ python web_api.py
 ### Development
 ```bash
 # Terminal interface
-python main.py
+uv run main.py
 
 # Web interface with hot reload
 cd frontend
 npm start  # Frontend (port 3000)
 # In another terminal:
-uvicorn web_api:app --reload  # Backend (port 8000)
+uv run uvicorn web_api:app --reload  # Backend (port 8000)
 ```
 
 ### Production
@@ -203,7 +205,7 @@ cd frontend
 npm run build
 
 # Start production server
-python start_web.py
+uv run start_web.py
 ```
 
 
