@@ -80,7 +80,7 @@ PROVIDERS = {
     },
     "LongCat": {
         "name": "longcat",
-        "models": ["LongCat-Flash-Thinking-2601", "LongCat-Flash-Chat", "LongCat-Flash-Thinking"],
+        "models": ["LongCat-Flash-Thinking-2601", "LongCat-Flash-Chat", "LongCat-Flash-Thinking", "LongCat-Flash-Lite"],
         "api_key_url": "https://longcat.chat/platform/api_keys",
         "description": "LongCat Flash models (OpenAI-compatible)"
     },
