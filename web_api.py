@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="DeepDrone API",
     description="AI-Powered Drone Control System",
-    version="1.0.0"
+    version="2.0.0"
 )
 
 # Add CORS middleware
@@ -183,7 +183,7 @@ class DroneCommandRequest(BaseModel):
 @app.get("/api")
 async def api_root():
     """API root endpoint"""
-    return {"message": "DeepDrone API Server", "version": "1.0.0"}
+    return {"message": "DeepDrone API Server", "version": "2.0.0"}
 
 @app.get("/api/providers")
 async def get_providers():
@@ -221,7 +221,7 @@ async def get_providers():
         },
         "ZhipuAI": {
             "name": "zhipuai",
-            "models": ["glm-4.7", "glm-4.7-flash", "glm-4.5-air"],
+            "models": ["glm-5", "glm-4.7", "glm-4.7-flash", "glm-4.5-air"],
             "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
             "description": "GLM models from ZhipuAI"
         },
