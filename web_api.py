@@ -252,7 +252,7 @@ async def get_providers():
         },
         "Ollama": {
             "name": "ollama",
-            "models": ["qwen3:4b", "gpt-oss:latest", "glm-4.7-flash"],
+            "models": ["qwen3:4b", "gpt-oss:latest", "qwen3.5:35b", "glm-4.7-flash"],
             "api_key_url": "https://ollama.com (No API key needed - supports local/network)",
             "description": "Local/Network models via Ollama with custom server support"
         }
