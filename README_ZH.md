@@ -109,7 +109,7 @@ uv run simulate_drone.py
 | **OpenAI** | GPT-5.2, GPT-5.1-Codex-Max, GPT-5.1-Codex-Mini, GPT-5.1-Codex, GPT-5.1, GPT-5-mini, GPT-5-nano 等 | 云端 | 最新 GPT-5.2 和 GPT-5.1 系列模型 |
 | **Anthropic** | Claude Opus 4.5, Claude Sonnet 4.5 等 | 云端 | 先进的 Claude 4.5 模型 |
 | **Google** | Gemini 3 Pro Preview, Gemini 3 Flash Preview, Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash Lite | 云端 | 来自 Google AI Studio 的 Gemini 3 和 Gemini 2.5 模型 |
-| **Qwen** | qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b | 云端 | DashScope 提供的 OpenAI 兼容接口 |
+| **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | 云端 | 马斯克的 xAI 模型 |
 | **智谱AI** | GLM-5, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner 等 | 云端 | 高级推理模型 |
