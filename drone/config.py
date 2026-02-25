@@ -285,11 +285,19 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            # Qwen via LiteLLM (OpenAI-compatible)
-            "qwen3.5-plus-2026-02-15": ModelConfig(
-                name="qwen3.5-plus-2026-02-15",
+            # Qwen via 阿里云百炼平台API (OpenAI-compatible)
+            "qwen3.5-plus": ModelConfig(
+                name="qwen3.5-plus",
                 provider="qwen",
-                model_id="qwen3.5-plus-2026-02-15",
+                model_id="qwen3.5-plus",
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "qwen3.5-flash": ModelConfig(
+                name="qwen3.5-flash",
+                provider="qwen",
+                model_id="qwen3.5-flash",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7
@@ -302,34 +310,26 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3-max": ModelConfig(
-                name="qwen3-max",
+            "qwen3.5-122b-a10b": ModelConfig(
+                name="qwen3.5-122b-a10b",
                 provider="qwen",
-                model_id="qwen3-max",
+                model_id="qwen3.5-122b-a10b",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3-coder-plus": ModelConfig(
-                name="qwen3-coder-plus",
+            "qwen3.5-27b": ModelConfig(
+                name="qwen3.5-27b",
                 provider="qwen",
-                model_id="qwen3-coder-plus",
+                model_id="qwen3.5-27b",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3-next-80b-a3b-thinking": ModelConfig(
-                name="qwen3-next-80b-a3b-thinking",
+            "qwen3.5-35b-a3b": ModelConfig(
+                name="qwen3.5-35b-a3b",
                 provider="qwen",
-                model_id="qwen3-next-80b-a3b-thinking",
-                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-                max_tokens=2048,
-                temperature=0.7
-            ),
-            "qwen3-next-80b-a3b-instruct": ModelConfig(
-                name="qwen3-next-80b-a3b-instruct",
-                provider="qwen",
-                model_id="qwen3-next-80b-a3b-instruct",
+                model_id="qwen3.5-35b-a3b",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7

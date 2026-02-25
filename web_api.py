@@ -209,7 +209,7 @@ async def get_providers():
         },
         "Qwen": {
             "name": "qwen",
-            "models": ["qwen3.5-plus-2026-02-15", "qwen3.5-397b-a17b", "qwen3-max", "qwen3-coder-plus", "qwen3-next-80b-a3b-thinking", "qwen3-next-80b-a3b-instruct"],
+            "models": ["qwen3.5-plus", "qwen3.5-flash", "qwen3.5-397b-a17b", "qwen3.5-122b-a10b", "qwen3.5-27b", "qwen3.5-35b-a3b"],
             "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
             "description": "Qwen3 and Qwen3.5 models via DashScope"
         },
