@@ -285,7 +285,7 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            # Qwen via LiteLLM (OpenAI-compatible)
+            # Qwen via official API (OpenAI-compatible)
             "qwen3.5-plus": ModelConfig(
                 name="qwen3.5-plus",
                 provider="qwen",
