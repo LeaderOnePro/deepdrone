@@ -211,7 +211,7 @@ async def get_providers():
             "name": "qwen",
             "models": ["qwen3.5-plus", "qwen3.5-flash", "qwen3.5-397b-a17b", "qwen3.5-122b-a10b", "qwen3.5-27b", "qwen3.5-35b-a3b"],
             "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
-            "description": "Qwen3 and Qwen3.5 models via DashScope"
+            "description": "Qwen3.5 models via DashScope"
         },
         "xAI": {
             "name": "xai",
@@ -252,7 +252,7 @@ async def get_providers():
         },
         "Ollama": {
             "name": "ollama",
-            "models": ["qwen3:4b", "gpt-oss:latest", "qwen3.5:35b", "glm-4.7-flash"],
+            "models": ["qwen3.5:4b", "gpt-oss:latest", "qwen3.5:35b", "glm-4.7-flash"],
             "api_key_url": "https://ollama.com (No API key needed - supports local/network)",
             "description": "Local/Network models via Ollama with custom server support"
         }

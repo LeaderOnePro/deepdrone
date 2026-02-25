@@ -233,10 +233,10 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3-4b": ModelConfig(
-                name="qwen3-4b",
+            "qwen3.5-4b": ModelConfig(
+                name="qwen3.5-4b",
                 provider="ollama",
-                model_id="qwen3:4b",
+                model_id="qwen3.5:4b",
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
