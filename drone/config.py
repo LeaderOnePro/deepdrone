@@ -285,7 +285,7 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            # Qwen via official API (OpenAI-compatible)
+            # Qwen via 阿里云百炼平台API (OpenAI-compatible)
             "qwen3.5-plus": ModelConfig(
                 name="qwen3.5-plus",
                 provider="qwen",
