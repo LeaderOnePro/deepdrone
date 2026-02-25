@@ -82,38 +82,17 @@ class ConfigManager:
     def _create_default_models(self):
         """Create default model configurations."""
         self.models = {
+            "gpt-5.3-codex": ModelConfig(
+                name="gpt-5.3-codex",
+                provider="openai",
+                model_id="gpt-5.3-codex",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "gpt-5.2": ModelConfig(
                 name="gpt-5.2",
                 provider="openai",
                 model_id="gpt-5.2",
-                max_tokens=2048,
-                temperature=0.7
-            ),
-            "gpt-5.1-codex-max": ModelConfig(
-                name="gpt-5.1-codex-max",
-                provider="openai",
-                model_id="gpt-5.1-codex-max",
-                max_tokens=2048,
-                temperature=0.7
-            ),
-            "gpt-5.1-codex-mini": ModelConfig(
-                name="gpt-5.1-codex-mini",
-                provider="openai",
-                model_id="gpt-5.1-codex-mini",
-                max_tokens=2048,
-                temperature=0.7
-            ),
-            "gpt-5.1-codex": ModelConfig(
-                name="gpt-5.1-codex",
-                provider="openai",
-                model_id="gpt-5.1-codex",
-                max_tokens=2048,
-                temperature=0.7
-            ),
-            "gpt-5.1": ModelConfig(
-                name="gpt-5.1",
-                provider="openai",
-                model_id="gpt-5.1",
                 max_tokens=2048,
                 temperature=0.7
             ),
@@ -131,31 +110,31 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "claude-opus-4-5-20251101": ModelConfig(
-                name="claude-opus-4-5-20251101",
+            "claude-opus-4-6": ModelConfig(
+                name="claude-opus-4-6",
                 provider="anthropic",
-                model_id="claude-opus-4-5-20251101",
+                model_id="claude-opus-4-6",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "claude-sonnet-4-5-20250929": ModelConfig(
-                name="claude-sonnet-4-5-20250929",
+            "claude-sonnet-4-6": ModelConfig(
+                name="claude-sonnet-4-6",
                 provider="anthropic",
-                model_id="claude-sonnet-4-5-20250929",
+                model_id="claude-sonnet-4-6",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "claude-3-haiku-20240307": ModelConfig(
-                name="claude-3-haiku-20240307",
+            "claude-haiku-4-5": ModelConfig(
+                name="claude-haiku-4-5",
                 provider="anthropic",
-                model_id="claude-3-haiku-20240307",
+                model_id="claude-haiku-4-5",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "gemini-3-pro-preview": ModelConfig(
-                name="gemini-3-pro-preview",
+            "gemini-3.1-pro-preview": ModelConfig(
+                name="gemini-3.1-pro-preview",
                 provider="google",
-                model_id="gemini/gemini-3-pro-preview",
+                model_id="gemini/gemini-3.1-pro-preview",
                 max_tokens=2048,
                 temperature=0.7
             ),
@@ -173,17 +152,17 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "gemini-2.5-flash": ModelConfig(
-                name="gemini-2.5-flash",
+            "gemini-flash-latest": ModelConfig(
+                name="gemini-flash-latest",
                 provider="google",
-                model_id="gemini/gemini-2.5-flash",
+                model_id="gemini/gemini-flash-latest",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "gemini-2.5-flash-lite": ModelConfig(
-                name="gemini-2.5-flash-lite",
+            "gemini-flash-lite-latest": ModelConfig(
+                name="gemini-flash-lite-latest",
                 provider="google",
-                model_id="gemini/gemini-2.5-flash-lite",
+                model_id="gemini/gemini-flash-lite-latest",
                 max_tokens=2048,
                 temperature=0.7
             ),

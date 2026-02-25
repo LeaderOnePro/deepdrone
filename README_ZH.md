@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**使用自然语言控制无人机，支持来自 11 大主流提供商的最新 AI 模型：OpenAI GPT-5.2、Anthropic Claude 4.5、Google Gemini 3 Pro Preview、阿里巴巴 Qwen3.5 Plus/Flash、xAI Grok 4.1、智谱AI GLM-5、DeepSeek、月之暗面 Kimi K2.5、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
+**使用自然语言控制无人机，支持来自 11 大主流提供商的最新 AI 模型：OpenAI GPT-5.3 Codex、Anthropic Claude 4.6、Google Gemini 3.1 Pro Preview、阿里巴巴 Qwen3.5 Plus/Flash、xAI Grok 4.1、智谱AI GLM-5、DeepSeek、月之暗面 Kimi K2.5、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
 
 ---
 
@@ -42,7 +42,7 @@ uv run start_web.py
 
 ## ✨ 功能特性
 
-- 🤖 **全面的 AI 支持**：11 大主流提供商的最新模型（GPT-5.2、Claude 4.5、Gemini 3 Pro Preview、Kimi K2.5、美团 LongCat Flash、Llama 4、Grok 4.1 等）
+- 🤖 **全面的 AI 支持**：11 大主流提供商的最新模型（GPT-5.3 Codex、Claude 4.6、Gemini 3.1 Pro Preview、Kimi K2.5、美团 LongCat Flash、Llama 4、Grok 4.1 等）
 - 🌐 **双重界面**：终端 CLI 和现代化 Web 界面
 - 🌐 **网络灵活性**：支持本地、局域网和互联网 Ollama 服务器
 - 🚁 **真实无人机控制**：DroneKit 集成，支持实际飞行控制
@@ -106,9 +106,9 @@ uv run simulate_drone.py
 
 | 提供商 | 模型 | API 类型 | 描述 |
 |--------|------|----------|------|
-| **OpenAI** | GPT-5.2, GPT-5.1-Codex-Max, GPT-5.1-Codex-Mini, GPT-5.1-Codex, GPT-5.1, GPT-5-mini, GPT-5-nano 等 | 云端 | 最新 GPT-5.2 和 GPT-5.1 系列模型 |
-| **Anthropic** | Claude Opus 4.5, Claude Sonnet 4.5 等 | 云端 | 先进的 Claude 4.5 模型 |
-| **Google** | Gemini 3 Pro Preview, Gemini 3 Flash Preview, Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash Lite | 云端 | 来自 Google AI Studio 的 Gemini 3 和 Gemini 2.5 模型 |
+| **OpenAI** | GPT-5.3-Codex, GPT-5.2, GPT-5-mini, GPT-5-nano | 云端 | 最新 GPT-5.3 和 GPT-5.2 系列模型 |
+| **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | 云端 | 先进的 Claude 4.6 模型 |
+| **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 2.5 Pro, Gemini Flash Latest, Gemini Flash Lite Latest | 云端 | 来自 Google AI Studio 的 Gemini 3.1 和 Gemini 系列模型 |
 | **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | 云端 | 马斯克的 xAI 模型 |
 | **智谱AI** | GLM-5, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |

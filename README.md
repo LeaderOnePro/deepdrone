@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.2, Anthropic Claude 4.5, Google Gemini 3 Pro Preview, Alibaba Qwen3.5 Plus/Flash, xAI Grok 4.1, ZhipuAI GLM-5, DeepSeek, Moonshot Kimi K2.5, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.3 Codex, Anthropic Claude 4.6, Google Gemini 3.1 Pro Preview, Alibaba Qwen3.5 Plus/Flash, xAI Grok 4.1, ZhipuAI GLM-5, DeepSeek, Moonshot Kimi K2.5, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -42,7 +42,7 @@ The app will guide you through:
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.2, Claude 4.5, Gemini 3 Pro Preview, Kimi K2.5, LongCat Flash, Llama 4, Grok 4.1, etc.)
+- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.3 Codex, Claude 4.6, Gemini 3.1 Pro Preview, Kimi K2.5, LongCat Flash, Llama 4, Grok 4.1, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
@@ -74,9 +74,9 @@ uv run simulate_drone.py
 
 | Provider | Models | API Type | Description |
 |----------|--------|----------|-------------|
-| **OpenAI** | GPT-5.2, GPT-5.1-Codex-Max, GPT-5.1-Codex-Mini, GPT-5.1-Codex, GPT-5.1, GPT-5-mini, GPT-5-nano | Cloud | Latest GPT-5.2 and GPT-5.1 series models |
-| **Anthropic** | Claude Opus 4.5, Claude Sonnet 4.5, etc | Cloud | Advanced Claude 4.5 models |
-| **Google** | Gemini 3 Pro Preview, Gemini 3 Flash Preview, Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash Lite | Cloud | Gemini 3 and Gemini 2.5 models from Google AI Studio |
+| **OpenAI** | GPT-5.3-Codex, GPT-5.2, GPT-5-mini, GPT-5-nano | Cloud | Latest GPT-5.3 and GPT-5.2 series models |
+| **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | Cloud | Advanced Claude 4.6 models |
+| **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 2.5 Pro, Gemini Flash Latest, Gemini Flash Lite Latest | Cloud | Gemini 3.1 and Gemini models from Google AI Studio |
 | **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | Cloud | DashScope OpenAI-compatible endpoints |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
