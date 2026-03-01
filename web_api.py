@@ -225,6 +225,12 @@ async def get_providers():
             "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
             "description": "GLM models from ZhipuAI"
         },
+        "MiniMax": {
+            "name": "minimax",
+            "models": ["MiniMax-M2.5", "MiniMax-M2.5-highspeed"],
+            "api_key_url": "https://platform.minimaxi.com/user-center/basic-information/interface-key",
+            "description": "MiniMax-M2.5 models from MiniMax"
+        },
         "DeepSeek": {
             "name": "deepseek",
             "models": ["deepseek-chat", "deepseek-reasoner"],

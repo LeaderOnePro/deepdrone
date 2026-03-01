@@ -50,7 +50,7 @@ def chat(
         return
     
     # Check if model needs API key
-    if model_config.provider in ["openai", "anthropic", "zhipuai"] and not model_config.api_key:
+    if model_config.provider != "ollama" and not model_config.api_key:
         console.print(f"[yellow]Model '{model}' requires an API key[/yellow]")
         if Confirm.ask("Would you like to set it now?"):
             set_api_key_interactive(model)
@@ -136,7 +136,7 @@ def add_model(
     console.print(f"[green]Model '{name}' added successfully[/green]")
     
     # Ask for API key if needed
-    if provider in ["openai", "anthropic", "zhipuai"]:
+    if provider in ["openai", "anthropic", "zhipuai", "minimax"]:
         if Confirm.ask(f"Would you like to set the API key for '{name}' now?"):
             set_api_key_interactive(name)
 
@@ -275,6 +275,8 @@ def set_api_key_interactive(model_name: str, api_key: Optional[str] = None):
             console.print("Get your Kimi (Moonshot) API key from: https://platform.moonshot.cn/console/api-keys")
         elif model_config.provider == "xai":
             console.print("Get your xAI API key from: https://console.x.ai")
+        elif model_config.provider == "minimax":
+            console.print("Get your MiniMax API key from: https://platform.minimaxi.com/user-center/basic-information/interface-key")
         
         api_key = getpass.getpass("Enter API key (hidden): ")
     
