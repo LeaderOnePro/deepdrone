@@ -147,6 +147,7 @@ const SettingsPage = () => {
                : provider === 'deepseek' ? 'https://api.deepseek.com/v1'
                : provider === 'moonshot' ? 'https://api.moonshot.cn/v1'
                : provider === 'xai' ? 'https://api.x.ai/v1'
+               : provider === 'minimax' ? 'https://api.minimaxi.com/v1'
                : '',
     }));
 
@@ -493,7 +494,7 @@ const SettingsPage = () => {
               )}
 
               {/* Base URL (for Ollama and other providers) */}
-              {(modelConfig.provider === 'ollama' || modelConfig.provider === 'qwen' || modelConfig.provider === 'deepseek' || modelConfig.provider === 'moonshot' || modelConfig.provider === 'xai') && (
+              {(modelConfig.provider === 'ollama' || modelConfig.provider === 'qwen' || modelConfig.provider === 'deepseek' || modelConfig.provider === 'moonshot' || modelConfig.provider === 'xai' || modelConfig.provider === 'minimax') && (
                 <div className="form-group" style={{ gridColumn: 'span 2' }}>
                   <label className="form-label">
                     {modelConfig.provider === 'ollama' ? 'Ollama 服务器地址' : '基础 URL'}
@@ -515,6 +516,8 @@ const SettingsPage = () => {
                           ? 'https://api.moonshot.cn/v1'
                           : modelConfig.provider === 'xai'
                           ? 'https://api.x.ai/v1'
+                          : modelConfig.provider === 'minimax'
+                          ? 'https://api.minimaxi.com/v1'
                           : ''
                       }
                     />

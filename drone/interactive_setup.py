@@ -66,6 +66,12 @@ PROVIDERS = {
         "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
         "description": "GLM models from ZhipuAI"
     },
+    "MiniMax": {
+        "name": "minimax",
+        "models": ["MiniMax-M2.5", "MiniMax-M2.5-highspeed"],
+        "api_key_url": "https://platform.minimaxi.com/user-center/basic-information/interface-key",
+        "description": "MiniMax-M2.5 models from MiniMax"
+    },
     "DeepSeek": {
         "name": "deepseek",
         "models": ["deepseek-chat", "deepseek-reasoner"],
@@ -382,6 +388,8 @@ def get_api_key(provider_name: str, model_name: str) -> Optional[str]:
         console.print("[dim]该 Key 将用于生成 JWT 以调用 ZhipuAI API。[/dim]\n")
     elif provider_name.lower() == "qwen":
         console.print("[yellow]提示：Qwen 使用 OpenAI 兼容通道，请填入 DashScope 的 API Key。[/yellow]\n")
+    elif provider_name.lower() == "minimax":
+        console.print("[yellow]提示：MiniMax 使用 OpenAI 兼容通道，请填入 MiniMax 的接口密钥。[/yellow]\n")
     
     try:
         # Use getpass for secure password input (works in all environments)
@@ -477,6 +485,8 @@ def start_interactive_session():
             base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
         elif provider_name.lower() == "longcat":
             base_url = "https://api.longcat.chat/openai/v1"
+        elif provider_name.lower() == "minimax":
+            base_url = "https://api.minimaxi.com/v1"
         
         model_config = ModelConfig(
             name=f"{provider_name.lower()}-session",
