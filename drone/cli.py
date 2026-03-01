@@ -50,7 +50,7 @@ def chat(
         return
     
     # Check if model needs API key
-    if model_config.provider in ["openai", "anthropic", "zhipuai", "minimax"] and not model_config.api_key:
+    if model_config.provider != "ollama" and not model_config.api_key:
         console.print(f"[yellow]Model '{model}' requires an API key[/yellow]")
         if Confirm.ask("Would you like to set it now?"):
             set_api_key_interactive(model)
