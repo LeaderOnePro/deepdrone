@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**使用自然语言控制无人机，支持来自 11 大主流提供商的最新 AI 模型：OpenAI GPT-5.3 Codex、Anthropic Claude 4.6、Google Gemini 3.1 Pro Preview、阿里巴巴 Qwen3.5 Plus/Flash、xAI Grok 4.1、智谱AI GLM-5、DeepSeek、月之暗面 Kimi K2.5、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
+**使用自然语言控制无人机，支持来自 12 大主流提供商的最新 AI 模型：OpenAI GPT-5.3 Codex、Anthropic Claude 4.6、Google Gemini 3.1 Pro Preview、阿里巴巴 Qwen3.5 Plus/Flash、xAI Grok 4.1、智谱AI GLM-5、MiniMax、DeepSeek、月之暗面 Kimi K2.5、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
 
 ---
 
@@ -35,14 +35,14 @@ uv run start_web.py
 ```
 
 应用程序将引导您完成：
-- **AI 提供商选择**：从 11 个提供商中选择最新模型
+- **AI 提供商选择**：从 12 个提供商中选择最新模型
 - **模型选择**：选择前沿 AI 模型（支持网络 Ollama）
 - **无人机连接**：连接到模拟器或真实无人机
 - **自然语言控制**："起飞到30米"，"飞行正方形路线"
 
 ## ✨ 功能特性
 
-- 🤖 **全面的 AI 支持**：11 大主流提供商的最新模型（GPT-5.3 Codex、Claude 4.6、Gemini 3.1 Pro Preview、Kimi K2.5、美团 LongCat Flash、Llama 4、Grok 4.1 等）
+- 🤖 **全面的 AI 支持**：12 大主流提供商的最新模型（GPT-5.3 Codex、Claude 4.6、Gemini 3.1 Pro Preview、MiniMax、Kimi K2.5、美团 LongCat Flash、Llama 4、Grok 4.1 等）
 - 🌐 **双重界面**：终端 CLI 和现代化 Web 界面
 - 🌐 **网络灵活性**：支持本地、局域网和互联网 Ollama 服务器
 - 🚁 **真实无人机控制**：DroneKit 集成，支持实际飞行控制
@@ -112,6 +112,7 @@ uv run simulate_drone.py
 | **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | 云端 | 马斯克的 xAI 模型 |
 | **智谱AI** | GLM-5, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |
+| **MiniMax** | MiniMax-M2.5, MiniMax-M2.5-highspeed | 云端 | 来自 MiniMax 的 MiniMax-M2.5 模型 |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner 等 | 云端 | 高级推理模型 |
 | **月之暗面（Kimi）** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview 等 | 云端 | 月之暗面 AI Kimi K2 系列模型，支持思维链 |
 | **美团 LongCat** | LongCat Flash Thinking 2601, LongCat Flash Chat, LongCat Flash Thinking, LongCat Flash Lite | 云端 | OpenAI 兼容的 LongCat Flash 系列模型 |
@@ -130,7 +131,7 @@ uv run simulate_drone.py
 
 - **uv** - 快速 Python 包管理和项目工具
 - **LiteLLM** - 云端 AI 模型统一接口（OpenAI、Anthropic、Google、xAI 等）
-- **直接 API 集成** - 原生支持智谱AI、Qwen（DashScope）、DeepSeek、月之暗面 Kimi
+- **直接 API 集成** - 原生支持智谱AI、Qwen（DashScope）、MiniMax、DeepSeek、月之暗面 Kimi
 - **Ollama** - 本地/网络 AI 模型执行，支持自定义服务器
 - **DroneKit-Python** - 真实无人机控制和遥测
 - **Rich** - 美观的终端界面和格式化

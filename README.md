@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.3 Codex, Anthropic Claude 4.6, Google Gemini 3.1 Pro Preview, Alibaba Qwen3.5 Plus/Flash, xAI Grok 4.1, ZhipuAI GLM-5, DeepSeek, Moonshot Kimi K2.5, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 12 major providers: OpenAI GPT-5.3 Codex, Anthropic Claude 4.6, Google Gemini 3.1 Pro Preview, Alibaba Qwen3.5 Plus/Flash, xAI Grok 4.1, ZhipuAI GLM-5, MiniMax, DeepSeek, Moonshot Kimi K2.5, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -35,14 +35,14 @@ uv run start_web.py
 ```
 
 The app will guide you through:
-- **AI Provider Selection**: Choose from 11 providers with latest models
+- **AI Provider Selection**: Choose from 12 providers with latest models
 - **Model Selection**: Pick from cutting-edge AI models (network Ollama supported)
 - **Drone Connection**: Connect to simulator or real drone
 - **Natural Language Control**: "Take off to 30 meters", "Fly in a square pattern"
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.3 Codex, Claude 4.6, Gemini 3.1 Pro Preview, Kimi K2.5, LongCat Flash, Llama 4, Grok 4.1, etc.)
+- 🤖 **Comprehensive AI Support**: 12 major providers with latest models (GPT-5.3 Codex, Claude 4.6, Gemini 3.1 Pro Preview, MiniMax, Kimi K2.5, LongCat Flash, Llama 4, Grok 4.1, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
@@ -80,6 +80,7 @@ uv run simulate_drone.py
 | **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | Cloud | DashScope OpenAI-compatible endpoints |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
+| **MiniMax** | MiniMax-M2.5, MiniMax-M2.5-highspeed | Cloud | MiniMax-M2.5 models from MiniMax |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
 | **Moonshot (Kimi)** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
 | **LongCat** | LongCat Flash Thinking 2601, LongCat Flash Chat, LongCat Flash Thinking, LongCat Flash Lite | Cloud | OpenAI-compatible LongCat Flash models |
@@ -98,7 +99,7 @@ uv run simulate_drone.py
 
 - **uv** - Fast Python package manager and project tool
 - **LiteLLM** - Unified interface for cloud AI models (OpenAI, Anthropic, Google, xAI, etc.)
-- **Direct API Integration** - Native support for ZhipuAI, Qwen (DashScope), DeepSeek, Moonshot Kimi
+- **Direct API Integration** - Native support for ZhipuAI, Qwen (DashScope), MiniMax, DeepSeek, Moonshot Kimi
 - **Ollama** - Local/Network AI model execution with custom server support
 - **DroneKit-Python** - Real drone control and telemetry
 - **Rich** - Beautiful terminal interface and formatting

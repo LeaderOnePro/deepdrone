@@ -272,6 +272,23 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            # MiniMax via OpenAI-compatible API
+            "minimax-m2.5": ModelConfig(
+                name="minimax-m2.5",
+                provider="minimax",
+                model_id="MiniMax-M2.5",
+                base_url="https://api.minimaxi.com/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "minimax-m2.5-highspeed": ModelConfig(
+                name="minimax-m2.5-highspeed",
+                provider="minimax",
+                model_id="MiniMax-M2.5-highspeed",
+                base_url="https://api.minimaxi.com/v1",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             # Qwen via 阿里云百炼平台API (OpenAI-compatible)
             "qwen3.5-plus": ModelConfig(
                 name="qwen3.5-plus",
@@ -452,7 +469,7 @@ class ConfigManager:
         """Get list of models that require API keys."""
         api_models = []
         for name, config in self.models.items():
-            if config.provider in ["openai", "anthropic", "zhipuai", "qwen", "deepseek", "moonshot", "longcat", "xai"]:
+            if config.provider in ["openai", "anthropic", "zhipuai", "qwen", "deepseek", "moonshot", "longcat", "xai", "minimax"]:
                 api_models.append(name)
         return api_models
 
