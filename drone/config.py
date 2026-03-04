@@ -212,18 +212,18 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3-4b": ModelConfig(
-                name="qwen3-4b",
+            "qwen3.5-4b": ModelConfig(
+                name="qwen3.5-4b",
                 provider="ollama",
-                model_id="qwen3:4b",
+                model_id="qwen3.5:4b",
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "gpt-oss-latest": ModelConfig(
-                name="gpt-oss-latest",
+            "qwen3.5-latest": ModelConfig(
+                name="qwen3.5-latest",
                 provider="ollama",
-                model_id="gpt-oss:latest",
+                model_id="qwen3.5:latest",
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
