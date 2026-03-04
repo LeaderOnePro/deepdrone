@@ -203,9 +203,9 @@ async def get_providers():
         },
         "Google": {
             "name": "google",
-            "models": ["gemini/gemini-3.1-pro-preview", "gemini/gemini-3-flash-preview", "gemini/gemini-2.5-pro", "gemini/gemini-flash-latest", "gemini/gemini-flash-lite-latest"],
+            "models": ["gemini/gemini-3.1-pro-preview", "gemini/gemini-3-flash-preview", "gemini/gemini-3.1-flash-lite-preview", "gemini/gemini-flash-latest", "gemini/gemini-flash-lite-latest"],
             "api_key_url": "https://aistudio.google.com/app/apikey",
-            "description": "Gemini 3 models from Google AI Studio"
+            "description": "Gemini 3.1 models from Google AI Studio"
         },
         "Qwen": {
             "name": "qwen",
