@@ -82,10 +82,10 @@ class ConfigManager:
     def _create_default_models(self):
         """Create default model configurations."""
         self.models = {
-            "gpt-5.3-codex": ModelConfig(
-                name="gpt-5.3-codex",
+            "gpt-5.4": ModelConfig(
+                name="gpt-5.4",
                 provider="openai",
-                model_id="gpt-5.3-codex",
+                model_id="gpt-5.4",
                 max_tokens=2048,
                 temperature=0.7
             ),
