@@ -212,6 +212,14 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
+            "nanbeige4.1": ModelConfig(
+                name="nanbeige4.1",
+                provider="ollama",
+                model_id="tomng/nanbeige4.1",
+                base_url="http://localhost:11434",
+                max_tokens=2048,
+                temperature=0.7
+            ),
             "qwen3.5-4b": ModelConfig(
                 name="qwen3.5-4b",
                 provider="ollama",
@@ -228,18 +236,18 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7
             ),
-            "qwen3.5-35b": ModelConfig(
-                name="qwen3.5-35b",
-                provider="ollama",
-                model_id="qwen3.5:35b",
-                base_url="http://localhost:11434",
-                max_tokens=2048,
-                temperature=0.7
-            ),
             "glm-4.7-flash": ModelConfig(
                 name="glm-4.7-flash",
                 provider="ollama",
                 model_id="glm-4.7-flash",
+                base_url="http://localhost:11434",
+                max_tokens=2048,
+                temperature=0.7
+            ),
+            "qwen3.5-35b": ModelConfig(
+                name="qwen3.5-35b",
+                provider="ollama",
+                model_id="qwen3.5:35b",
                 base_url="http://localhost:11434",
                 max_tokens=2048,
                 temperature=0.7
