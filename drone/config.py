@@ -171,7 +171,7 @@ class ConfigManager:
             "longcat-flash-thinking-2601": ModelConfig(
                 name="longcat-flash-thinking-2601",
                 provider="longcat",
-                model_id="LongCat-Flash-Thinking-2601",
+                model_id="LongCat-Flash-Thinking",
                 base_url="https://api.longcat.chat/openai/v1",
                 max_tokens=2048,
                 temperature=0.7,
@@ -187,7 +187,7 @@ class ConfigManager:
             "longcat-flash-thinking": ModelConfig(
                 name="longcat-flash-thinking",
                 provider="longcat",
-                model_id="LongCat-Flash-Thinking",
+                model_id="LongCat-Flash-Omni-2603",
                 base_url="https://api.longcat.chat/openai/v1",
                 max_tokens=2048,
                 temperature=0.7,
