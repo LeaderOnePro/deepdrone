@@ -106,7 +106,7 @@ uv run simulate_drone.py
 
 | 提供商 | 模型 | API 类型 | 描述 |
 |--------|------|----------|------|
-| **OpenAI** | GPT-5.4, GPT-5.2, GPT-5-mini, GPT-5-nano | 云端 | 最新 GPT-5.4 和 GPT-5.2 系列模型 |
+| **OpenAI** | GPT-5.4, GPT-5.4-mini, GPT-5.4-nano | 云端 | 最新 GPT-5.4 系列模型 |
 | **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | 云端 | 先进的 Claude 4.6 模型 |
 | **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview, Gemini Flash Latest, Gemini Flash Lite Latest | 云端 | 来自 Google AI Studio 的 Gemini 3.1 和 Gemini 系列模型 |
 | **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
