@@ -290,18 +290,18 @@ class ConfigManager:
                 temperature=0.7,
             ),
             # MiniMax via OpenAI-compatible API
-            "minimax-m2.5": ModelConfig(
-                name="minimax-m2.5",
+            "minimax-m2.7": ModelConfig(
+                name="minimax-m2.7",
                 provider="minimax",
-                model_id="MiniMax-M2.5",
+                model_id="MiniMax-M2.7",
                 base_url="https://api.minimaxi.com/v1",
                 max_tokens=2048,
                 temperature=0.7,
             ),
-            "minimax-m2.5-highspeed": ModelConfig(
-                name="minimax-m2.5-highspeed",
+            "minimax-m2.7-highspeed": ModelConfig(
+                name="minimax-m2.7-highspeed",
                 provider="minimax",
-                model_id="MiniMax-M2.5-highspeed",
+                model_id="MiniMax-M2.7-highspeed",
                 base_url="https://api.minimaxi.com/v1",
                 max_tokens=2048,
                 temperature=0.7,

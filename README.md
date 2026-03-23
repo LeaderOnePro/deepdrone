@@ -80,7 +80,7 @@ uv run simulate_drone.py
 | **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | Cloud | DashScope OpenAI-compatible endpoints |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-5-Turbo, GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
-| **MiniMax** | MiniMax-M2.5, MiniMax-M2.5-highspeed | Cloud | MiniMax-M2.5 models from MiniMax |
+| **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | Cloud | MiniMax-M2.7 models from MiniMax |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
 | **Moonshot (Kimi)** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
 | **LongCat** | LongCat Flash Thinking 2601, LongCat Flash Chat, LongCat Flash Thinking, LongCat Flash Lite | Cloud | OpenAI-compatible LongCat Flash models |

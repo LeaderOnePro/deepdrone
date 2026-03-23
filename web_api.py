@@ -261,9 +261,9 @@ async def get_providers():
         },
         "MiniMax": {
             "name": "minimax",
-            "models": ["MiniMax-M2.5", "MiniMax-M2.5-highspeed"],
+            "models": ["MiniMax-M2.7", "MiniMax-M2.7-highspeed"],
             "api_key_url": "https://platform.minimaxi.com/user-center/basic-information/interface-key",
-            "description": "MiniMax-M2.5 models from MiniMax",
+            "description": "MiniMax-M2.7 models from MiniMax",
         },
         "DeepSeek": {
             "name": "deepseek",
