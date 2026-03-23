@@ -249,7 +249,13 @@ async def get_providers():
         },
         "ZhipuAI": {
             "name": "zhipuai",
-            "models": ["glm-5", "glm-4.7", "glm-4.7-flash", "glm-4.5-air"],
+            "models": [
+                "glm-5-turbo",
+                "glm-5",
+                "glm-4.7",
+                "glm-4.7-flash",
+                "glm-4.5-air",
+            ],
             "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
             "description": "GLM models from ZhipuAI",
         },

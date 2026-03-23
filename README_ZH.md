@@ -111,7 +111,7 @@ uv run simulate_drone.py
 | **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview, Gemini Flash Latest, Gemini Flash Lite Latest | 云端 | 来自 Google AI Studio 的 Gemini 3.1 和 Gemini 系列模型 |
 | **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | 云端 | 马斯克的 xAI 模型 |
-| **智谱AI** | GLM-5, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |
+| **智谱AI** | GLM-5-Turbo, GLM-5, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |
 | **MiniMax** | MiniMax-M2.5, MiniMax-M2.5-highspeed | 云端 | 来自 MiniMax 的 MiniMax-M2.5 模型 |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner 等 | 云端 | 高级推理模型 |
 | **月之暗面（Kimi）** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview 等 | 云端 | 月之暗面 AI Kimi K2 系列模型，支持思维链 |

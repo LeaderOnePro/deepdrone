@@ -254,6 +254,13 @@ class ConfigManager:
                 max_tokens=2048,
                 temperature=0.7,
             ),
+            "glm-5-turbo": ModelConfig(
+                name="glm-5-turbo",
+                provider="zhipuai",
+                model_id="glm-5-turbo",
+                max_tokens=2048,
+                temperature=0.7,
+            ),
             "glm-5": ModelConfig(
                 name="glm-5",
                 provider="zhipuai",
