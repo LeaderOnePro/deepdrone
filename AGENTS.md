@@ -1,0 +1,19 @@
+# Repository Guidelines
+
+## Project Structure & Module Organization
+Core drone automation lives in `drone/`, including the Typer CLI (`cli.py`), model configuration (`config.py`), and hardware interfaces. Entry scripts at the repository root provide operator workflows: `main.py` launches the guided terminal, `start_web.py` boots FastAPI with the bundled frontend, `simulate_drone.py` runs the MAVLink simulator, and `web_api.py` exposes REST and WebSocket services. The React client resides in `frontend/src` (components, pages, hooks), with build metadata in `frontend/package.json`. Supporting assets live in `media/`, terrain samples in `terrain/`, and experiments or migration utilities in `misc/`. Runtime model caches and settings are persisted under `~/.deepdrone`.
+
+## Build, Test, and Development Commands
+Run `pip install -r requirements.txt` before touching Python modules. Use `python main.py` for the interactive setup and terminal control loop. Execute `python start_web.py` for the bundled API plus static frontend, or `uvicorn web_api:app --reload` when iterating on backend endpoints. Start the React client with `cd frontend && npm start`, and produce optimized assets with `npm run build`. Spin up the bundled simulator via `python simulate_drone.py` before exercising flight flows.
+
+## Coding Style & Naming Conventions
+Follow PEP 8 with four-space indentation, descriptive docstrings, and type hints on public functions. Keep command implementations in `snake_case` and reuse helper utilities from `drone/drone_tools.py` instead of reimplementing MAVLink calls. Console output should rely on Rich components for consistency. Frontend modules follow React 18 conventions: components in PascalCase, hooks prefixed with `use`, shared styles colocated under `frontend/src/styles`, and context providers suffixed with `Provider`. Resolve ESLint warnings emitted by the `react-scripts` toolchain before opening a PR, and group imports by standard library, third-party, then project.
+
+## Testing Guidelines
+UI tests leverage React Testing Library; run `npm test` for watch mode or `npm test -- --coverage` before shipping UI-heavy updates. Python packages currently rely on scenario validation: pair `python simulate_drone.py` with `python main.py` or web sessions to rehearse mission workflows. When adding automated Python coverage, place `pytest` suites under `tests/`, mock LiteLLM and MAVLink boundaries, and document new fixtures so they remain hermetic. Always note exercised simulator scenarios in PR descriptions when backend logic changes.
+
+## Commit & Pull Request Guidelines
+Recent history mixes concise imperatives with Conventional Commit prefixes. Keep subject lines under 72 characters, use present tense (`Add`, `Fix`, `Remove`), and optionally prepend a scope (`feat:`, `docs:`). Reference related issues in the body and call out affected subsystems (`drone/cli`, `frontend/src/pages`). Pull requests should describe intent, list functional changes, cite test evidence (commands run or simulator scenarios), and attach screenshots or GIFs for UI work. Request reviewers from both flight-control and frontend maintainers when changes span domains.
+
+## Security & Configuration Tips
+Do not commit `.env` files or the generated `~/.deepdrone` directory. API keys and custom endpoints load through the `DEEPDRONE_` environment prefix; document new variables in README updates and provide safe fallbacks in `drone/config.py`. Treat MAVLink endpoints as sensitive: redact real drone addresses in logs and PRs, confirm emergency commands (`return_home`, `land`) stay reachable in test builds, and review access controls before exposing services beyond localhost.

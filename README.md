@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**Control drones with natural language using the latest AI models from 12 major providers: OpenAI GPT-5.4, Anthropic Claude 4.6, Google Gemini 3.1 Pro Preview, Alibaba Qwen3.5 Plus/Flash, xAI Grok 4.1, ZhipuAI GLM-5, MiniMax, DeepSeek, Moonshot Kimi K2.5, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 11 major providers: OpenAI GPT-5.2, Anthropic Claude 4.5, Google Gemini 3 Pro Preview, Alibaba Qwen3 Max, xAI Grok 4.1, ZhipuAI GLM-4.7, DeepSeek, Moonshot Kimi K2 Thinking, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -21,28 +21,28 @@
 ### Terminal Interface
 ```bash
 # 1. Install dependencies
-uv sync
+pip install -r requirements.txt
 
 # 2. Start interactive setup
-uv run main.py
+python main.py
 ```
 
 ### Web Interface
 ```bash
 # One-click web start
-uv run start_web.py
+python start_web.py
 # Visit: http://localhost:8000
 ```
 
 The app will guide you through:
-- **AI Provider Selection**: Choose from 12 providers with latest models
+- **AI Provider Selection**: Choose from 11 providers with latest models
 - **Model Selection**: Pick from cutting-edge AI models (network Ollama supported)
 - **Drone Connection**: Connect to simulator or real drone
 - **Natural Language Control**: "Take off to 30 meters", "Fly in a square pattern"
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 12 major providers with latest models (GPT-5.4, Claude 4.6, Gemini 3.1 Pro Preview, MiniMax, Kimi K2.5, LongCat Flash, Llama 4, Grok 4.1, etc.)
+- 🤖 **Comprehensive AI Support**: 11 major providers with latest models (GPT-5.2, Claude 4.5, Gemini 3 Pro Preview, Kimi K2 Thinking, LongCat Flash, Llama 4, Grok 4.1, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
@@ -55,7 +55,7 @@ The app will guide you through:
 
 ```bash
 # Quick simulator (included)
-uv run simulate_drone.py
+python simulate_drone.py
 
 # Advanced SITL (optional)
 # Follow ArduPilot SITL installation guide
@@ -74,32 +74,29 @@ uv run simulate_drone.py
 
 | Provider | Models | API Type | Description |
 |----------|--------|----------|-------------|
-| **OpenAI** | GPT-5.4, GPT-5.4-mini, GPT-5.4-nano | Cloud | Latest GPT-5.4 series models |
-| **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | Cloud | Advanced Claude 4.6 models |
-| **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview, Gemini Flash Latest, Gemini Flash Lite Latest | Cloud | Gemini 3.1 and Gemini models from Google AI Studio |
-| **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | Cloud | DashScope OpenAI-compatible endpoints |
+| **OpenAI** | GPT-5.2, GPT-5.1-Codex-Max, GPT-5.1-Codex-Mini, GPT-5.1-Codex, GPT-5.1, GPT-5-mini, GPT-5-nano | Cloud | Latest GPT-5.2 and GPT-5.1 series models |
+| **Anthropic** | Claude Opus 4.5, Claude Sonnet 4.5, etc | Cloud | Advanced Claude 4.5 models |
+| **Google** | Gemini 3 Pro Preview, Gemini 3 Flash Preview, Gemini 2.5 Pro, Gemini 2.5 Flash, Gemini 2.5 Flash Lite | Cloud | Gemini 3 and Gemini 2.5 models from Google AI Studio |
+| **Qwen** | Qwen3 Max, Qwen3 235B Instruct 2507, Qwen3 Coder Plus, Qwen3 Next 80B | Cloud | DashScope OpenAI-compatible endpoints |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | Cloud | Elon Musk's xAI models |
-| **ZhipuAI** | GLM-5-Turbo, GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
-| **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | Cloud | MiniMax-M2.7 models from MiniMax |
+| **ZhipuAI** | GLM-4.7, GLM-4.5-Air, etc | Cloud | Chinese AI models with JWT auth |
 | **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner, etc | Cloud | Advanced reasoning models |
-| **Moonshot (Kimi)** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
-| **LongCat** | LongCat Flash Thinking, LongCat Flash Chat, LongCat Flash Omni 2603, LongCat Flash Lite | Cloud | OpenAI-compatible LongCat Flash models |
+| **Moonshot (Kimi)** | Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |
+| **LongCat** | LongCat Flash Chat, LongCat Flash Thinking | Cloud | OpenAI-compatible LongCat Flash models |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo, etc | Cloud | Latest Llama models via providers |
-| **Ollama** | NanBeige4.1, Qwen3.5:4B, Qwen3.5:Latest, GLM-4.7-Flash, Qwen3.5:35B, etc | Local/Network | Local & remote server support |
+| **Ollama** | Qwen3:4B, GPT-OSS, Qwen3:30B, etc | Local/Network | Local & remote server support |
 
 ## 🔧 Requirements
 
-- Python 3.9+
-- [uv](https://docs.astral.sh/uv/) (package manager)
+- Python 3.8+
 - DroneKit-Python
 - LiteLLM for cloud models
 - Ollama for local/network models (optional)
 
 ## 💻 Tech Stack
 
-- **uv** - Fast Python package manager and project tool
 - **LiteLLM** - Unified interface for cloud AI models (OpenAI, Anthropic, Google, xAI, etc.)
-- **Direct API Integration** - Native support for ZhipuAI, Qwen (DashScope), MiniMax, DeepSeek, Moonshot Kimi
+- **Direct API Integration** - Native support for ZhipuAI, Qwen (DashScope), DeepSeek, Moonshot Kimi
 - **Ollama** - Local/Network AI model execution with custom server support
 - **DroneKit-Python** - Real drone control and telemetry
 - **Rich** - Beautiful terminal interface and formatting
@@ -122,10 +119,10 @@ DeepDrone includes a modern web interface for browser-based drone control with a
 
 ```bash
 # Option 1: One-click start (recommended)
-uv run start_web.py
+python start_web.py
 
 # Option 2: Manual start
-uv run web_api.py
+python web_api.py
 # Then visit: http://localhost:8000
 ```
 
@@ -181,7 +178,7 @@ uv run web_api.py
 - Ensure models are installed: `ollama pull model_name`
 
 **Simulator not responding:**
-- Restart simulator: `uv run simulate_drone.py`
+- Restart simulator: `python simulate_drone.py`
 - Check connection string matches simulator port
 - Verify no other processes using the port
 
@@ -190,13 +187,13 @@ uv run web_api.py
 ### Development
 ```bash
 # Terminal interface
-uv run main.py
+python main.py
 
 # Web interface with hot reload
 cd frontend
 npm start  # Frontend (port 3000)
 # In another terminal:
-uv run uvicorn web_api:app --reload  # Backend (port 8000)
+uvicorn web_api:app --reload  # Backend (port 8000)
 ```
 
 ### Production
@@ -206,7 +203,7 @@ cd frontend
 npm run build
 
 # Start production server
-uv run start_web.py
+python start_web.py
 ```
 
 

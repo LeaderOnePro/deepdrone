@@ -37,7 +37,7 @@ def check_frontend():
 def check_npm():
     """Check if npm is available"""
     try:
-        subprocess.run(["npm", "--version"], capture_output=True, check=True, shell=True)
+        subprocess.run(["npm", "--version"], capture_output=True, check=True)
         return True
     except (subprocess.CalledProcessError, FileNotFoundError):
         return False
@@ -67,7 +67,7 @@ def build_frontend():
     if not node_modules.exists():
         print("📦 Installing frontend dependencies...")
         try:
-            subprocess.run(["npm", "install"], cwd=frontend_dir, check=True, shell=True)
+            subprocess.run(["npm", "install"], cwd=frontend_dir, check=True)
         except subprocess.CalledProcessError:
             print("❌ Failed to install frontend dependencies")
             print("Please make sure Node.js and npm are installed")
@@ -79,7 +79,7 @@ def build_frontend():
     
     # Build the frontend
     try:
-        subprocess.run(["npm", "run", "build"], cwd=frontend_dir, check=True, shell=True)
+        subprocess.run(["npm", "run", "build"], cwd=frontend_dir, check=True)
         print("✅ Frontend built successfully")
         return True
     except subprocess.CalledProcessError:
