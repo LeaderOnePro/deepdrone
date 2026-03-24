@@ -217,7 +217,7 @@ class DroneCommandRequest(BaseModel):
 @app.get("/api")
 async def api_root():
     """API root endpoint"""
-    return {"message": "DeepDrone API Server", "version": "1.0.0"}
+    return {"message": "DeepDrone-Bridge API Server", "version": "3.0.0"}
 
 @app.get("/api/providers")
 async def get_providers():
@@ -225,69 +225,75 @@ async def get_providers():
     providers = {
         "OpenAI": {
             "name": "openai",
-            "models": ["gpt-5.2", "gpt-5.1-codex-max", "gpt-5.1-codex-mini", "gpt-5.1-codex", "gpt-5.1", "gpt-5-mini", "gpt-5-nano"],
+            "models": ["gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano"],
             "api_key_url": "https://platform.openai.com/api-keys",
-            "description": "Latest GPT-5.2 and GPT-5.1 series models"
+            "description": "Latest GPT-5.4 series models"
         },
         "Anthropic": {
             "name": "anthropic",
-            "models": ["claude-opus-4-5-20251101", "claude-sonnet-4-5-20250929", "claude-3-haiku-20240307"],
-            "api_key_url": "https://console.anthropic.com/",
-            "description": "Advanced Claude 4.5 models"
+            "models": ["claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5"],
+            "api_key_url": "https://console.anthropic.com",
+            "description": "Advanced Claude 4.6 models"
         },
         "Google": {
             "name": "google",
-            "models": ["gemini/gemini-3-pro-preview", "gemini/gemini-3-flash-preview", "gemini/gemini-2.5-pro", "gemini/gemini-2.5-flash", "gemini/gemini-2.5-flash-lite"],
+            "models": ["gemini/gemini-3.1-pro-preview", "gemini/gemini-3-flash-preview", "gemini/gemini-3.1-flash-lite-preview", "gemini/gemini-flash-latest", "gemini/gemini-flash-lite-latest"],
             "api_key_url": "https://aistudio.google.com/app/apikey",
-            "description": "Gemini 3 models from Google AI Studio"
+            "description": "Gemini 3.1 models from Google AI Studio"
         },
         "Qwen": {
             "name": "qwen",
-            "models": ["qwen3-max", "qwen3-235b-a22b-thinking-2507", "qwen3-235b-a22b-instruct-2507", "qwen3-coder-plus", "qwen3-next-80b-a3b-thinking", "qwen3-next-80b-a3b-instruct"],
+            "models": ["qwen3.5-plus", "qwen3.5-flash", "qwen3.5-397b-a17b", "qwen3.5-122b-a10b", "qwen3.5-27b", "qwen3.5-35b-a3b"],
             "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
-            "description": "Qwen3 models via DashScope"
+            "description": "Qwen3.5 models via DashScope"
         },
         "xAI": {
             "name": "xai",
             "models": ["grok-4-1-fast-reasoning", "grok-4-1-fast-non-reasoning", "grok-4-0709"],
-            "api_key_url": "https://console.x.ai/",
+            "api_key_url": "https://console.x.ai",
             "description": "Grok models from xAI"
         },
         "ZhipuAI": {
             "name": "zhipuai",
-            "models": ["glm-4.7", "glm-4.5-air", "glm-4.5-flash"],
+            "models": ["glm-5-turbo", "glm-5", "glm-4.7", "glm-4.7-flash", "glm-4.5-air"],
             "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
             "description": "GLM models from ZhipuAI"
+        },
+        "MiniMax": {
+            "name": "minimax",
+            "models": ["MiniMax-M2.7", "MiniMax-M2.7-highspeed"],
+            "api_key_url": "https://platform.minimaxi.com/user-center/basic-information/interface-key",
+            "description": "MiniMax-M2.7 models from MiniMax"
         },
         "DeepSeek": {
             "name": "deepseek",
             "models": ["deepseek-chat", "deepseek-reasoner"],
-            "api_key_url": "https://platform.deepseek.com/",
+            "api_key_url": "https://platform.deepseek.com",
             "description": "DeepSeek models with reasoning capabilities"
         },
         "Kimi": {
             "name": "moonshot",
-            "models": ["kimi-k2-thinking-turbo", "kimi-k2-turbo-preview", "kimi-k2-thinking", "kimi-k2-0905-preview"],
+            "models": ["kimi-k2.5", "kimi-k2-thinking-turbo", "kimi-k2-turbo-preview", "kimi-k2-thinking", "kimi-k2-0905-preview"],
             "api_key_url": "https://platform.moonshot.cn/console/api-keys",
             "description": "Kimi models from Moonshot AI"
         },
         "LongCat": {
             "name": "longcat",
-            "models": ["LongCat-Flash-Chat", "LongCat-Flash-Thinking"],
+            "models": ["LongCat-Flash-Thinking", "LongCat-Flash-Chat", "LongCat-Flash-Omni-2603", "LongCat-Flash-Lite"],
             "api_key_url": "https://longcat.chat/platform/api_keys",
             "description": "LongCat Flash models with thinking support"
         },
         "Meta": {
             "name": "meta",
             "models": ["meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", "llama/Llama-3.3-70B-Instruct-Turbo"],
-            "api_key_url": "https://together.ai/",
-            "api_key_alternatives": ["https://replicate.com/", "https://openrouter.ai/"],
+            "api_key_url": "https://together.ai",
+            "api_key_alternatives": ["https://replicate.com", "https://openrouter.ai"],
             "description": "Latest Llama models via providers"
         },
         "Ollama": {
             "name": "ollama",
-            "models": ["qwen3:4b", "gpt-oss:latest", "qwen3:30b"],
-            "api_key_url": "https://ollama.ai/ (No API key needed - supports local/network)",
+            "models": ["tomng/nanbeige4.1", "qwen3.5:4b", "qwen3.5:latest", "glm-4.7-flash", "qwen3.5:35b"],
+            "api_key_url": "https://ollama.com (No API key needed - supports local/network)",
             "description": "Local/Network models via Ollama with custom server support"
         }
     }

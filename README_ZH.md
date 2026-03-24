@@ -1,8 +1,10 @@
-# 🚁 DeepDrone - AI 驱动的无人机控制系统
+# DeepDrone-Bridge - AI 驱动的桥梁结构健康检测系统
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**使用自然语言控制无人机，支持来自 12 大主流提供商的最新 AI 模型：OpenAI GPT-5.4、Anthropic Claude 4.6、Google Gemini 3.1 Pro Preview、阿里巴巴 Qwen3.5 Plus/Flash、xAI Grok 4.1、智谱AI GLM-5、MiniMax、DeepSeek、月之暗面 Kimi K2.5、美团 LongCat Flash、Meta Llama 4，以及本地/网络 Ollama 模型。**
+**DeepDrone-Bridge** 是 [DeepDrone](https://github.com/LeaderOnePro/deepdrone) 的桥梁结构健康检测专用分支。在核心无人机控制系统的基础上，扩展了 LLM 驱动的损伤感知巡检规划、实时损伤检测和自适应航点重规划功能——全部通过自然语言与 12 大 AI 提供商进行交互。
+
+> 基于 JTG/T H21-2011 桥梁检测标准。
 
 ---
 
@@ -10,13 +12,28 @@
 
 [![English](https://img.shields.io/badge/English-README-blue?style=for-the-badge)](README.md) [![中文](https://img.shields.io/badge/中文-README-red?style=for-the-badge)](README_ZH.md)
 
-**🤖 AI 助手 | AI Assistant**
+---
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/LeaderOnePro/deepdrone) [![Ask Zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/LeaderOnePro/deepdrone)
+## 与 DeepDrone 的区别
+
+DeepDrone-Bridge 在 DeepDrone 基础平台之上新增了 `bridge/` 桥梁检测专用模块：
+
+| 模块 | 描述 |
+|------|------|
+| `bridge/bridge_knowledge.py` | 桥梁领域知识库，中英双语术语，5 级损伤严重性分类 |
+| `bridge/damage_detector.py` | 损伤检测接口（Mock / 本地 YOLO / 远程 API） |
+| `bridge/adaptive_planner.py` | LLM 驱动的损伤感知航点重规划，支持自适应巡检 |
+| `bridge/inspection_logger.py` | 巡检会话日志，结构化报告生成（JSON 和 Markdown） |
+
+**桥梁专用 API 端点**（`web_api.py`）：
+- `POST /api/bridge/mode` — 开关桥梁检测模式
+- `POST /api/bridge/inspection/start` — 启动巡检会话，生成初始航点
+- `POST /api/bridge/damage/report` — 上报损伤并触发自适应重规划
+- `POST /api/bridge/inspection/end` — 结束巡检并生成报告
 
 ---
 
-## 🚀 快速开始
+## 快速开始
 
 ### 终端界面
 ```bash
@@ -38,88 +55,37 @@ uv run start_web.py
 - **AI 提供商选择**：从 12 个提供商中选择最新模型
 - **模型选择**：选择前沿 AI 模型（支持网络 Ollama）
 - **无人机连接**：连接到模拟器或真实无人机
-- **自然语言控制**："起飞到30米"，"飞行正方形路线"
+- **桥梁检测模式**：启用桥梁专用损伤检测和自适应规划
+- **自然语言控制**："检测主梁"、"上报 2 号桥墩裂缝"
 
-## ✨ 功能特性
-
-- 🤖 **全面的 AI 支持**：12 大主流提供商的最新模型（GPT-5.4、Claude 4.6、Gemini 3.1 Pro Preview、MiniMax、Kimi K2.5、美团 LongCat Flash、Llama 4、Grok 4.1 等）
-- 🌐 **双重界面**：终端 CLI 和现代化 Web 界面
-- 🌐 **网络灵活性**：支持本地、局域网和互联网 Ollama 服务器
-- 🚁 **真实无人机控制**：DroneKit 集成，支持实际飞行控制
-- 💬 **自然语言**：使用对话式命令控制无人机
-- 🛠️ **内置模拟器**：包含无人机模拟器用于测试
-- 🔒 **安全操作**：紧急停止和返航功能
-- 📱 **移动端就绪**：响应式 Web 界面，支持触摸操作
-
-## 🌐 Web 界面
-
-DeepDrone 包含现代化的 Web 界面，支持基于浏览器的无人机控制，采用简洁响应式设计。
-
-### 🎯 Web 功能
-
-- **🖥️ 现代化 UI**：响应式设计，采用自定义 CSS 设计系统（无 Material-UI 依赖）
-- **🤖 AI 集成**：实时聊天界面，支持自然语言控制
-- **🚁 无人机控制**：实时状态监控和快捷命令按钮
-- **📊 仪表盘**：系统概览和实时数据可视化
-- **📱 移动端支持**：触摸友好界面，底部导航
-
-### 🚀 Web 快速启动
-
-```bash
-# 方式 1：一键启动（推荐）
-uv run start_web.py
-
-# 方式 2：手动启动
-uv run web_api.py
-# 然后访问：http://localhost:8000
-```
-
-
-
-### 🛠️ Web 技术栈
-
-- **后端**：FastAPI + Uvicorn，RESTful API
-- **前端**：React 18 + 自定义 CSS 设计系统
-- **实时通信**：WebSocket 支持实时更新
-- **响应式**：移动端优先设计，支持触摸操作
-
-## 🛠️ 模拟器设置
-
-```bash
-# 快速模拟器（内置）
-uv run simulate_drone.py
-
-# 高级 SITL（可选）
-# 请参考 ArduPilot SITL 安装指南
-```
-
-## 📝 命令示例
+## 命令示例
 
 ```
-🚁 DeepDrone> 连接模拟器并起飞到20米
-🚁 DeepDrone> 飞行到 GPS 坐标 37.7749, -122.4194
-🚁 DeepDrone> 执行边长50米的正方形飞行路线
-🚁 DeepDrone> 返航并安全降落
+DeepDrone-Bridge> 连接模拟器并起飞到 20 米
+DeepDrone-Bridge> 启用桥梁检测模式
+DeepDrone-Bridge> 开始桥面板常规巡检
+DeepDrone-Bridge> 上报 3 号桥墩检测到裂缝，严重等级 3
+DeepDrone-Bridge> 生成巡检报告并降落
 ```
 
-## 🤖 支持的 AI 提供商
+## 支持的 AI 提供商
 
 | 提供商 | 模型 | API 类型 | 描述 |
 |--------|------|----------|------|
 | **OpenAI** | GPT-5.4, GPT-5.4-mini, GPT-5.4-nano | 云端 | 最新 GPT-5.4 系列模型 |
 | **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | 云端 | 先进的 Claude 4.6 模型 |
-| **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview, Gemini Flash Latest, Gemini Flash Lite Latest | 云端 | 来自 Google AI Studio 的 Gemini 3.1 和 Gemini 系列模型 |
-| **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
-| **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | 云端 | 马斯克的 xAI 模型 |
-| **智谱AI** | GLM-5-Turbo, GLM-5, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |
-| **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | 云端 | 来自 MiniMax 的 MiniMax-M2.7 模型 |
-| **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner 等 | 云端 | 高级推理模型 |
-| **月之暗面（Kimi）** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview 等 | 云端 | 月之暗面 AI Kimi K2 系列模型，支持思维链 |
+| **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview | 云端 | 来自 Google AI Studio 的 Gemini 3.1 系列模型 |
+| **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B, Qwen3.5 122B, Qwen3.5 27B | 云端 | DashScope 提供的 OpenAI 兼容接口 |
+| **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | 云端 | xAI Grok 模型 |
+| **智谱AI** | GLM-5-Turbo, GLM-5, GLM-4.7, GLM-4.7-Flash | 云端 | 中文 AI 模型，JWT 认证 |
+| **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | 云端 | MiniMax-M2.7 模型 |
+| **DeepSeek** | DeepSeek Chat, DeepSeek Reasoner | 云端 | 高级推理模型 |
+| **月之暗面（Kimi）** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking | 云端 | 月之暗面 Kimi 模型，支持思维链 |
 | **美团 LongCat** | LongCat Flash Thinking, LongCat Flash Chat, LongCat Flash Omni 2603, LongCat Flash Lite | 云端 | OpenAI 兼容的 LongCat Flash 系列模型 |
-| **Meta** | Llama 4 Maverick, Llama 3.3 Turbo 等 | 云端 | 通过提供商的最新 Llama 模型 |
-| **Ollama** | NanBeige4.1, Qwen3.5:4B, Qwen3.5:Latest, GLM-4.7-Flash, Qwen3.5:35B 等 | 本地/网络 | 本地和远程服务器支持 |
+| **Meta** | Llama 4 Maverick, Llama 3.3 Turbo | 云端 | 通过提供商的最新 Llama 模型 |
+| **Ollama** | NanBeige4.1, Qwen3.5:4B, Qwen3.5:Latest, GLM-4.7-Flash | 本地/网络 | 本地和远程服务器支持 |
 
-## 🔧 系统要求
+## 系统要求
 
 - Python 3.9+
 - [uv](https://docs.astral.sh/uv/)（包管理器）
@@ -127,7 +93,7 @@ uv run simulate_drone.py
 - LiteLLM（云端模型）
 - Ollama（本地/网络模型，可选）
 
-## 💻 技术栈
+## 技术栈
 
 - **uv** - 快速 Python 包管理和项目工具
 - **LiteLLM** - 云端 AI 模型统一接口（OpenAI、Anthropic、Google、xAI 等）
@@ -138,55 +104,53 @@ uv run simulate_drone.py
 - **Typer** - 命令行界面框架
 - **Pydantic** - 配置管理和验证
 
-## 🌐 网络功能
+## 桥梁检测架构
+
+```
+bridge/
+  bridge_knowledge.py    # 领域知识库 & 系统提示词
+  damage_detector.py     # 检测后端（Mock/YOLO/API）
+  adaptive_planner.py    # LLM 驱动的航点重规划
+  inspection_logger.py   # 会话日志 & 报告生成
+```
+
+**巡检工作流：**
+1. 通过 API 或对话启用桥梁检测模式
+2. 启动巡检会话 — 生成桥梁各构件的常规巡检航点
+3. 无人机按航点飞行，损伤检测器并行运行
+4. 检测到损伤时，自适应规划器生成补充航点进行详细检查
+5. 结束会话，生成结构化巡检报告（兼容 JTG/T H21-2011 标准）
+
+## Web 界面
+
+DeepDrone-Bridge 包含现代化的 Web 界面，支持基于浏览器的无人机控制，采用简洁响应式设计。
+
+### Web 快速启动
+
+```bash
+# 方式 1：一键启动（推荐）
+uv run start_web.py
+
+# 方式 2：手动启动
+uv run web_api.py
+# 然后访问：http://localhost:8000
+```
+
+### Web 技术栈
+
+- **后端**：FastAPI + Uvicorn，RESTful API
+- **前端**：React 18 + 自定义 CSS 设计系统
+- **实时通信**：WebSocket 支持实时更新
+- **响应式**：移动端优先设计，支持触摸操作
+
+## 网络功能
 
 - **Ollama 网络支持**：连接到局域网或互联网上的 Ollama 服务器
 - **自定义服务器 URL**：配置远程 Ollama 实例
 - **自动模型检测**：自动检测任何服务器上的可用模型
 - **灵活部署**：在本地或强大的远程服务器上运行模型
 
-## 🔧 Web 界面配置
-
-### 连接示例
-- **模拟器**：`udp:127.0.0.1:14550`
-- **USB 连接**：`/dev/ttyACM0`（Linux）或 `COM3`（Windows）
-- **TCP 连接**：`tcp:192.168.1.100:5760`
-- **UDP 连接**：`udp:192.168.1.100:14550`
-
-### AI 模型设置
-1. 在 Web 界面中导航到设置页面
-2. 从下拉菜单选择 AI 提供商
-3. 选择模型（Ollama 模型自动检测）
-4. 输入 API 密钥（Ollama 不需要）
-5. 测试连接并保存
-
-## 🐛 故障排除
-
-
-
-**AI 模型连接失败：**
-- 验证 API 密钥是否正确
-- 检查网络连接
-- 查看浏览器控制台错误信息
-
-**无人机连接失败：**
-- 确认连接字符串格式正确
-- 确保模拟器正在运行
-- 检查串口权限（Linux/Mac）
-
-### 常见问题
-
-**Ollama 连接失败：**
-- 验证 Ollama 服务器正在运行
-- 检查基础 URL 配置
-- 确保模型已安装：`ollama pull 模型名称`
-
-**模拟器无响应：**
-- 重启模拟器：`uv run simulate_drone.py`
-- 检查连接字符串是否匹配模拟器端口
-- 验证没有其他进程占用端口
-
-## 🚀 部署
+## 部署
 
 ### 开发环境
 ```bash
@@ -210,12 +174,10 @@ npm run build
 uv run start_web.py
 ```
 
-
-
-## 🤝 贡献
+## 贡献
 
 欢迎贡献！请随时提交问题和拉取请求。
 
 ---
 
-**享受您的 DeepDrone 体验！** 🚁✨
+**DeepDrone-Bridge v3.0** | 基于 [DeepDrone](https://github.com/LeaderOnePro/deepdrone)

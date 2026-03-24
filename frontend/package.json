@@ -1,7 +1,7 @@
 {
-  "name": "deepdrone-frontend",
-  "version": "2.0.0",
-  "description": "DeepDrone Web Interface",
+  "name": "deepdrone-bridge-frontend",
+  "version": "3.0.0",
+  "description": "DeepDrone-Bridge Web Interface",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
