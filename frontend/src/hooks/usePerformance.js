@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useRef, useEffect, useState } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 
 /**
- * 性能监控 Hook
+ * Performance monitoring hook.
  */
 export const usePerformanceMonitor = (componentName) => {
   const renderCount = useRef(0);
@@ -10,11 +10,11 @@ export const usePerformanceMonitor = (componentName) => {
   useEffect(() => {
     renderCount.current += 1;
     const renderTime = Date.now() - startTime.current;
-    
+
     if (process.env.NODE_ENV === 'development') {
       console.log(`[Performance] ${componentName} rendered ${renderCount.current} times, took ${renderTime}ms`);
     }
-    
+
     startTime.current = Date.now();
   });
 
@@ -22,7 +22,7 @@ export const usePerformanceMonitor = (componentName) => {
 };
 
 /**
- * 防抖 Hook
+ * Debounce hook.
  */
 export const useDebounce = (callback, delay) => {
   const timeoutRef = useRef(null);
@@ -31,7 +31,7 @@ export const useDebounce = (callback, delay) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
+
     timeoutRef.current = setTimeout(() => {
       callback(...args);
     }, delay);
@@ -39,7 +39,7 @@ export const useDebounce = (callback, delay) => {
 };
 
 /**
- * 节流 Hook
+ * Throttle hook.
  */
 export const useThrottle = (callback, delay) => {
   const lastRun = useRef(Date.now());
@@ -53,14 +53,7 @@ export const useThrottle = (callback, delay) => {
 };
 
 /**
- * 内存化计算 Hook
- */
-export const useMemoizedValue = (computeFn, deps) => {
-  return useMemo(computeFn, deps);
-};
-
-/**
- * 异步状态管理 Hook
+ * Async state hook.
  */
 export const useAsyncState = (initialState = null) => {
   const [state, setState] = useState({
