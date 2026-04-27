@@ -267,7 +267,7 @@ async def get_providers():
         },
         "DeepSeek": {
             "name": "deepseek",
-            "models": ["deepseek-chat", "deepseek-reasoner"],
+            "models": ["deepseek-v4-flash", "deepseek-v4-pro"],
             "api_key_url": "https://platform.deepseek.com",
             "description": "DeepSeek models with reasoning capabilities",
         },

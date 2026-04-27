@@ -356,18 +356,18 @@ class ConfigManager:
                 temperature=0.7,
             ),
             # DeepSeek via OpenAI-compatible
-            "deepseek-chat": ModelConfig(
-                name="deepseek-chat",
+            "deepseek-v4-flash": ModelConfig(
+                name="deepseek-v4-flash",
                 provider="deepseek",
-                model_id="deepseek-chat",
+                model_id="deepseek-v4-flash",
                 base_url="https://api.deepseek.com/v1",
                 max_tokens=2048,
                 temperature=0.7,
             ),
-            "deepseek-reasoner": ModelConfig(
-                name="deepseek-reasoner",
+            "deepseek-v4-pro": ModelConfig(
+                name="deepseek-v4-pro",
                 provider="deepseek",
-                model_id="deepseek-reasoner",
+                model_id="deepseek-v4-pro",
                 base_url="https://api.deepseek.com/v1",
                 max_tokens=2048,
                 temperature=0.7,
