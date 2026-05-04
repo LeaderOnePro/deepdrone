@@ -372,6 +372,14 @@ class ConfigManager:
                 temperature=0.7,
             ),
             # Kimi (Moonshot) via OpenAI-compatible
+            "kimi-k2.6": ModelConfig(
+                name="kimi-k2.6",
+                provider="moonshot",
+                model_id="kimi-k2.6",
+                base_url="https://api.moonshot.cn/v1",
+                max_tokens=2048,
+                temperature=0.7,
+            ),
             "kimi-k2-thinking-turbo": ModelConfig(
                 name="kimi-k2-thinking-turbo",
                 provider="moonshot",
@@ -389,7 +397,6 @@ class ConfigManager:
                 temperature=0.7,
             ),
             "kimi-k2-thinking": ModelConfig(
-                name="kimi-k2-thinking",
                 provider="moonshot",
                 model_id="kimi-k2-thinking",
                 base_url="https://api.moonshot.cn/v1",

@@ -274,6 +274,7 @@ async def get_providers():
         "Kimi": {
             "name": "moonshot",
             "models": [
+                "kimi-k2.6",
                 "kimi-k2.5",
                 "kimi-k2-thinking-turbo",
                 "kimi-k2-turbo-preview",

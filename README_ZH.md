@@ -114,7 +114,7 @@ uv run simulate_drone.py
 | **智谱AI** | GLM-5.1, GLM-5-Turbo, GLM-5, GLM-4.7-Flash 等 | 云端 | 中文 AI 模型，JWT 认证 |
 | **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | 云端 | 来自 MiniMax 的 MiniMax-M2.7 模型 |
 | **DeepSeek** | DeepSeek V4 Flash, DeepSeek V4 Pro 等 | 云端 | DeepSeek V4 系列推理模型 |
-| **月之暗面（Kimi）** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview 等 | 云端 | 月之暗面 AI Kimi K2 系列模型，支持思维链 |
+| **月之暗面（Kimi）** | Kimi K2.6, Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking 等 | 云端 | 月之暗面 AI Kimi K2 系列模型，支持思维链 |
 | **美团 LongCat** | LongCat Flash Thinking, LongCat Flash Chat, LongCat Flash Omni 2603, LongCat Flash Lite | 云端 | OpenAI 兼容的 LongCat Flash 系列模型 |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo 等 | 云端 | 通过提供商的最新 Llama 模型 |
 | **Ollama** | NanBeige4.1, Qwen3.5:4B, Qwen3.5:Latest, GLM-4.7-Flash, Qwen3.5:35B 等 | 本地/网络 | 本地和远程服务器支持 |
