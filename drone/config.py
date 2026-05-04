@@ -91,6 +91,13 @@ class ConfigManager:
     def _create_default_models(self):
         """Create default model configurations."""
         self.models = {
+            "gpt-5.5": ModelConfig(
+                name="gpt-5.5",
+                provider="openai",
+                model_id="gpt-5.5",
+                max_tokens=2048,
+                temperature=0.7,
+            ),
             "gpt-5.4": ModelConfig(
                 name="gpt-5.4",
                 provider="openai",
@@ -104,14 +111,7 @@ class ConfigManager:
                 model_id="gpt-5.4-mini",
                 max_tokens=2048,
                 temperature=0.7,
-            ),
-            "gpt-5.4-nano": ModelConfig(
-                name="gpt-5.4-nano",
-                provider="openai",
-                model_id="gpt-5.4-nano",
-                max_tokens=2048,
-                temperature=0.7,
-            ),
+            )
             "claude-opus-4-6": ModelConfig(
                 name="claude-opus-4-6",
                 provider="anthropic",

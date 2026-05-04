@@ -202,9 +202,9 @@ async def get_providers():
     providers = {
         "OpenAI": {
             "name": "openai",
-            "models": ["gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano"],
+            "models": ["gpt-5.5", "gpt-5.4", "gpt-5.4-mini"],
             "api_key_url": "https://platform.openai.com/api-keys",
-            "description": "Latest GPT-5.4 series models",
+            "description": "Latest GPT-5.5 and GPT-5.4 series models",
         },
         "Anthropic": {
             "name": "anthropic",
