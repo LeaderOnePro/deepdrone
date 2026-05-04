@@ -39,7 +39,7 @@ PROVIDERS = {
     },
     "Anthropic": {
         "name": "anthropic",
-        "models": ["claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5"],
+        "models": ["claude-opus-4-7", "claude-sonnet-4-6", "claude-haiku-4-5"],
         "api_key_url": "https://console.anthropic.com",
         "description": "Claude models from Anthropic",
     },
