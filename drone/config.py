@@ -398,6 +398,14 @@ class ConfigManager:
                 temperature=0.7,
             ),
             # xAI Grok via OpenAI-compatible
+            "grok-4.3": ModelConfig(
+                name="grok-4.3",
+                provider="xai",
+                model_id="grok-4.3",
+                base_url="https://api.x.ai/v1",
+                max_tokens=2048,
+                temperature=0.7,
+            ),
             "grok-4-1-fast-reasoning": ModelConfig(
                 name="grok-4-1-fast-reasoning",
                 provider="xai",
@@ -410,14 +418,6 @@ class ConfigManager:
                 name="grok-4-1-fast-non-reasoning",
                 provider="xai",
                 model_id="grok-4-1-fast-non-reasoning",
-                base_url="https://api.x.ai/v1",
-                max_tokens=2048,
-                temperature=0.7,
-            ),
-            "grok-4-0709": ModelConfig(
-                name="grok-4-0709",
-                provider="xai",
-                model_id="grok-4-0709",
                 base_url="https://api.x.ai/v1",
                 max_tokens=2048,
                 temperature=0.7,
