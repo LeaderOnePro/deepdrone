@@ -2,7 +2,7 @@
 
 ![DeepDrone Demo](media/demo.png?v=2)
 
-**Control drones with natural language using the latest AI models from 12 major providers: OpenAI GPT-5.4, Anthropic Claude 4.6, Google Gemini 3.1 Pro Preview, Alibaba Qwen3.5 Plus/Flash, xAI Grok 4.1, ZhipuAI GLM-5, MiniMax, DeepSeek, Moonshot Kimi K2.5, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
+**Control drones with natural language using the latest AI models from 12 major providers: OpenAI GPT-5.5, Anthropic Claude 4.7, Google Gemini 3.1 Pro Preview, Alibaba Qwen3.6 Plus/Flash, xAI Grok 4.3, ZhipuAI GLM-5.1, MiniMax, DeepSeek V4, Moonshot Kimi K2.6, LongCat Flash, Meta Llama 4, and local/network Ollama models.**
 
 ---
 
@@ -42,7 +42,7 @@ The app will guide you through:
 
 ## ✨ Features
 
-- 🤖 **Comprehensive AI Support**: 12 major providers with latest models (GPT-5.4, Claude 4.6, Gemini 3.1 Pro Preview, MiniMax, Kimi K2.5, LongCat Flash, Llama 4, Grok 4.1, etc.)
+- 🤖 **Comprehensive AI Support**: 12 major providers with latest models (GPT-5.5, Claude 4.7, Gemini 3.1 Pro Preview, MiniMax, Kimi K2.6, LongCat Flash, Llama 4, Grok 4.3, etc.)
 - 🌐 **Dual Interface**: Terminal CLI and modern web interface
 - 🌐 **Network Flexibility**: Local, LAN, and internet Ollama server support
 - 🚁 **Real Drone Control**: DroneKit integration for actual flight control
@@ -82,10 +82,10 @@ uv run simulate_drone.py
 | **ZhipuAI** | GLM-5.1, GLM-5-Turbo, GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
 | **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | Cloud | MiniMax-M2.7 models from MiniMax |
 | **DeepSeek** | DeepSeek V4 Flash, DeepSeek V4 Pro, etc | Cloud | Advanced reasoning models |
-| **Moonshot (Kimi)** | Kimi K2.6, Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking | Cloud | Moonshot AI Kimi K2 models with thinking support |
-| **LongCat** | LongCat Flash Thinking, LongCat Flash Chat, LongCat Flash Omni 2603, LongCat Flash Lite | Cloud | OpenAI-compatible LongCat Flash models |
+| **Moonshot (Kimi)** | Kimi K2.6, Kimi K2.5 | Cloud | Moonshot AI Kimi K2 models with thinking support |
+| **LongCat** | LongCat Flash Thinking, LongCat Flash Chat, LongCat Flash Omni 2603, LongCat Flash Lite, LongCat Flash Chat 2602 Exp, LongCat 2.0 Preview | Cloud | OpenAI-compatible LongCat Flash models |
 | **Meta** | Llama 4 Maverick, Llama 3.3 Turbo, etc | Cloud | Latest Llama models via providers |
-| **Ollama** | NanBeige4.1, Qwen3.5:4B, Qwen3.5:Latest, GLM-4.7-Flash, Qwen3.5:35B, etc | Local/Network | Local & remote server support |
+| **Ollama** | NanBeige4.1, Qwen3.5:4B, Qwen3.5:Latest, GLM-4.7-Flash, Qwen3.6:Latest, etc | Local/Network | Local & remote server support |
 
 ## 🔧 Requirements
 

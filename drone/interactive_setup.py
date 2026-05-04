@@ -40,7 +40,7 @@ PROVIDERS = {
     "Anthropic": {
         "name": "anthropic",
         "models": ["claude-opus-4-7", "claude-sonnet-4-6", "claude-haiku-4-5"],
-        "api_key_url": "https://console.anthropic.com",
+        "api_key_url": "https://platform.claude.com/settings/workspaces/default/keys",
         "description": "Claude models from Anthropic",
     },
     "Google": {
@@ -52,7 +52,7 @@ PROVIDERS = {
             "gemini/gemini-flash-latest",
             "gemini/gemini-flash-lite-latest",
         ],
-        "api_key_url": "https://aistudio.google.com/app/apikey",
+        "api_key_url": "https://aistudio.google.com/app/api-keys",
         "description": "Gemini 3.1 models from Google AI Studio",
     },
     "Qwen": {
@@ -87,7 +87,7 @@ PROVIDERS = {
             "glm-4.7-flash",
             "glm-4.5-air",
         ],
-        "api_key_url": "https://open.bigmodel.cn/usercenter/apikeys",
+        "api_key_url": "https://open.bigmodel.cn/apikey/platform",
         "description": "GLM models from ZhipuAI",
     },
     "MiniMax": {
@@ -99,7 +99,7 @@ PROVIDERS = {
     "DeepSeek": {
         "name": "deepseek",
         "models": ["deepseek-v4-flash", "deepseek-v4-pro"],
-        "api_key_url": "https://platform.deepseek.com",
+        "api_key_url": "https://platform.deepseek.com/api_keys",
         "description": "DeepSeek models (OpenAI-compatible)",
     },
     "Kimi": {
@@ -107,10 +107,6 @@ PROVIDERS = {
         "models": [
             "kimi-k2.6",
             "kimi-k2.5",
-            "kimi-k2-thinking-turbo",
-            "kimi-k2-turbo-preview",
-            "kimi-k2-thinking",
-            "kimi-k2-0905-preview",
         ],
         "api_key_url": "https://platform.moonshot.cn/console/api-keys",
         "description": "Kimi models (OpenAI-compatible)",
@@ -122,6 +118,8 @@ PROVIDERS = {
             "LongCat-Flash-Chat",
             "LongCat-Flash-Omni-2603",
             "LongCat-Flash-Lite",
+            "LongCat-Flash-Chat-2602-Exp",
+            "LongCat-2.0-Preview",
         ],
         "api_key_url": "https://longcat.chat/platform/api_keys",
         "description": "LongCat Flash models (OpenAI-compatible)",
@@ -142,7 +140,7 @@ PROVIDERS = {
             "qwen3.5:4b",
             "qwen3.5:latest",
             "glm-4.7-flash",
-            "qwen3.5:35b",
+            "qwen3.6:latest",
         ],
         "api_key_url": "https://ollama.com (No API key needed - supports local/network)",
         "description": "Local/Network models via Ollama (supports custom server URL)",
