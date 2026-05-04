@@ -79,7 +79,7 @@ uv run simulate_drone.py
 | **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview, Gemini Flash Latest, Gemini Flash Lite Latest | Cloud | Gemini 3.1 and Gemini models from Google AI Studio |
 | **Qwen** | Qwen3.6 Max Preview, Qwen3.6 Plus, Qwen3.6 Flash, Qwen3.6 35B A3B, Qwen3.6 27B | Cloud | DashScope OpenAI-compatible endpoints |
 | **xAI** | Grok 4.3, Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning | Cloud | Elon Musk's xAI models |
-| **ZhipuAI** | GLM-5-Turbo, GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
+| **ZhipuAI** | GLM-5.1, GLM-5-Turbo, GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
 | **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | Cloud | MiniMax-M2.7 models from MiniMax |
 | **DeepSeek** | DeepSeek V4 Flash, DeepSeek V4 Pro, etc | Cloud | Advanced reasoning models |
 | **Moonshot (Kimi)** | Kimi K2.5, Kimi K2 Thinking Turbo, Kimi K2 Turbo, Kimi K2 Thinking, Kimi K2 0905 Preview | Cloud | Moonshot AI Kimi K2 models with thinking support |

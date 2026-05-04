@@ -249,6 +249,7 @@ async def get_providers():
         "ZhipuAI": {
             "name": "zhipuai",
             "models": [
+                "glm-5.1",
                 "glm-5-turbo",
                 "glm-5",
                 "glm-4.7",
