@@ -307,50 +307,42 @@ class ConfigManager:
                 temperature=0.7,
             ),
             # Qwen via 阿里云百炼平台API (OpenAI-compatible)
-            "qwen3.5-plus": ModelConfig(
-                name="qwen3.5-plus",
+            "qwen3.6-max-preview": ModelConfig(
+                name="qwen3.6-max-preview",
                 provider="qwen",
-                model_id="qwen3.5-plus",
+                model_id="qwen3.6-max-preview",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7,
             ),
-            "qwen3.5-flash": ModelConfig(
-                name="qwen3.5-flash",
+            "qwen3.6-plus": ModelConfig(
+                name="qwen3.6-plus",
                 provider="qwen",
-                model_id="qwen3.5-flash",
+                model_id="qwen3.6-plus",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7,
             ),
-            "qwen3.5-397b-a17b": ModelConfig(
-                name="qwen3.5-397b-a17b",
+            "qwen3.6-flash": ModelConfig(
+                name="qwen3.6-flash",
                 provider="qwen",
-                model_id="qwen3.5-397b-a17b",
+                model_id="qwen3.6-flash",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7,
             ),
-            "qwen3.5-122b-a10b": ModelConfig(
-                name="qwen3.5-122b-a10b",
+            "qwen3.6-35b-a3b": ModelConfig(
+                name="qwen3.6-35b-a3b",
                 provider="qwen",
-                model_id="qwen3.5-122b-a10b",
+                model_id="qwen3.6-35b-a3b",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7,
             ),
-            "qwen3.5-27b": ModelConfig(
-                name="qwen3.5-27b",
+            "qwen3.6-27b": ModelConfig(
+                name="qwen3.6-27b",
                 provider="qwen",
-                model_id="qwen3.5-27b",
-                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-                max_tokens=2048,
-                temperature=0.7,
-            ),
-            "qwen3.5-35b-a3b": ModelConfig(
-                name="qwen3.5-35b-a3b",
-                provider="qwen",
-                model_id="qwen3.5-35b-a3b",
+                model_id="qwen3.6-27b",
                 base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
                 max_tokens=2048,
                 temperature=0.7,

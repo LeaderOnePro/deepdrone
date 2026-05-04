@@ -77,7 +77,7 @@ uv run simulate_drone.py
 | **OpenAI** | GPT-5.5, GPT-5.4, GPT-5.4-mini | Cloud | Latest GPT-5.5 and GPT-5.4 series models |
 | **Anthropic** | Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5 | Cloud | Advanced Claude 4.7 and 4.6 models |
 | **Google** | Gemini 3.1 Pro Preview, Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview, Gemini Flash Latest, Gemini Flash Lite Latest | Cloud | Gemini 3.1 and Gemini models from Google AI Studio |
-| **Qwen** | Qwen3.5 Plus, Qwen3.5 Flash, Qwen3.5 397B A17B, Qwen3.5 122B A10B, Qwen3.5 27B, Qwen3.5 35B A3B | Cloud | DashScope OpenAI-compatible endpoints |
+| **Qwen** | Qwen3.6 Max Preview, Qwen3.6 Plus, Qwen3.6 Flash, Qwen3.6 35B A3B, Qwen3.6 27B | Cloud | DashScope OpenAI-compatible endpoints |
 | **xAI** | Grok 4.1 Fast Reasoning, Grok 4.1 Fast Non-Reasoning, Grok 4 | Cloud | Elon Musk's xAI models |
 | **ZhipuAI** | GLM-5-Turbo, GLM-5, GLM-4.7-Flash, etc | Cloud | Chinese AI models with JWT auth |
 | **MiniMax** | MiniMax-M2.7, MiniMax-M2.7-highspeed | Cloud | MiniMax-M2.7 models from MiniMax |

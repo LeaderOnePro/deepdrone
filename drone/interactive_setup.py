@@ -58,15 +58,14 @@ PROVIDERS = {
     "Qwen": {
         "name": "qwen",
         "models": [
-            "qwen3.5-plus",
-            "qwen3.5-flash",
-            "qwen3.5-397b-a17b",
-            "qwen3.5-122b-a10b",
-            "qwen3.5-27b",
-            "qwen3.5-35b-a3b",
+            "qwen3.6-max-preview",
+            "qwen3.6-plus",
+            "qwen3.6-flash",
+            "qwen3.6-35b-a3b",
+            "qwen3.6-27b",
         ],
         "api_key_url": "https://bailian.console.aliyun.com/ai/ak",
-        "description": "Qwen3.5 models via DashScope (OpenAI-compatible)",
+        "description": "Qwen3.6 models via DashScope (OpenAI-compatible)",
     },
     "xAI": {
         "name": "xai",
