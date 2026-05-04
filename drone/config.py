@@ -111,14 +111,14 @@ class ConfigManager:
                 model_id="gpt-5.4-mini",
                 max_tokens=2048,
                 temperature=0.7,
-            )
+            ),
             "claude-opus-4-7": ModelConfig(
                 name="claude-opus-4-7",
                 provider="anthropic",
                 model_id="claude-opus-4-7",
                 max_tokens=2048,
                 temperature=0.7,
-            )
+            ),
             "claude-sonnet-4-6": ModelConfig(
                 name="claude-sonnet-4-6",
                 provider="anthropic",
